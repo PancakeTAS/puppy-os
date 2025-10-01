@@ -1,4 +1,4 @@
-use std::{fs, path::Path, process::Command};
+use std::{fs, os::unix, path::{Path, PathBuf}, process::Command};
 
 use anyhow::{bail, Context};
 
@@ -288,12 +288,17 @@ impl State {
         fs::write(&script_path, pkg.build.script.as_bytes())
             .context("Failed to write build script")?;
 
+        let symlink = PathBuf::from("/tmp/dog-buildroot");
+        let _ = fs::remove_file(&symlink);
+        unix::fs::symlink(&env.buildroot, &symlink)
+            .context("Failed to create buildroot symlink")?;
+
         let status = Command::new("sh")
             .arg("-euo")
             .arg("pipefail")
-            .arg(&script_path.canonicalize()?)
-            .env("pkgroot", &env.pkgroot.canonicalize()?)
-            .env("buildroot", &env.buildroot.canonicalize()?)
+            .arg(&script_path)
+            .env("pkgroot", &env.pkgroot)
+            .env("buildroot", &env.buildroot)
             .current_dir(&env.tempdir)
             .status()
             .context("Failed to execute build script")?;

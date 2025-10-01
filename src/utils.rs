@@ -1,4 +1,4 @@
-use std::{fs, os::unix, path::{Path, PathBuf}, time};
+use std::{fs, os::unix, path::{Path, PathBuf}};
 
 use anyhow::Context;
 
@@ -13,40 +13,44 @@ pub struct Environment {
 impl Environment {
     /// Create a new environment
     pub fn new(dir: &Path) -> anyhow::Result<Self> {
-        let timestamp = time::SystemTime::now()
-            .duration_since(time::UNIX_EPOCH)
-            .expect("Time went backwards")
-            .as_secs();
+        if !dir.exists() {
+            anyhow::bail!("Build directory does not exist");
+        }
 
-        let tempdir = dir.join(format!("build-{}", timestamp));
-        let pkgroot = dir.join(format!("pkg-{}", timestamp));
-        let buildroot = dir.join(format!("buildroot-{}", timestamp));
-        fs::create_dir_all(&tempdir)
-            .with_context(|| format!("Failed to create tempdir at {}", tempdir.display()))?;
-        fs::create_dir_all(&pkgroot)
-            .with_context(|| format!("Failed to create pkgroot at {}", pkgroot.display()))?;
-        fs::create_dir_all(&buildroot)
-            .with_context(|| format!("Failed to create buildroot at {}", buildroot.display()))?;
+        // turn dir into absolute path
+        let mut dir = dir.to_path_buf();
+        if !dir.is_absolute() {
+            dir = std::env::current_dir()?.join(dir);
+        }
 
-        fs::create_dir_all(buildroot.join("usr/include"))?;
-        fs::create_dir_all(buildroot.join("usr/lib"))?;
-        fs::create_dir_all(buildroot.join("usr/libexec"))?;
-        fs::create_dir_all(buildroot.join("usr/bin"))?;
-        unix::fs::symlink(PathBuf::from("usr/bin"), buildroot.join("bin"))?;
-        unix::fs::symlink(PathBuf::from("usr/bin"), buildroot.join("sbin"))?;
-        unix::fs::symlink(PathBuf::from("usr/lib"), buildroot.join("lib"))?;
-        unix::fs::symlink(PathBuf::from("usr/lib"), buildroot.join("libexec"))?;
-        unix::fs::symlink(PathBuf::from("usr/lib"), buildroot.join("lib64"))?;
-        unix::fs::symlink(PathBuf::from("bin"), buildroot.join("usr/sbin"))?;
-        unix::fs::symlink(PathBuf::from("lib"), buildroot.join("usr/lib64"))?;
+        // create timed subdirectory
+        let rand = rand::random::<u32>();
+        let dir = dir.join(format!("{}", rand));
+        fs::create_dir(&dir)?;
 
-        unix::fs::symlink(buildroot.canonicalize()?, PathBuf::from("/tmp/dog-buildroot"))?;
+        // create subdirectories
+        let tempdir = dir.join("temp");
+        let pkgroot = dir.join("pkgroot");
+        let buildroot = dir.join("buildroot");
+        fs::create_dir(&tempdir)?;
+        fs::create_dir(&pkgroot)?;
+        fs::create_dir(&buildroot)?;
 
-        Ok(Self {
-            tempdir,
-            pkgroot,
-            buildroot,
-        })
+        // prepare buildroot
+        fs::create_dir(buildroot.join("usr"))?;
+        fs::create_dir(buildroot.join("usr/include"))?;
+        fs::create_dir(buildroot.join("usr/share"))?;
+        fs::create_dir(buildroot.join("usr/lib"))?;
+        fs::create_dir(buildroot.join("usr/bin"))?;
+        unix::fs::symlink("usr/bin", buildroot.join("bin"))?;
+        unix::fs::symlink("usr/bin", buildroot.join("sbin"))?;
+        unix::fs::symlink("usr/lib", buildroot.join("lib"))?;
+        unix::fs::symlink("usr/lib", buildroot.join("libexec"))?;
+        unix::fs::symlink("usr/lib", buildroot.join("lib64"))?;
+        unix::fs::symlink("bin", buildroot.join("usr/sbin"))?;
+        unix::fs::symlink("lib", buildroot.join("usr/lib64"))?;
+
+        Ok(Self { tempdir, pkgroot, buildroot })
     }
 }
 
@@ -54,20 +58,10 @@ impl Drop for Environment {
     /// Clean up temporary directories
     fn drop(&mut self) {
         if self.tempdir.exists() {
-            fs::remove_dir_all(&self.tempdir)
-                .expect("Failed to remove temporary build directory");
+            let parent = self.tempdir.parent().unwrap();
+            fs::remove_dir_all(&parent)
+                .expect("Failed to remove build directory");
         }
-        if self.pkgroot.exists() {
-            fs::remove_dir_all(&self.pkgroot)
-                .expect("Failed to remove package directory");
-        }
-        if self.buildroot.exists() {
-            fs::remove_dir_all(&self.buildroot)
-                .expect("Failed to remove buildroot directory");
-        }
-
-        fs::remove_file("/tmp/dog-buildroot")
-            .expect("Failed to remove buildroot symlink");
     }
 }
 
@@ -92,7 +86,7 @@ pub fn make_tar(src: &Path) -> anyhow::Result<Vec<u8>> {
         .arg("cJf")
         .arg("-")
         .arg("-C")
-        .arg(src.canonicalize()?)
+        .arg(&src)
         .arg(".")
         .output()
         .context("Failed to create tarball")?;
