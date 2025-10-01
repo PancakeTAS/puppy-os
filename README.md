@@ -4,11 +4,11 @@ This project uses an in-house package manager "doggy" to save time recompiling. 
 ```bash
 $ doggy -p pkgs_toolchain -c cache_toolchain [-b /dev/shm/dog] llvm
 $ mkdir -p toolchain && tar xJf cache_toolchain/pkgs/llvm -C toolchain
-$ export PATH="$PWD/toolchain/bin:$PATH"
-$ export MAKEFLAGS="-j$(nproc)"
 $ rm -rf cache_toolchain
 ```
 Now you can compile any package like this, which will automatically compile all dependencies:
 ```bash
+$ export PATH="$PWD/toolchain/bin:$PATH"
+$ export MAKEFLAGS="-j$(nproc)"
 $ doggy -b /dev/shm/dog <package>
 ```
