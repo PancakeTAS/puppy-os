@@ -1,0 +1,35 @@
+[metadata]
+name = "openssl"
+version = "3.6.0"
+release = 1
+description = "Open Source toolkit for SSL and TLS"
+url = "https://openssl.net"
+license = "Zlib"
+
+[dependencies]
+compiler-rt = "21.1.2"
+libcxx = "21.1.2"
+linux = "6.16.9"
+musl = "1.2.5"
+
+[sources]
+openssl = "https://github.com/openssl/openssl/releases/download/openssl-3.6.0/openssl-3.6.0.tar.gz"
+
+[build]
+script = """
+cd openssl-3.6.0
+
+./Configure linux-aarch64 \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --openssldir=/usr/lib/ssl \
+    enable-ktls \
+    shared \
+    CROSS_COMPILE= CC=clang CXX=clang++ \
+    AR=llvm-ar AS=llvm-as RANLIB=llvm-ranlib \
+    CFLAGS="-O3 -D__STDC_NO_ATOMICS__" LDFLAGS="-flto"
+
+make
+
+make DESTDIR="$pkgroot" install
+"""
