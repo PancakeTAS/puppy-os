@@ -34,7 +34,6 @@ cmake -S compiler-rt -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
     -DCMAKE_ASM_COMPILER_TARGET="aarch64-dog-linux-musl" \
     -DCMAKE_CXX_COMPILER_TARGET="aarch64-dog-linux-musl" \
     -DCMAKE_C_COMPILER_TARGET="aarch64-dog-linux-musl" \
