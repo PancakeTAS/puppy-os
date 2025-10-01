@@ -1,8 +1,8 @@
-use std::{fs, os::unix, path::{Path, PathBuf}, process::{Command, Stdio}, rc::Rc, time::Instant};
+use std::{fs, os::unix, path::{Path, PathBuf}, process::{Command, Stdio}, time::Instant};
 
 use anyhow::{bail, Context};
 
-use crate::{output, utils};
+use crate::utils;
 
 pub mod pkg {
     use serde::Deserialize;
@@ -54,7 +54,7 @@ pub mod repo {
 
     /// Package repository
     pub struct Repository {
-        pkgs: Vec<Rc<pkg::Package>>,
+        pub pkgs: Vec<Rc<pkg::Package>>,
     }
 
     impl Repository {
@@ -235,6 +235,10 @@ pub mod cache {
 
             Ok(())
         }
+        /// Get cached sources
+        pub fn get_srcs(&self) -> &pkg::SourceMap {
+            &self.sources
+        }
         /// Get cached packages
         pub fn get_pkgs(&self) -> &pkg::DependencyMap {
             &self.pkgs
@@ -242,11 +246,109 @@ pub mod cache {
     }
 }
 
+pub mod monitor {
+    use std::{collections::HashMap, rc::Rc, time::Instant};
+
+    use anyhow::{Context, Ok};
+    use console::Term;
+    use ptree::TreeBuilder;
+
+    use crate::{state::{cache, pkg, repo}, utils};
+
+    pub struct Monitor {
+        terminal: Term,
+        postlines: usize,
+        states: HashMap<String, utils::PkgState>,
+        root: Rc<pkg::Package>
+    }
+
+    impl Monitor {
+        /// Recursively build a tree
+        fn build_tree(&self, builder: &mut TreeBuilder, repo: &repo::Repository, pkg: &pkg::Package)
+                -> anyhow::Result<()> {
+            let name = &pkg.metadata.name;
+            let state = self.states.get(name).unwrap_or(&utils::PkgState::Pending);
+            let entry = utils::fmt_entry(&pkg.metadata.name, state);
+
+            let mut node = builder.begin_child(entry);
+            for (name, version) in &pkg.dependencies {
+                let dep = repo.find_pkg(name, Some(version)).
+                    context("Unable to find dependency")?;
+                self.build_tree(&mut node, repo, &dep)?;
+            }
+            node.end_child();
+
+            Ok(())
+        }
+        /// Build a full tree as string
+        fn make_tree(&self, repo: &repo::Repository, pkg: &pkg::Package) -> anyhow::Result<String> {
+            let mut builder = TreeBuilder::new("\x1b[1;1mDependency Graph\x1b[0m".to_string());
+            self.build_tree(&mut builder, repo, pkg)?;
+            let tree = builder.build();
+
+            let mut bytes = Vec::new();
+            ptree::write_tree(&tree, &mut bytes)
+                .context("Failed to write tree to buffer")?;
+            String::from_utf8(bytes)
+                .context("Failed to convert tree to string")
+        }
+    }
+
+    impl Monitor {
+        /// Create a new monitor handler
+        pub fn new(repo: &repo::Repository, pkg: Rc<pkg::Package>, cache: &cache::Cache)
+                -> anyhow::Result<Self> {
+            let states = cache.get_pkgs().keys().
+                map(|k| (k.clone(), utils::PkgState::Cached)).
+                collect();
+            let mut monitor = Monitor {
+                terminal: Term::stdout(),
+                postlines: 0,
+                states,
+                root: pkg.clone()
+            };
+
+            let tree = monitor.make_tree(repo, &monitor.root)?;
+            monitor.postlines = tree.matches('\n').count() + 1;
+            monitor.terminal.write_line(&tree)
+                .context("Failed to write initial tree")?;
+
+            Ok(monitor)
+        }
+        /// Append a line above the tree
+        pub fn append_line(&mut self, line: &str, repo: &repo::Repository) -> anyhow::Result<()> {
+            self.terminal.clear_last_lines(self.postlines)
+                .context("Failed to clear terminal")?;
+            self.terminal.write_line(line)
+                .context("Failed to write line")?;
+            self.print_tree(repo)?;
+            Ok(())
+        }
+        /// Update the tree
+        pub fn print_tree(&mut self, repo: &repo::Repository) -> anyhow::Result<()> {
+            let tree = self.make_tree(repo, &self.root)?;
+            self.terminal.write_line(&tree)
+                .context("Failed to write tree")?;
+            Ok(())
+        }
+        /// Mark a package as in progress
+        pub fn mark_in_progress(&mut self, name: &str) {
+            self.states.insert(name.to_string(), utils::PkgState::InProgress(Instant::now()));
+        }
+        /// Mark a package as built
+        pub fn mark_built(&mut self, name: &str, duration: u64) {
+            self.states.remove(name);
+            self.states.insert(name.to_string(), utils::PkgState::Built(duration));
+        }
+    }
+}
+
 /// Global state of the build system
 pub struct State {
-    pub cfg: crate::Configuration,
-    pub repo: repo::Repository,
-    pub cache: cache::Cache,
+    cfg: crate::Configuration,
+    repo: repo::Repository,
+    cache: cache::Cache,
+    monitor: monitor::Monitor,
 }
 
 impl State {
@@ -257,15 +359,29 @@ impl State {
         let cache = cache::Cache::new(Path::new(&cfg.cachedir))
             .context("Failed to create cache")?;
 
-        Ok(Self { cfg, repo, cache })
-    }
-    /// Get the root package
-    pub fn get_pkg(&self) -> anyhow::Result<Rc<pkg::Package>> {
-        self.repo.find_pkg(&self.cfg.pkg, None)
-            .context("Failed to find root package")
+        let pkg = repo.find_pkg(&cfg.pkg, None);
+        if pkg.is_none() {
+            println!("Package '{}' does not exist", &cfg.pkg);
+        }
+        let pkg = pkg.unwrap();
+
+        let mut monitor = monitor::Monitor::new(&repo, pkg.clone(), &cache)
+            .context("Failed to create monitor")?;
+
+        monitor.append_line(&format!("Found {} packages in repository",
+            repo.pkgs.len()), &repo)?;
+        monitor.append_line(&format!("Found {} cached sources, {} cached packages",
+            cache.get_srcs().len(), cache.get_pkgs().len()), &repo)?;
+        monitor.append_line(&format!("=== {}-{}-{}",
+            pkg.metadata.name, pkg.metadata.version, pkg.metadata.release), &repo)?;
+        monitor.append_line(&format!("> \"{}\"", pkg.metadata.description), &repo)?;
+        monitor.append_line(&format!("from: {}", pkg.metadata.url), &repo)?;
+        monitor.append_line(&format!("license: {}", pkg.metadata.license), &repo)?;
+
+        Ok(Self { cfg, repo, cache, monitor })
     }
     /// Build a package by name
-    pub fn build_pkg(&mut self, name: Option<&str>, output: &mut output::Output) -> anyhow::Result<()> {
+    pub fn build_pkg(&mut self, name: Option<&str>) -> anyhow::Result<()> {
         let name = name.unwrap_or(&self.cfg.pkg);
         let pkg = self.repo.find_pkg(name, None)
             .context("Failed to find package")?;
@@ -276,7 +392,7 @@ impl State {
         for dep in &pkg.dependencies {
             let mut path = self.cache.fetch_pkg(dep.0, dep.1);
             if path.is_none() {
-                self.build_pkg(Some(dep.0), output)?;
+                self.build_pkg(Some(dep.0))?;
                 path = self.cache.fetch_pkg(dep.0, dep.1);
             }
             let path = path.unwrap();
@@ -285,9 +401,9 @@ impl State {
         }
 
         let time = Instant::now();
-        output.mark_in_progress(&pkg.metadata.name);
-        output.append_line(&format!("Building package: {}-{}",
-            pkg.metadata.name, pkg.metadata.version), &self.repo);
+        self.monitor.mark_in_progress(&pkg.metadata.name);
+        self.monitor.append_line(&format!("Building package: {}-{}",
+            pkg.metadata.name, pkg.metadata.version), &self.repo)?;
 
         // download and extract sources
         for src in &pkg.sources {
@@ -321,7 +437,7 @@ impl State {
 
         let rx = utils::route_command(cmd.stdout.take().unwrap(), cmd.stderr.take().unwrap());
         for line in rx {
-            output.append_line(&line, &self.repo);
+            self.monitor.append_line(&line, &self.repo)?
         }
 
         let status = cmd.wait_with_output()
@@ -337,9 +453,9 @@ impl State {
         self.cache.store_pkg(&pkg.metadata.name, &pkg.metadata.version, &tarball)
             .context("Failed to store package in cache")?;
 
-        output.mark_built(&pkg.metadata.name, time.elapsed().as_secs());
-        output.append_line(&format!("Finished building package: {}-{}",
-            pkg.metadata.name, pkg.metadata.version), &self.repo);
+        self.monitor.mark_built(&pkg.metadata.name, time.elapsed().as_secs());
+        self.monitor.append_line(&format!("Finished building package: {}-{}",
+            pkg.metadata.name, pkg.metadata.version), &self.repo)?;
 
         Ok(())
     }

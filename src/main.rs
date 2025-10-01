@@ -1,6 +1,7 @@
+use std::env;
+
 use clap::Parser;
 
-pub mod output;
 pub mod state;
 pub mod utils;
 
@@ -23,11 +24,34 @@ pub struct Configuration {
 
 fn main() {
     let config = Configuration::parse();
+
+    // set environment variables
+    unsafe {
+        let cwd = std::env::current_dir()
+            .expect("Unable to get current directory");
+
+        let mut prefix = cwd.to_path_buf().join("toolchain/bin").to_str().unwrap().to_string();
+        prefix.push(':');
+        prefix.push_str(&env::var("PATH").unwrap());
+
+        println!("Using tools from {}/toolchain/bin", cwd.to_str().unwrap());
+
+        env::set_var("PATH", prefix);
+    }
+
+    unsafe {
+        let nproc = num_cpus::get();
+
+        println!("Using {} parallel jobs", nproc);
+
+        let flags = format!("-j{}", nproc);
+        env::set_var("MAKEFLAGS", flags);
+    }
+
+    // create state
     let mut state = state::State::new(config)
-        .expect("Unable to initialize state");
-    let pkg = state.get_pkg()
-        .expect("Unable to get package");
-    let mut output = output::Output::new(&state.repo, pkg, &state.cache);
-    state.build_pkg(None, &mut output)
-        .expect("Unable to build package");
+        .expect("An error occurred while initializing the state");
+
+    state.build_pkg(None)
+        .expect("An error occurred during the build");
 }

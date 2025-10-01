@@ -1,4 +1,4 @@
-use std::{fs, io::{BufRead, BufReader}, os::unix, path::{Path, PathBuf}, process::{ChildStderr, ChildStdout}, sync::{self, mpsc::Receiver}, thread};
+use std::{fs, io::{BufRead, BufReader}, os::unix, path::{Path, PathBuf}, process::{ChildStderr, ChildStdout}, sync::{self, mpsc::Receiver}, thread, time::Instant};
 
 use anyhow::Context;
 
@@ -58,7 +58,8 @@ impl Drop for Environment {
     /// Clean up temporary directories
     fn drop(&mut self) {
         if self.tempdir.exists() {
-            let parent = self.tempdir.parent().unwrap();
+            let parent = self.tempdir.parent()
+                .expect("Found lonely filesystem node");
             fs::remove_dir_all(&parent)
                 .expect("Failed to remove build directory");
         }
@@ -105,7 +106,7 @@ pub fn route_command(stdout: ChildStdout, stderr: ChildStderr) -> Receiver<Strin
         let reader = BufReader::new(stdout);
         for line in reader.lines() {
             if let Ok(line) = line {
-                tx_stdout.send(line).unwrap();
+                let _ = tx_stdout.send(line);
             }
         }
     });
@@ -115,10 +116,39 @@ pub fn route_command(stdout: ChildStdout, stderr: ChildStderr) -> Receiver<Strin
         let reader = BufReader::new(stderr);
         for line in reader.lines() {
             if let Ok(line) = line {
-                tx_stderr.send(line).unwrap();
+                let _ = tx_stderr.send(line);
             }
         }
     });
 
     rx
+}
+
+
+/// State of a package
+pub enum PkgState {
+    Pending,
+    InProgress(Instant), // start time
+    Cached,
+    Built(u64) // duration
+}
+
+/// Format a tree entry
+pub fn fmt_entry(name: &str, state: &PkgState) -> String {
+    let emoji_str = match state {
+        PkgState::Pending => "\x1b[36m\u{16ED}",
+        PkgState::InProgress(_) => "\x1b[1;33m\u{23F5}",
+        PkgState::Cached => "\x1b[0;32m\u{2713}",
+        PkgState::Built(_) => "\x1b[0;32m\u{2713}"
+    };
+    let suffix_str = match state {
+        PkgState::Pending => "".to_string(),
+        PkgState::InProgress(start) => {
+            let elapsed = start.elapsed().as_secs();
+            format!("\x1b[0;37m (building for {}s)", elapsed)
+        },
+        PkgState::Cached => "\x1b[0;37m".to_string(),
+        PkgState::Built(duration) => format!("\x1b[0;37m ({}s)", duration)
+    };
+    format!("{} {}{}\x1b[0m", emoji_str, name, suffix_str)
 }
