@@ -6,3 +6,6 @@
 /toolchain
 /build
 /cache
+
+# general temp files
+/tmp
