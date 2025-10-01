@@ -3,5 +3,6 @@
 /Cargo.lock
 
 # doggy files
+/toolchain
 /build
 /cache
