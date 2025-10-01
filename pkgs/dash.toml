@@ -30,4 +30,5 @@ DESTDIR="$pkgroot" make install
 llvm-strip --strip-unneeded "$pkgroot/usr/bin/dash"
 
 ln -sfv dash "$pkgroot/usr/bin/sh"
+rm -rfv "$pkgroot/usr/share"
 """

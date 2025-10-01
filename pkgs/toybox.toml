@@ -33,9 +33,6 @@ make allnoconfig
 echo "CONFIG_TOYBOX_LIBCRYPTO=y" >> .config
 echo "CONFIG_TOYBOX_LIBZ=y" >> .config
 echo "CONFIG_TOYBOX_FLOAT=y" >> .config
-echo "CONFIG_TOYBOX_HELP=y" >> .config
-echo "CONFIG_TOYBOX_HELP_DASHDASH=y" >> .config
-echo "CONFIG_TOYBOX_ZHELP=y" >> .config
 for util in "${ENABLED_UTILS[@]}"; do
     util_upper=$(echo "$util" | tr '[:lower:]' '[:upper:]')
     echo "CONFIG_$util_upper=y" >> .config
@@ -43,11 +40,16 @@ done
 
 make \
     CROSS_COMPILE= CC=clang STRIP=llvm-strip \
+    CFLAGS="-w" LDFLAGS="-w" \
     LDOPTIMIZE="-flto" OPTIMIZE="-O3"
 
-PREFIX="$pkgroot/usr" make install
+mkdir -p "$pkgroot/usr/bin"
+cp -pv toybox "$pkgroot/usr/bin/"
 
 for util in "${ENABLED_UTILS[@]}"; do
     ln -sfv toybox "$pkgroot/usr/bin/$util"
 done
+
+rm -fv "$pkgroot/usr/bin/sort_float"
+rm -fv "$pkgroot/usr/bin/baseenc"
 """

@@ -23,7 +23,8 @@ cd openssl-3.6.0
     --prefix=/usr \
     --libdir=/usr/lib \
     --openssldir=/usr/lib/ssl \
-    enable-ktls \
+    enable-ktls enable-fips \
+    no-padlockeng no-capieng no-afalgeng no-loadereng \
     shared \
     CROSS_COMPILE= CC=clang CXX=clang++ \
     AR=llvm-ar AS=llvm-as RANLIB=llvm-ranlib \
@@ -31,5 +32,16 @@ cd openssl-3.6.0
 
 make
 
-make DESTDIR="$pkgroot" install
+make DESTDIR="$pkgroot" install_sw install_ssldirs
+
+llvm-strip --strip-unneeded "$pkgroot/usr/lib/ossl-modules/legacy.so"
+llvm-strip --strip-unneeded "$pkgroot/usr/lib/libcrypto.so.3"
+llvm-strip --strip-unneeded "$pkgroot/usr/lib/libssl.so.3"
+
+llvm-strip --strip-unneeded "$pkgroot/usr/bin/openssl"
+
+rm -rfv "$pkgroot/usr/bin/c_rehash"
+rm -rfv "$pkgroot/usr/lib/cmake"
+rm -rfv "$pkgroot/usr/lib/pkgconfig"
+rm -rfv "$pkgroot/usr/lib/engines-3"
 """

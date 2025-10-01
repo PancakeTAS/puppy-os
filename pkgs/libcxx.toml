@@ -45,4 +45,6 @@ llvm-strip --strip-unneeded \
     "$pkgroot/usr/lib/libunwind.so.1.0" \
     "$pkgroot/usr/lib/libc++abi.so.1.0" \
     "$pkgroot/usr/lib/libc++.so.1.0"
+
+rm -rvf "$pkgroot/usr/share"
 """
