@@ -24,8 +24,7 @@ mkdir -p build && cd build
     --disable-wrapper \
     CROSS_COMPILE= CC=clang \
     AR=llvm-ar RANLIB=llvm-ranlib \
-    LIBCC="$buildroot/lib/linux/libclang_rt.builtins-aarch64.a" \
-    CFLAGS="--target=aarch64-dog-linux-musl"
+    LIBCC="$buildroot/lib/linux/libclang_rt.builtins-aarch64.a"
 
 make
 
