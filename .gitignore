@@ -1,0 +1,7 @@
+# rust files
+/target
+/Cargo.lock
+
+# doggy files
+/build
+/cache
