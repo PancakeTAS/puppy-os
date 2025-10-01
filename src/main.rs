@@ -1,5 +1,6 @@
-use std::env;
+use std::{env, path::PathBuf};
 
+use anyhow::Context;
 use clap::Parser;
 
 pub mod state;
@@ -17,6 +18,9 @@ pub struct Configuration {
     /// Temporary build directory (tmpfs recommended)
     #[arg(short, long, default_value = "build")]
     pub builddir: String,
+    /// Build a sysroot from packages (comma-separated)
+    #[arg(short, long)]
+    pub sysroot: Option<String>,
     /// Package to build
     #[arg(index = 1)]
     pub pkg: String
@@ -24,6 +28,23 @@ pub struct Configuration {
 
 fn main() {
     let config = Configuration::parse();
+    if config.sysroot.is_some() {
+        let cache = state::cache::Cache::new(&PathBuf::from(config.cachedir))
+            .expect("An error occurred while initializing the cache");
+        let pkgs = config.pkg.split(',')
+            .map(|s| s.to_string())
+            .collect::<Vec<String>>();
+        let paths = pkgs.iter()
+            .map(|p| cache.fetch_pkg(p, None)
+                .with_context(|| format!("Package {} not found in cache.", p)))
+            .collect::<Result<Vec<PathBuf>, _>>()
+            .expect("An error occurred while fetching packages from cache");
+
+        utils::make_sysroot(&PathBuf::from("sysroot"), &paths)
+            .expect("An error occurred while creating the sysroot");
+
+        return;
+    }
 
     // set environment variables
     unsafe {

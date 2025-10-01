@@ -36,19 +36,7 @@ impl Environment {
         fs::create_dir(&pkgroot)?;
         fs::create_dir(&buildroot)?;
 
-        // prepare buildroot
-        fs::create_dir(buildroot.join("usr"))?;
-        fs::create_dir(buildroot.join("usr/include"))?;
-        fs::create_dir(buildroot.join("usr/share"))?;
-        fs::create_dir(buildroot.join("usr/lib"))?;
-        fs::create_dir(buildroot.join("usr/bin"))?;
-        unix::fs::symlink("usr/bin", buildroot.join("bin"))?;
-        unix::fs::symlink("usr/bin", buildroot.join("sbin"))?;
-        unix::fs::symlink("usr/lib", buildroot.join("lib"))?;
-        unix::fs::symlink("usr/lib", buildroot.join("libexec"))?;
-        unix::fs::symlink("usr/lib", buildroot.join("lib64"))?;
-        unix::fs::symlink("bin", buildroot.join("usr/sbin"))?;
-        unix::fs::symlink("lib", buildroot.join("usr/lib64"))?;
+        prepare_sysroot(&pkgroot)?;
 
         Ok(Self { tempdir, pkgroot, buildroot })
     }
@@ -69,7 +57,7 @@ impl Drop for Environment {
 /// Extract a tarball to a destination
 pub fn extract_tar(tarball: &Path, dest: &Path) -> anyhow::Result<()> {
     let status = std::process::Command::new("tar") // tar-rs is *somehow* broken
-        .arg("xf")
+        .arg("xhf")
         .arg(tarball.canonicalize()?)
         .arg("-C")
         .arg(dest.canonicalize()?)
@@ -151,4 +139,39 @@ pub fn fmt_entry(name: &str, state: &PkgState) -> String {
         PkgState::Built(duration) => format!("\x1b[0;37m ({}s)", duration)
     };
     format!("{} {}{}\x1b[0m", emoji_str, name, suffix_str)
+}
+
+fn prepare_sysroot(root: &Path) -> anyhow::Result<()> {
+    fs::create_dir(root.join("usr"))?;
+    fs::create_dir(root.join("usr/include"))?;
+    fs::create_dir(root.join("usr/share"))?;
+    fs::create_dir(root.join("usr/lib"))?;
+    fs::create_dir(root.join("usr/bin"))?;
+    unix::fs::symlink("usr/bin", root.join("bin"))?;
+    unix::fs::symlink("usr/bin", root.join("sbin"))?;
+    unix::fs::symlink("usr/lib", root.join("lib"))?;
+    unix::fs::symlink("usr/lib", root.join("libexec"))?;
+    unix::fs::symlink("usr/lib", root.join("lib64"))?;
+    unix::fs::symlink("bin", root.join("usr/sbin"))?;
+    unix::fs::symlink("lib", root.join("usr/lib64"))?;
+    Ok(())
+}
+
+/// Create a sysroot from a list of tarballs
+pub fn make_sysroot(sysroot: &Path, pkgs: &Vec<PathBuf>) -> anyhow::Result<()> {
+    if sysroot.exists() {
+        anyhow::bail!("Directory for sysroot already exists.");
+    }
+
+    fs::create_dir(sysroot)
+        .context("Failed to create sysroot directory")?;
+    prepare_sysroot(sysroot)
+        .context("Failed to prepare sysroot directory")?;
+
+    for pkg in pkgs {
+        extract_tar(pkg, sysroot)
+            .with_context(|| format!("Failed to extract package {:?}", pkg))?;
+    }
+
+    Ok(())
 }

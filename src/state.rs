@@ -216,9 +216,9 @@ pub mod cache {
             Ok(path)
         }
         /// Try to fetch a built package from the cache
-        pub fn fetch_pkg(&self, name: &str, version: &str) -> Option<PathBuf> {
+        pub fn fetch_pkg(&self, name: &str, version: Option<&str>) -> Option<PathBuf> {
             self.pkgs.get(name)
-                .filter(|v| *v == version)
+                .filter(|v| *v == version.unwrap_or(v))
                 .map(|_| self.pkgdir.join(name))
         }
         /// Store a built package in the cache
@@ -390,10 +390,10 @@ impl State {
 
         // build and extract dependencies
         for dep in &pkg.dependencies {
-            let mut path = self.cache.fetch_pkg(dep.0, dep.1);
+            let mut path = self.cache.fetch_pkg(dep.0, Some(dep.1));
             if path.is_none() {
                 self.build_pkg(Some(dep.0))?;
-                path = self.cache.fetch_pkg(dep.0, dep.1);
+                path = self.cache.fetch_pkg(dep.0, Some(dep.1));
             }
             let path = path.unwrap();
             utils::extract_tar(&path, &env.buildroot)
