@@ -1,8 +1,8 @@
-use std::{fs, os::unix, path::{Path, PathBuf}, process::Command};
+use std::{fs, os::unix, path::{Path, PathBuf}, process::{Command, Stdio}, rc::Rc, time::Instant};
 
 use anyhow::{bail, Context};
 
-use crate::utils;
+use crate::{output, utils};
 
 pub mod pkg {
     use serde::Deserialize;
@@ -235,14 +235,18 @@ pub mod cache {
 
             Ok(())
         }
+        /// Get cached packages
+        pub fn get_pkgs(&self) -> &pkg::DependencyMap {
+            &self.pkgs
+        }
     }
 }
 
 /// Global state of the build system
 pub struct State {
-    cfg: crate::Configuration,
-    repo: repo::Repository,
-    cache: cache::Cache,
+    pub cfg: crate::Configuration,
+    pub repo: repo::Repository,
+    pub cache: cache::Cache,
 }
 
 impl State {
@@ -255,8 +259,13 @@ impl State {
 
         Ok(Self { cfg, repo, cache })
     }
+    /// Get the root package
+    pub fn get_pkg(&self) -> anyhow::Result<Rc<pkg::Package>> {
+        self.repo.find_pkg(&self.cfg.pkg, None)
+            .context("Failed to find root package")
+    }
     /// Build a package by name
-    pub fn build_pkg(&mut self, name: Option<&str>) -> anyhow::Result<()> {
+    pub fn build_pkg(&mut self, name: Option<&str>, output: &mut output::Output) -> anyhow::Result<()> {
         let name = name.unwrap_or(&self.cfg.pkg);
         let pkg = self.repo.find_pkg(name, None)
             .context("Failed to find package")?;
@@ -267,13 +276,18 @@ impl State {
         for dep in &pkg.dependencies {
             let mut path = self.cache.fetch_pkg(dep.0, dep.1);
             if path.is_none() {
-                self.build_pkg(Some(dep.0))?;
+                self.build_pkg(Some(dep.0), output)?;
                 path = self.cache.fetch_pkg(dep.0, dep.1);
             }
             let path = path.unwrap();
             utils::extract_tar(&path, &env.buildroot)
                 .with_context(|| format!("Failed to extract dependency: {}", path.display()))?;
         }
+
+        let time = Instant::now();
+        output.mark_in_progress(&pkg.metadata.name);
+        output.append_line(&format!("Building package: {}-{}",
+            pkg.metadata.name, pkg.metadata.version), &self.repo);
 
         // download and extract sources
         for src in &pkg.sources {
@@ -293,15 +307,26 @@ impl State {
         unix::fs::symlink(&env.buildroot, &symlink)
             .context("Failed to create buildroot symlink")?;
 
-        let status = Command::new("sh")
+        let mut cmd = Command::new("sh")
             .arg("-euo")
             .arg("pipefail")
             .arg(&script_path)
             .env("pkgroot", &env.pkgroot)
             .env("buildroot", &env.buildroot)
             .current_dir(&env.tempdir)
-            .status()
-            .context("Failed to execute build script")?;
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .context("Failed to spawn build script")?;
+
+        let rx = utils::route_command(cmd.stdout.take().unwrap(), cmd.stderr.take().unwrap());
+        for line in rx {
+            output.append_line(&line, &self.repo);
+        }
+
+        let status = cmd.wait_with_output()
+            .context("Failed to wait for build script")?
+            .status;
         if !status.success() {
             bail!("Build script failed with status: {}", status);
         }
@@ -311,6 +336,11 @@ impl State {
             .context("Failed to create package archive")?;
         self.cache.store_pkg(&pkg.metadata.name, &pkg.metadata.version, &tarball)
             .context("Failed to store package in cache")?;
+
+        output.mark_built(&pkg.metadata.name, time.elapsed().as_secs());
+        output.append_line(&format!("Finished building package: {}-{}",
+            pkg.metadata.name, pkg.metadata.version), &self.repo);
+
         Ok(())
     }
 }

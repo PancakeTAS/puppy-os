@@ -1,4 +1,4 @@
-use std::{fs, os::unix, path::{Path, PathBuf}};
+use std::{fs, io::{BufRead, BufReader}, os::unix, path::{Path, PathBuf}, process::{ChildStderr, ChildStdout}, sync::{self, mpsc::Receiver}, thread};
 
 use anyhow::Context;
 
@@ -94,4 +94,31 @@ pub fn make_tar(src: &Path) -> anyhow::Result<Vec<u8>> {
         anyhow::bail!("Failed to create tarball (status {})", output.status);
     }
     Ok(output.stdout)
+}
+
+/// Route a command's stdout and stderr to the channels
+pub fn route_command(stdout: ChildStdout, stderr: ChildStderr) -> Receiver<String> {
+    let (tx, rx) = sync::mpsc::channel();
+
+    let tx_stdout = tx.clone();
+    thread::spawn(move || {
+        let reader = BufReader::new(stdout);
+        for line in reader.lines() {
+            if let Ok(line) = line {
+                tx_stdout.send(line).unwrap();
+            }
+        }
+    });
+
+    let tx_stderr = tx.clone();
+    thread::spawn(move || {
+        let reader = BufReader::new(stderr);
+        for line in reader.lines() {
+            if let Ok(line) = line {
+                tx_stderr.send(line).unwrap();
+            }
+        }
+    });
+
+    rx
 }

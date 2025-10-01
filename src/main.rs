@@ -1,7 +1,8 @@
 use clap::Parser;
 
-pub mod utils;
+pub mod output;
 pub mod state;
+pub mod utils;
 
 #[derive(Parser)]
 #[command(about)]
@@ -24,6 +25,9 @@ fn main() {
     let config = Configuration::parse();
     let mut state = state::State::new(config)
         .expect("Unable to initialize state");
-    state.build_pkg(None)
+    let pkg = state.get_pkg()
+        .expect("Unable to get package");
+    let mut output = output::Output::new(&state.repo, pkg, &state.cache);
+    state.build_pkg(None, &mut output)
         .expect("Unable to build package");
 }
