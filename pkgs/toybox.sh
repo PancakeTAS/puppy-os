@@ -39,7 +39,7 @@ make \
     CROSS_COMPILE= CC=clang STRIP=llvm-strip \
     LDOPTIMIZE="-flto" OPTIMIZE="-O3"
 
-PREFIX="$pkgroot" make install
+PREFIX="$pkgroot/usr" make install
 
 for util in "${ENABLED_UTILS[@]}"; do
     ln -sfv toybox "$pkgroot/usr/bin/$util"
