@@ -36,7 +36,7 @@ impl Environment {
         fs::create_dir(&pkgroot)?;
         fs::create_dir(&buildroot)?;
 
-        prepare_sysroot(&pkgroot)?;
+        prepare_sysroot(&buildroot)?;
 
         Ok(Self { tempdir, pkgroot, buildroot })
     }
