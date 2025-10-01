@@ -8,7 +8,5 @@ $ rm -rf cache_toolchain
 ```
 Now you can compile any package like this, which will automatically compile all dependencies:
 ```bash
-$ export PATH="$PWD/toolchain/bin:$PATH"
-$ export MAKEFLAGS="-j$(nproc)"
 $ doggy -b /dev/shm/dog <package>
 ```
