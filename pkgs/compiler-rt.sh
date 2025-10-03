@@ -60,13 +60,14 @@ pkgbuild() {
 }
 
 pkginstall() {
-    cmake --install build
+    cmake --install build --strip
 
-    mkdir -p "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
-    cp "$pkgroot/usr/lib/linux/libclang_rt.builtins-aarch64.a" \
-        "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a"
-    cp "$pkgroot/usr/lib/linux/clang_rt.crtbegin-aarch64.o" \
-        "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/crtbeginS.o"
-    cp "$pkgroot/usr/lib/linux/clang_rt.crtend-aarch64.o" \
-        "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/crtendS.o"
+    mkdir -p "$pkgroot/usr/lib/clang/lib"
+    mv "$pkgroot/usr/lib/linux" \
+        "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
+
+    cd "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
+    mv "libclang_rt.builtins-aarch64.a" "libclang_rt.builtins.a"
+    mv "clang_rt.crtbegin-aarch64.o" "crtbeginS.o"
+    mv "clang_rt.crtend-aarch64.o" "crtendS.o"
 }

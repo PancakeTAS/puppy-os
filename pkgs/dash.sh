@@ -36,7 +36,10 @@ pkgbuild() {
 pkginstall() {
     DESTDIR="$pkgroot" make install
 
-    llvm-strip --strip-unneeded "$pkgroot/usr/bin/dash"
+    llvm-strip --strip-unneeded \
+        "$pkgroot/usr/bin/dash"
+
     ln -sf dash "$pkgroot/usr/bin/sh"
+
     rm -rf "$pkgroot/usr/share"
 }

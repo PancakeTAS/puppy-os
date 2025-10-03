@@ -28,7 +28,7 @@ pkgprepare() {
         CROSS_COMPILE= CC=clang \
         CFLAGS="-O3" \
         AR=llvm-ar RANLIB=llvm-ranlib \
-        LIBCC="$buildroot/lib/linux/libclang_rt.builtins-aarch64.a"
+        LIBCC="$buildroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a"
 }
 
 pkgbuild() {

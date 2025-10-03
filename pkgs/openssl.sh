@@ -27,11 +27,10 @@ pkgprepare() {
         --libdir=/usr/lib \
         --openssldir=/usr/share/ssl \
         enable-ktls enable-fips \
-        no-padlockeng no-capieng no-afalgeng no-loadereng \
         shared \
         CROSS_COMPILE= CC=clang CXX=clang++ \
         AR=llvm-ar AS=llvm-as RANLIB=llvm-ranlib \
-        CFLAGS="-O3 -D__STDC_NO_ATOMICS__" LDFLAGS="-flto"
+        CFLAGS="-D__STDC_NO_ATOMICS__" LDFLAGS="-flto"
 }
 
 pkgbuild() {
@@ -41,13 +40,27 @@ pkgbuild() {
 pkginstall() {
     make DESTDIR="$pkgroot" install_sw install_ssldirs
 
-    llvm-strip --strip-unneeded "$pkgroot/usr/lib/ossl-modules/legacy.so" \
-        "$pkgroot/usr/lib/libcrypto.so.3" \
-        "$pkgroot/usr/lib/libssl.so.3" \
-        "$pkgroot/usr/bin/openssl"
+    rm -f "$pkgroot/usr/bin/c_rehash"
 
-    rm -rf "$pkgroot/usr/bin/c_rehash" \
+    rm -f \
+        "$pkgroot/usr/lib/libcrypto.a" \
+        "$pkgroot/usr/lib/libssl.a"
+
+    rm -rf \
         "$pkgroot/usr/lib/cmake" \
-        "$pkgroot/usr/lib/pkgconfig" \
-        "$pkgroot/usr/lib/engines-3"
+        "$pkgroot/usr/lib/pkgconfig"
+
+    llvm-strip --strip-unneeded \
+        "$pkgroot/usr/bin/openssl" \
+        "$pkgroot/usr/lib/libssl.so.3" \
+        "$pkgroot/usr/lib/libcrypto.so.3"
+
+    llvm-strip --strip-unneeded \
+        "$pkgroot/usr/lib/ossl-modules/legacy.so"
+
+    llvm-strip --strip-unneeded \
+        "$pkgroot/usr/lib/engines-3/afalg.so" \
+        "$pkgroot/usr/lib/engines-3/capi.so" \
+        "$pkgroot/usr/lib/engines-3/loader_attic.so" \
+        "$pkgroot/usr/lib/engines-3/padlock.so"
 }

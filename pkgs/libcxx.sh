@@ -39,7 +39,10 @@ pkgprepare() {
         -DLIBCXX_HAS_MUSL_LIBC=On \
         -DLIBUNWIND_USE_COMPILER_RT=true \
         -DLIBCXXABI_USE_COMPILER_RT=true \
-        -DCMAKE_CXX_FLAGS="-nostdlib $buildroot/usr/lib/linux/libclang_rt.builtins-aarch64.a" \
+        -DLIBCXX_ENABLE_STATIC=Off \
+        -DLIBCXXABI_ENABLE_STATIC=Off \
+        -DLIBUNWIND_ENABLE_STATIC=Off \
+        -DCMAKE_CXX_FLAGS="-nostdlib $buildroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a" \
         -DCMAKE_C_FLAGS="-unwindlib=none"
 }
 
@@ -48,12 +51,10 @@ pkgbuild() {
 }
 
 pkginstall() {
-    cmake --install build
+    cmake --install build --strip
 
-    llvm-strip --strip-unneeded \
-        "$pkgroot/usr/lib/libunwind.so.1.0" \
-        "$pkgroot/usr/lib/libc++abi.so.1.0" \
-        "$pkgroot/usr/lib/libc++.so.1.0"
-
-    rm -rf "$pkgroot/usr/share"
+    rm -rf "$pkgroot/usr/share" \
+        "$pkgroot/usr/include/c++/v1/__cxx03/experimental" \
+        "$pkgroot/usr/include/c++/v1/experimental" \
+        "$pkgroot/usr/lib/libc++experimental.a"
 }
