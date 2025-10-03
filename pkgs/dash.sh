@@ -3,7 +3,6 @@
 # metadata
 pkgname="dash"
 pkgver="0.5.13"
-pkgrel=1
 pkgdesc="POSIX compliant shell"
 pkgurl="http://gondor.apana.org.au/~herbert/dash/"
 pkglic="BSD"
@@ -31,17 +30,13 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $pkgname-$pkgver
-
     make
 }
 
 pkginstall() {
-    cd $pkgname-$pkgver
-
     DESTDIR="$pkgroot" make install
 
     llvm-strip --strip-unneeded "$pkgroot/usr/bin/dash"
-    ln -sfv dash "$pkgroot/usr/bin/sh"
-    rm -rfv "$pkgroot/usr/share"
+    ln -sf dash "$pkgroot/usr/bin/sh"
+    rm -rf "$pkgroot/usr/share"
 }

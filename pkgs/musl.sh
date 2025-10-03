@@ -3,7 +3,6 @@
 # metadata
 pkgname="musl"
 pkgver="1.2.5"
-pkgrel="1"
 pkgdesc="Implementation of the C standard library"
 pkgurl="https://musl.libc.org"
 pkglic="MIT"
@@ -33,13 +32,9 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $pkgname-$pkgver/build
-
     make
 }
 
 pkginstall() {
-    cd $pkgname-$pkgver/build
-
     DESTDIR="$pkgroot" make install
 }

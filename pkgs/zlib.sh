@@ -3,7 +3,6 @@
 # metadata
 pkgname="zlib"
 pkgver="1.3.1"
-pkgrel="1"
 pkgdesc="Compression library implementing the deflate compression method found in gzip and PKZIP"
 pkgurl="https://zlib.net"
 pkglic="Zlib"
@@ -15,7 +14,7 @@ pkgdeps=(
     "musl-1.2.5"
 )
 pkgsrcs=(
-    "https://musl.net/$pkgname-$pkgver.tar.xz"
+    "https://zlib.net/$pkgname-$pkgver.tar.xz"
 )
 
 # build scripts
@@ -33,13 +32,9 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $pkgname-$pkgver
-
     cmake --build build
 }
 
 pkginstall() {
-    cd $pkgname-$pkgver
-
     cmake --install build --strip
 }

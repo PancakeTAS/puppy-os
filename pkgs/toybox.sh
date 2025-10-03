@@ -3,7 +3,6 @@
 # metadata
 pkgname="toybox"
 pkgver="0.8.12"
-pkgrel=1
 pkgdesc="collection of standard UNIX command line tools"
 pkgurl="https://landley.net/toybox"
 pkglic="BSD"
@@ -44,8 +43,6 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $pkgname-$pkgver
-
     make \
         CROSS_COMPILE= CC=clang STRIP=llvm-strip \
         CFLAGS="-w" LDFLAGS="-w" \
@@ -53,15 +50,13 @@ pkgbuild() {
 }
 
 pkginstall() {
-    cd $pkgname-$pkgver
-
     mkdir -p "$pkgroot/usr/bin"
-    cp -pv toybox "$pkgroot/usr/bin/"
+    cp -p toybox "$pkgroot/usr/bin/"
 
     for util in "${_utils[@]}"; do
-        ln -sfv toybox "$pkgroot/usr/bin/$util"
+        ln -sf toybox "$pkgroot/usr/bin/$util"
     done
 
-    rm -fv "$pkgroot/usr/bin/sort_float" \
+    rm -f "$pkgroot/usr/bin/sort_float" \
         "$pkgroot/usr/bin/baseenc"
 }

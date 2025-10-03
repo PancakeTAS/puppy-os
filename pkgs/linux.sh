@@ -1,7 +1,8 @@
+#!/bin/sh
+
 # metadata
 pkgname="linux"
 pkgver="6.16.9"
-pkgrel=1
 pkgdesc="The Linux kernel"
 pkgurl="https://kernel.org/"
 pkglic="GPL-2.0-only"
@@ -15,17 +16,14 @@ pkgsrcs=(
 
 # build scripts
 pkgprepare() {
+    cd $pkgname-$pkgver
 }
 
 pkgbuild() {
-    cd $pkgname-$pkgver
-
     make ARCH=arm64 headers
 }
 
 pkginstall() {
-    cd $pkgname-$pkgver"
-
     make ARCH=arm64 INSTALL_HDR_PATH="$pkgroot/usr" headers_install
 }
 

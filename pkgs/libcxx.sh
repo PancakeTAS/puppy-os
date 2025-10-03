@@ -1,8 +1,9 @@
+#!/bin/sh
+
 # metadata
 pkgname="libcxx"
 _pkgname="llvm"
 pkgver="21.1.2"
-pkgrel=1
 pkgdesc="LLVM c++ standard library"
 pkgurl="https://libcxx.llvm.org/"
 pkglic="Apache-2.0 (LLVM-exception)"
@@ -43,14 +44,10 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $_pkgname-project-llvmorg-$pkgver
-
     cmake --build build
 }
 
 pkginstall() {
-    cd $_pkgname-project-llvmorg-$pkgver
-
     cmake --install build
 
     llvm-strip --strip-unneeded \
@@ -58,5 +55,5 @@ pkginstall() {
         "$pkgroot/usr/lib/libc++abi.so.1.0" \
         "$pkgroot/usr/lib/libc++.so.1.0"
 
-    rm -rvf "$pkgroot/usr/share"
+    rm -rf "$pkgroot/usr/share"
 }

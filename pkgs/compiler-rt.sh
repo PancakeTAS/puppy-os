@@ -4,7 +4,6 @@
 pkgname="compiler-rt"
 _pkgname="llvm"
 pkgver="21.1.2"
-pkgrel=1
 pkgdesc="compiler-rt runtime libraries"
 pkgurl="https://compiler-rt.llvm.org/"
 pkglic="Apache-2.0 (LLVM-exception)"
@@ -57,21 +56,17 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    cd $_pkgname-project-llvmorg-$pkgver
-
     cmake --build build
 }
 
 pkginstall() {
-    cd $_pkgname-project-llvmorg-$pkgver
-
     cmake --install build
 
-    mkdir -pv "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
-    cp -v "$pkgroot/usr/lib/linux/libclang_rt.builtins-aarch64.a" \
+    mkdir -p "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
+    cp "$pkgroot/usr/lib/linux/libclang_rt.builtins-aarch64.a" \
         "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a"
-    cp -v "$pkgroot/usr/lib/linux/clang_rt.crtbegin-aarch64.o" \
+    cp "$pkgroot/usr/lib/linux/clang_rt.crtbegin-aarch64.o" \
         "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/crtbeginS.o"
-    cp -v "$pkgroot/usr/lib/linux/clang_rt.crtend-aarch64.o" \
+    cp "$pkgroot/usr/lib/linux/clang_rt.crtend-aarch64.o" \
         "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl/crtendS.o"
 }
