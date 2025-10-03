@@ -1,11 +1,8 @@
-# rust files
-/target
-/Cargo.lock
-
 # doggy files
 /toolchain
 /build
 /cache
 
 # general temp files
+/sysroot
 /tmp
