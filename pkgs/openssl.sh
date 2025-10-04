@@ -25,7 +25,7 @@ pkgprepare() {
     ./Configure linux-aarch64 \
         --prefix=/usr \
         --libdir=/usr/lib \
-        --openssldir=/usr/share/ssl \
+        --openssldir=/etc/ssl \
         enable-ktls enable-fips \
         shared \
         CROSS_COMPILE= CC=clang CXX=clang++ \
@@ -40,25 +40,18 @@ pkgbuild() {
 pkginstall() {
     make DESTDIR="$pkgroot" install_sw install_ssldirs
 
-    rm -f "$pkgroot/usr/bin/c_rehash"
-
-    rm -f \
-        "$pkgroot/usr/lib/libcrypto.a" \
-        "$pkgroot/usr/lib/libssl.a"
-
     rm -rf \
+        "$pkgroot/usr/bin/c_rehash" \
+        "$pkgroot/usr/lib/libcrypto.a" \
+        "$pkgroot/usr/lib/libssl.a" \
         "$pkgroot/usr/lib/cmake" \
         "$pkgroot/usr/lib/pkgconfig"
 
     llvm-strip --strip-unneeded \
         "$pkgroot/usr/bin/openssl" \
         "$pkgroot/usr/lib/libssl.so.3" \
-        "$pkgroot/usr/lib/libcrypto.so.3"
-
-    llvm-strip --strip-unneeded \
-        "$pkgroot/usr/lib/ossl-modules/legacy.so"
-
-    llvm-strip --strip-unneeded \
+        "$pkgroot/usr/lib/libcrypto.so.3" \
+        "$pkgroot/usr/lib/ossl-modules/legacy.so" \
         "$pkgroot/usr/lib/engines-3/afalg.so" \
         "$pkgroot/usr/lib/engines-3/capi.so" \
         "$pkgroot/usr/lib/engines-3/loader_attic.so" \

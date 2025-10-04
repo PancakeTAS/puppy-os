@@ -43,7 +43,8 @@ pkgprepare() {
 
 pkgbuild() {
     make \
-        CROSS_COMPILE= CC=clang STRIP=llvm-strip \
+        CROSS_COMPILE= CC=clang \
+        STRIP=llvm-strip \
         CFLAGS="-w" LDFLAGS="-w" \
         LDOPTIMIZE="-flto" OPTIMIZE="-O3"
 }

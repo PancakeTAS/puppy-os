@@ -34,7 +34,7 @@ pkgprepare() {
         --with-sysroot="$buildroot" \
         CC=clang LD=ld.lld \
         CFLAGS="-O3" LDFLAGS="-flto" \
-        AR=llvm-ar RANLIB=llvm-ranlib STRIP=llvm-strip OBJDUMP=llvm-objdump LINK=llvm-link DLLTOOL=llvm-dlltool MANIFEST_TOOL=llvm-mt NM=llvm-nm
+        AR=llvm-ar RANLIB=llvm-ranlib STRIP=llvm-strip OBJDUMP=llvm-objdump DLLTOOL=llvm-dlltool MANIFEST_TOOL=llvm-mt NM=llvm-nm
 }
 
 pkgbuild() {
