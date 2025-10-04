@@ -3,7 +3,7 @@
 # metadata
 pkgname="linux"
 pkgver="6.16.9"
-pkgdesc="The Linux kernel"
+pkgdesc="the Linux kernel"
 pkgurl="https://kernel.org/"
 pkglic="GPL-2.0-only"
 

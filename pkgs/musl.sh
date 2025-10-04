@@ -25,9 +25,10 @@ pkgprepare() {
         --prefix=/usr \
         --target=aarch64-dog-linux-musl \
         --disable-wrapper \
+        --disable-static \
         CROSS_COMPILE= CC=clang \
         CFLAGS="-O3" \
-        AR=llvm-ar RANLIB=llvm-ranlib \
+        AR=llvm-ar \
         LIBCC="$buildroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a"
 }
 

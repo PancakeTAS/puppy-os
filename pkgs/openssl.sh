@@ -3,7 +3,7 @@
 # metadata
 pkgname="openssl"
 pkgver="3.6.0"
-pkgdesc="Open Source toolkit for SSL and TLS"
+pkgdesc="open source toolkit for SSL and TLS"
 pkgurl="https://openssl.net"
 pkglic="Zlib"
 

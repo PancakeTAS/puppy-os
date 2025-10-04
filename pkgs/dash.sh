@@ -10,7 +10,6 @@ pkglic="BSD"
 # build information
 pkgdeps=(
     "compiler-rt-21.1.2"
-    "linux-6.16.9"
     "musl-1.2.5"
 )
 pkgsrcs=(
@@ -26,7 +25,8 @@ pkgprepare() {
         --host=aarch64-dog-linux-musl \
         --disable-dependency-tracking \
         CC=clang \
-        CFLAGS="-O3" LDFLAGS="-flto"
+        CFLAGS="-O3" LDFLAGS="-flto" \
+        STRIP=llvm-strip
 }
 
 pkgbuild() {
@@ -34,12 +34,10 @@ pkgbuild() {
 }
 
 pkginstall() {
-    DESTDIR="$pkgroot" make install
+    DESTDIR="$pkgroot" make install-strip
 
-    llvm-strip --strip-unneeded \
-        "$pkgroot/usr/bin/dash"
+    ln -s dash "$pkgroot/usr/bin/sh"
 
-    ln -sf dash "$pkgroot/usr/bin/sh"
-
-    rm -rf "$pkgroot/usr/share"
+    rm -rf \
+        "$pkgroot/usr/share"
 }

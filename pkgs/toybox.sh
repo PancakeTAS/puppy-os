@@ -20,7 +20,6 @@ pkgsrcs=(
 )
 
 # build scripts
-
 _utils=('base32' 'base64' 'baseenc' 'basename' 'cat' 'cp' 'chgrp' 'chroot' 'chown' 'chmod' 'cksum' 'comm' 'cut' 'date' 'dd' 'df' 'dirname' 'du' 'echo' 'env' 'expand' 'expr' 'factor' 'false' 'fmt' 'fold' 'groups' 'head' 'hostid' 'id' 'install' 'link' 'logname' 'ln' 'ls' 'md5sum' 'mkdir' 'mkfifo' 'mknod' 'mktemp' 'mv' 'nice' 'nohup' 'nproc' 'nl' 'od' 'paste' 'printenv' 'printf' 'pwd' 'rm' 'rmdir' 'readlink' 'realpath' 'seq' 'sha1sum' 'sha224sum' 'sha256sum' 'sha384sum' 'sha512sum' 'shred' 'sleep' 'sort' 'sort_float' 'split' 'stat' 'stty' 'shuf' 'sync' 'tac' 'tail' 'tee' 'test' 'timeout' 'tr' 'touch' 'tsort' 'true' 'truncate' 'tty' 'uname' 'uniq' 'unlink' 'wc' 'who' 'whoami' 'yes') # coreutils
 _utils+=('bc' 'patch' 'ascii' 'cpio' 'time' 'sed' 'tar') # respective packages
 _utils+=('fgrep' 'egrep' 'grep') # grep

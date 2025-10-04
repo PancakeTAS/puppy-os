@@ -3,7 +3,7 @@
 # metadata
 pkgname="zlib"
 pkgver="1.3.1"
-pkgdesc="Compression library implementing the deflate compression method found in gzip and PKZIP"
+pkgdesc="compression library implementing the deflate compression method found in gzip and PKZIP"
 pkgurl="https://zlib.net"
 pkglic="Zlib"
 
