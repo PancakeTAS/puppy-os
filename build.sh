@@ -16,11 +16,16 @@ function echo_stderr() {
 : "${SRCCACHEDIR:=cache/srcs}"
 : "${PKGCACHEDIR:=cache/pkgs}"
 
-mkdir -pv \
+mkdir -p \
     "$PKGDIR" \
     "$BUILDDIR" \
     "$SRCCACHEDIR" \
     "$PKGCACHEDIR"
+
+# flatten package directory
+mkdir -p "$BUILDDIR/pkgs"
+find "$PKGDIR" -type f -name '*.sh' -exec cp -u {} "$BUILDDIR/pkgs/" \;
+export PKGDIR="$BUILDDIR/pkgs"
 
 # ensure toolchain is present
 if [ ! -d "internal/toolchain/bin" ]; then
