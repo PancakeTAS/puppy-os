@@ -30,6 +30,7 @@ PKGROOT="$TEMPDIR/pkgroot"
 
 mkdir "$TEMPDIR"
 trap 'rm -rf "$TEMPDIR"' ERR
+trap 'rm -rf "$TEMPDIR"' EXIT
 
 mkdir "$BUILDROOT"
 pushd "$BUILDROOT" >/dev/null
