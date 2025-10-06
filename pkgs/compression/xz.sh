@@ -9,8 +9,7 @@ pkglic="BSD"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
-    "linux-6.16.9"
+    "linux-headers-6.16.9"
     "musl-1.2.5"
 )
 pkgsrcs=(
@@ -44,6 +43,6 @@ pkginstall() {
 
     rm -rf \
         "$pkgroot/usr/share" \
-        "$pkgroot/usr/lib/pkgconfig" \
+        "$pkgroot/usr/lib/pkgconfig"
         "$pkgroot/usr/lib/liblzma.la"
 }

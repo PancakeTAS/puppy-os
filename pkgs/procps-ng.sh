@@ -1,36 +1,41 @@
 #!/bin/sh
 
 # metadata
-pkgname="attr"
-pkgver="2.5.2"
-pkgdesc="extended attribute support library"
-pkgurl="https://savannah.nongnu.org/projects/attr"
-pkglic="LGPLv2"
+pkgname="procps-ng"
+_pkgname="procps"
+pkgver="4.0.5"
+pkgdesc="utilities for system monitoring and proces management"
+pkgurl="https://gitlab.com/procps-ng/procps"
+pkglic="GPLv2"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
+    "linux-headers-6.16.9"
+    "libcxx-21.1.2"
     "musl-1.2.5"
+    "ncurses-6.5"
 )
 pkgsrcs=(
-    "http://download.savannah.nongnu.org/releases/$pkgname/$pkgname-$pkgver.tar.xz"
+    "https://gitlab.com/$pkgname/$_pkgname/-/archive/v$pkgver/$_pkgname-v$pkgver.tar.gz"
 )
 
 # build scripts
 pkgprepare() {
-    cd $pkgname-$pkgver
+    cd $_pkgname-v$pkgver
 
-    sed 's/#include <locale.h>/#include <locale.h>\n#include <libgen.h>/' \
-        -i tools/attr.c
+    sed -i 's/AC_FUNC_MALLOC//' configure.ac
+    sed -i 's/AC_FUNC_REALLOC//' configure.ac
 
+    ./autogen.sh
     ./configure \
         --prefix=/usr \
-        --sysconfdir=/etc \
         --host=aarch64-dog-linux-musl \
         --disable-dependency-tracking \
-        --disable-static \
         --disable-nls \
+        --disable-static \
         --disable-rpath \
+        --enable-watch8bit \
+        --enable-year2038 \
         --with-sysroot="$buildroot" \
         CC=clang LD=ld.lld \
         CFLAGS="-O3" LDFLAGS="-flto" \
@@ -44,9 +49,8 @@ pkgbuild() {
 pkginstall() {
     make install-strip DESTDIR="$pkgroot"
 
-    rm -rf \
-        "$pkgroot/usr/share/doc" \
-        "$pkgroot/usr/share/man" \
+    rm -rv \
+        "$pkgroot/usr/share" \
         "$pkgroot/usr/lib/pkgconfig" \
-        "$pkgroot/usr/lib/libattr.la"
+        "$pkgroot/usr/lib/libproc2.la"
 }

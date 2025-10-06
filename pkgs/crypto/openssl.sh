@@ -9,9 +9,8 @@ pkglic="Zlib"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
+    "linux-headers-6.16.9"
     "libcxx-21.1.2"
-    "linux-6.16.9"
     "musl-1.2.5"
 )
 pkgsrcs=(

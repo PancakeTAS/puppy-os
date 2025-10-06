@@ -9,9 +9,8 @@ pkglic="BSD"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
     "openssl-3.6.0"
-    "linux-6.16.9"
+    "linux-headers-6.16.9"
     "musl-1.2.5"
     "zlib-1.3.1"
 )

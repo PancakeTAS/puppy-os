@@ -9,7 +9,7 @@ pkglic="BSD"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
+    "linux-headers-6.16.9"
     "musl-1.2.5"
 )
 pkgsrcs=(
