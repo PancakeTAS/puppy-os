@@ -33,14 +33,14 @@ trap 'rm -rf "$TEMPDIR"' ERR
 
 mkdir "$BUILDROOT"
 pushd "$BUILDROOT" >/dev/null
-	mkdir -p usr/{include,lib,libexec,bin}
-	ln -sf usr/bin bin
-	ln -sf usr/bin sbin
-	ln -sf usr/lib lib
-	ln -sf usr/lib libexec
-	ln -sf usr/lib lib64
-	ln -sf bin usr/sbin
-	ln -sf lib usr/lib64
+    mkdir -p usr/{include,lib,libexec,bin}
+    ln -sf usr/bin bin
+    ln -sf usr/bin sbin
+    ln -sf usr/lib lib
+    ln -sf usr/lib libexec
+    ln -sf usr/lib lib64
+    ln -sf bin usr/sbin
+    ln -sf lib usr/lib64
 popd >/dev/null
 
 mkdir \
