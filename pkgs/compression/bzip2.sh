@@ -35,6 +35,7 @@ pkginstall() {
     make install PREFIX="$pkgroot/usr"
 
     cp libbz2.so.1.0.8 "$pkgroot/usr/lib/libbz2.so.1.0.8"
+    ln -s libbz2.so.1.0.8 "$pkgroot/usr/lib/libbz2.so.1.0"
     ln -s libbz2.so.1.0.8 "$pkgroot/usr/lib/libbz2.so"
 
     rm -rf \

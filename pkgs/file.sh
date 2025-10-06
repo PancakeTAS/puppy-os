@@ -48,7 +48,7 @@ pkginstall() {
     make install-strip DESTDIR="$pkgroot"
 
     rm -rf \
-        "$pkgroot/usr/share" \
+        "$pkgroot/usr/share/man" \
         "$pkgroot/usr/lib/pkgconfig" \
         "$pkgroot/usr/lib/libmagic.la"
 }

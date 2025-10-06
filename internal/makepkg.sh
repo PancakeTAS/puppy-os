@@ -42,6 +42,7 @@ pushd "$BUILDROOT" >/dev/null
     ln -sf usr/lib lib64
     ln -sf bin usr/sbin
     ln -sf lib usr/lib64
+    ln -sf lib usr/libexec
 popd >/dev/null
 
 mkdir \
