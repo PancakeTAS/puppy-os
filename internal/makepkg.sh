@@ -59,7 +59,7 @@ for dep in "${pkgdeps[@]}"; do
     fi
 
     echo_stderr ">>> extracting dependency $dep"
-    tar -xf "$PKGCACHEDIR/$dep.tar.xz" -C "$BUILDROOT"
+    tar -xhf "$PKGCACHEDIR/$dep.tar.xz" -C "$BUILDROOT"
 done
 
 for src in "${pkgsrcs[@]}"; do
@@ -70,7 +70,7 @@ for src in "${pkgsrcs[@]}"; do
     fi
 
     echo_stderr ">>> extracting source $base"
-    tar -xf "$SRCCACHEDIR/$base" -C "$SRCDIR"
+    tar -xhf "$SRCCACHEDIR/$base" -C "$SRCDIR"
 done
 
 pkgroot="$(realpath "$PKGROOT")"

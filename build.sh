@@ -35,7 +35,7 @@ if [ ! -d "internal/toolchain/bin" ]; then
     ./internal/makepkg.sh llvm
 
     echo_stderr ">>> extracting toolchain"
-    tar -xf "$PKGCACHEDIR/llvm-21.1.2.tar.xz" -C "internal/toolchain"
+    tar -xhf "$PKGCACHEDIR/llvm-21.1.2.tar.xz" -C "internal/toolchain"
     export PATH="$PWD/internal/toolchain/bin:$PATH"
 
     echo_stderr ">>> building compiler builtins library"
@@ -44,7 +44,7 @@ if [ ! -d "internal/toolchain/bin" ]; then
     ./internal/makepkg.sh compiler-rt
 
     echo_stderr ">>> extracting compiler builtins library"
-    tar -xf "$PKGCACHEDIR/compiler-rt-21.1.2.tar.xz" -C "internal/toolchain"
+    tar -xhf "$PKGCACHEDIR/compiler-rt-21.1.2.tar.xz" -C "internal/toolchain"
 
     echo_stderr ">>> toolchain ready"
 fi
