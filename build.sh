@@ -31,13 +31,21 @@ export PKGDIR="$BUILDDIR/pkgs"
 if [ ! -d "internal/toolchain/bin" ]; then
     mkdir "internal/toolchain"
 
-    echo_stderr ">>> building toolchain"
-    PKGDIR="internal" PKGCACHEDIR="$BUILDDIR/toolchain-cache" ./internal/makepkg.sh toolchain
+    echo_stderr ">>> building cross-compiler toolchain"
+    ./internal/makepkg.sh llvm
 
     echo_stderr ">>> extracting toolchain"
-    tar -xf "$BUILDDIR/toolchain-cache/llvm-21.1.2.tar.xz" -C "internal/toolchain"
+    tar -xf "$PKGCACHEDIR/llvm-21.1.2.tar.xz" -C "internal/toolchain"
+    export PATH="$PWD/internal/toolchain/bin:$PATH"
 
-    rm -rf "$BUILDDIR/toolchain-cache"
+    echo_stderr ">>> building compiler builtins library"
+    ./internal/makepkg.sh linux-headers
+    ./internal/makepkg.sh musl-headers
+    ./internal/makepkg.sh compiler-rt
+
+    echo_stderr ">>> extracting compiler builtins library"
+    tar -xf "$PKGCACHEDIR/compiler-rt-21.1.2.tar.xz" -C "internal/toolchain"
+
     echo_stderr ">>> toolchain ready"
 fi
 

@@ -10,9 +10,8 @@ pkglic="Apache-2.0 (LLVM-exception)"
 
 # build information
 pkgdeps=(
-  "compiler-rt-21.1.2"
-  "linux-6.16.9"
-  "musl-1.2.5"
+    "linux-headers-6.16.9"
+    "musl-1.2.5"
 )
 pkgsrcs=(
     "https://github.com/$_pkgname/$_pkgname-project/archive/refs/tags/llvmorg-$pkgver.tar.gz"
@@ -21,6 +20,9 @@ pkgsrcs=(
 # build scripts
 pkgprepare() {
     cd $_pkgname-project-llvmorg-$pkgver
+
+    LIBCC_PATH=$(echo "$PATH" | cut -d':' -f1)
+    LIBCC_PATH=$(dirname "$LIBCC_PATH")
 
     cmake -S runtimes -B build -G Ninja \
         -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On \
@@ -42,8 +44,7 @@ pkgprepare() {
         -DLIBCXX_ENABLE_STATIC=Off \
         -DLIBCXXABI_ENABLE_STATIC=Off \
         -DLIBUNWIND_ENABLE_STATIC=Off \
-        -DCMAKE_CXX_FLAGS="-nostdlib $buildroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a" \
-        -DCMAKE_C_FLAGS="-unwindlib=none"
+        -DCMAKE_CXX_FLAGS="-nostdlib $LIBCC_PATH/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64.a"
 }
 
 pkgbuild() {

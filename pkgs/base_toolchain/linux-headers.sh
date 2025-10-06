@@ -1,9 +1,10 @@
 #!/bin/sh
 
 # metadata
-pkgname="linux"
+pkgname="linux-headers"
+_pkgname="linux"
 pkgver="6.16.9"
-pkgdesc="the Linux kernel"
+pkgdesc="the Linux kernel header files"
 pkgurl="https://kernel.org/"
 pkglic="GPL-2.0-only"
 
@@ -11,12 +12,12 @@ pkglic="GPL-2.0-only"
 pkgdeps=(
 )
 pkgsrcs=(
-    "https://www.kernel.org/pub/$pkgname/kernel/v6.x/$pkgname-$pkgver.tar.xz"
+    "https://www.kernel.org/pub/$_pkgname/kernel/v6.x/$_pkgname-$pkgver.tar.xz"
 )
 
 # build scripts
 pkgprepare() {
-    cd $pkgname-$pkgver
+    cd $_pkgname-$pkgver
 }
 
 pkgbuild() {
@@ -26,5 +27,3 @@ pkgbuild() {
 pkginstall() {
     make ARCH=arm64 INSTALL_HDR_PATH="$pkgroot/usr" headers_install
 }
-
-# TODO: kernel, modules, etc.

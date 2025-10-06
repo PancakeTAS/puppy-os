@@ -3,14 +3,13 @@
 # metadata
 pkgname="musl"
 pkgver="1.2.5"
-pkgdesc="Implementation of the C standard library"
+pkgdesc="implementation of the C standard library"
 pkgurl="https://musl.libc.org"
 pkglic="MIT"
 
 # build information
 pkgdeps=(
-    "compiler-rt-21.1.2"
-    "linux-6.16.9"
+    "linux-headers-6.16.9"
 )
 pkgsrcs=(
     "https://musl.libc.org/releases/$pkgname-$pkgver.tar.gz"
@@ -21,6 +20,9 @@ pkgprepare() {
     mkdir -p $pkgname-$pkgver/build
     cd $pkgname-$pkgver/build
 
+    LIBCC_PATH=$(echo "$PATH" | cut -d':' -f1)
+    LIBCC_PATH=$(dirname "$LIBCC_PATH")
+
     ../configure \
         --prefix=/usr \
         --target=aarch64-dog-linux-musl \
@@ -29,7 +31,7 @@ pkgprepare() {
         CROSS_COMPILE= CC=clang \
         CFLAGS="-O3" \
         AR=llvm-ar \
-        LIBCC="$buildroot/usr/lib/clang/lib/aarch64-dog-linux-musl/libclang_rt.builtins.a"
+        LIBCC="$LIBCC_PATH/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64.a"
 }
 
 pkgbuild() {

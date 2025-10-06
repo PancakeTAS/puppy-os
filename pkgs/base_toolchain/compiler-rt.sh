@@ -10,30 +10,19 @@ pkglic="Apache-2.0 (LLVM-exception)"
 
 # build information
 pkgdeps=(
-    "linux-6.16.9"
+    "linux-headers-6.16.9"
+    "musl-headers-1.2.5"
 )
 pkgsrcs=(
-    "https://musl.libc.org/releases/musl-1.2.5.tar.gz"
     "https://github.com/$_pkgname/$_pkgname-project/archive/refs/tags/llvmorg-$pkgver.tar.gz"
 )
 
 # build scripts
 pkgprepare() {
-    cd musl-1.2.5
-    mkdir -p build && cd build
-
-    ../configure \
-        --prefix=/usr \
-        --target=aarch64-dog-linux-musl \
-        CROSS_COMPILE= CC=clang
-
-    DESTDIR="$buildroot" make install-headers
-
-    cd ../..
     cd $_pkgname-project-llvmorg-$pkgver
 
     cmake -S compiler-rt -B build -G Ninja \
-        -DCMAKE_INSTALL_PREFIX="$pkgroot/usr" \
+        -DCMAKE_INSTALL_PREFIX="$pkgroot/lib/clang/21" \
         -DCMAKE_SYSROOT="$buildroot" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_COMPILER=clang++ \
@@ -61,13 +50,4 @@ pkgbuild() {
 
 pkginstall() {
     cmake --install build --strip
-
-    mkdir -p "$pkgroot/usr/lib/clang/lib"
-    mv "$pkgroot/usr/lib/linux" \
-        "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
-
-    cd "$pkgroot/usr/lib/clang/lib/aarch64-dog-linux-musl"
-    mv "libclang_rt.builtins-aarch64.a" "libclang_rt.builtins.a"
-    mv "clang_rt.crtbegin-aarch64.o" "crtbeginS.o"
-    mv "clang_rt.crtend-aarch64.o" "crtendS.o"
 }
