@@ -29,6 +29,7 @@ pkgdeps=(
     "ncurses-6.5"
     "procps-ng-4.0.5"
     "toybox-0.8.12"
+    "util-linux-2.41.2"
 )
 pkgsrcs=(
 )
@@ -47,7 +48,7 @@ pkgbuild() {
         "fip.bin"
 
     # (danger zone, beware of sudo and losetup)
-    dd if=/dev/zero of=image.bin bs=1M count=96
+    dd if=/dev/zero of=image.bin bs=1M count=128
     LDEV=$(sudo losetup -f --show image.bin)
 
     sudo sgdisk -o -a 1 \
@@ -77,6 +78,11 @@ pkgbuild() {
 
     sudo mkfs.ext4 -L ROOTFS "${LDEV}p4"
     sudo mount "${LDEV}p4" mnt
+    sudo mkdir -p \
+        mnt/dev \
+        mnt/proc \
+        mnt/sys \
+        mnt/tmp
     sudo cp -rv \
         "$buildroot/usr" \
         "$buildroot/bin" \
@@ -86,7 +92,7 @@ pkgbuild() {
         "$buildroot/lib64" \
         mnt
     sudo rm -rv \
-        "mnt/include"
+        "mnt/usr/include"
     sudo umount mnt
 
     sudo losetup -d "$LDEV"
