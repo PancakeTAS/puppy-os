@@ -34,7 +34,7 @@ trap 'rm -rf "$TEMPDIR"' EXIT
 
 mkdir "$BUILDROOT"
 pushd "$BUILDROOT" >/dev/null
-    mkdir -p usr/{include,lib,libexec,bin}
+    mkdir -p usr/{include,lib,bin}
     ln -sf usr/bin bin
     ln -sf usr/bin sbin
     ln -sf usr/lib lib
