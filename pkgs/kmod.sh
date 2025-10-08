@@ -9,7 +9,7 @@ pkglic="GPLv2"
 
 # build information
 pkgdeps=(
-    "linux-headers-6.16.9"
+    "linux-headers-6.17"
     "musl-1.2.5"
     "zlib-1.3.1"
     "xz-5.8.1"

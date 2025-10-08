@@ -3,7 +3,7 @@
 # metadata
 pkgname="linux-headers"
 _pkgname="linux"
-pkgver="6.16.9"
+pkgver="6.17"
 pkgdesc="the Linux kernel header files"
 pkgurl="https://kernel.org/"
 pkglic="GPL-2.0-only"

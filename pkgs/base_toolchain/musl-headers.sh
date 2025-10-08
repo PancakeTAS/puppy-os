@@ -10,7 +10,7 @@ pkglic="MIT"
 
 # build information
 pkgdeps=(
-    "linux-headers-6.16.9"
+    "linux-headers-6.17"
 )
 pkgsrcs=(
     "https://musl.libc.org/releases/$_pkgname-$pkgver.tar.gz"

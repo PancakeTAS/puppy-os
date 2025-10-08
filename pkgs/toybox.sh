@@ -10,7 +10,7 @@ pkglic="BSD"
 # build information
 pkgdeps=(
     "openssl-3.6.0"
-    "linux-headers-6.16.9"
+    "linux-headers-6.17"
     "musl-1.2.5"
     "zlib-1.3.1"
 )
