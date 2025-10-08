@@ -1,9 +1,3 @@
-# doggy files
 /internal/toolchain
 /build
 /cache
-
-# general temp files
-/.toolchain
-/sysroot
-/tmp
