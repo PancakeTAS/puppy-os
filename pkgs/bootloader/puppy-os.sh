@@ -30,6 +30,12 @@ pkgdeps=(
     "procps-ng-4.0.5"
     "toybox-0.8.12"
     "util-linux-2.41.2"
+    "iproute2-6.16.0"
+    "iputils-20250605"
+    "libmnl-1.0.5"
+    "libnftnl-1.3.0"
+    "nftables-1.1.5"
+    "iana-20250929"
 )
 pkgsrcs=(
 )
