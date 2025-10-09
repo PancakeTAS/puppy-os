@@ -91,6 +91,7 @@ pkgbuild() {
         mnt/tmp
     sudo cp -rv \
         "$buildroot/usr" \
+        "$buildroot/etc" \
         "$buildroot/bin" \
         "$buildroot/sbin" \
         "$buildroot/lib" \

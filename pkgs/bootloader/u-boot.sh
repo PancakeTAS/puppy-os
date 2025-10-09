@@ -23,7 +23,7 @@ fdt_addr_r=0x48000000
 load_kernel=fatload mmc 0:3 ${kernel_addr_r} /linux-6.17.Image
 load_fdt=fatload mmc 0:3 ${fdt_addr_r} /linux-6.17.mt7988a-bananapi-bpi-r4.dtb
 
-console='console=ttyS0,115200n1 loglevel=8'
+console='console=ttyS0,115200n1 quiet'
 root='root=/dev/mmcblk0p4 rootwait rootfstype=ext4 ro'
 set_args=setenv bootargs ${console} ${root}
 
