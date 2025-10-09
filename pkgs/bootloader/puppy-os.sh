@@ -39,6 +39,7 @@ pkgdeps=(
     "iana-timezones-2025b"
     "libnl-3.11.0"
     "iw-6.17"
+    "hostapd-2.11"
 )
 pkgsrcs=(
 )

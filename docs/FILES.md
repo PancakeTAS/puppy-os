@@ -1,5 +1,5 @@
 This file attempts to document the files and directories each package may read or write to.
-Anything in the standard libraries /dev, /proc, /tmp, /sys is not mentioned here,
+Anything in the standard libraries /dev, /proc, /tmp, /sys, /var/run, /run is not mentioned here,
 though keep in mind that stuff like /dev/shm is not always present.
 
 Here's all programs that do NOT require any files:
@@ -35,9 +35,11 @@ Here's all programs that do NOT require any files:
 == ncurses
 - </usr/share>/terminfo: database
 
+== hostapd
+- </etc>/hostapd: obviously
+
 == iproute2
 - </usr/share>/iproute2: database
-- </var/run/netns>: namespaces
 
 == nftables
 - </etc>/passwd, </etc>/group: printing uid/gid
@@ -60,7 +62,6 @@ Here's all programs that do NOT require any files:
 - /etc/subuid, /etc/subgid: required for all things user
 - /etc/shells: also required for things
 - /etc/passwd, /etc/gshadow, /etc/group, /etc/shadow: required for all things users
-- /var/run: blkid, mount, etc.
 
 == dash
 - /etc/profile
