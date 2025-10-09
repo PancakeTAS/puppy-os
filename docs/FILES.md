@@ -6,7 +6,7 @@ Here's all programs that do NOT require any files:
 - brotli, bzip2, lz4, xz, zlib, zstd
 - libxcrypt
 - libmnl, libnftnl
-- iputils
+- iputils, iw
 - procps-ng
 - toybox
 
@@ -28,6 +28,9 @@ Here's all programs that do NOT require any files:
 
 == openssl
 - </etc>/ssl: obviously
+
+== libnl
+- </etc>/libnl: obviously
 
 == ncurses
 - </usr/share>/terminfo: database
