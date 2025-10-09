@@ -32,8 +32,6 @@ pkgprepare() {
         --without-debug \
         --without-normal \
         --enable-widec \
-        --disable-root-access \
-        --disable-root-environ \
         --with-strip-program=llvm-strip \
         CC=clang CXX=clang++ \
         CFLAGS="-O3" LDFLAGS="-flto" \

@@ -19,7 +19,7 @@ pkgsrcs=(
 )
 
 # build scripts
-_utils=('base32' 'base64' 'baseenc' 'basename' 'cat' 'cp' 'chroot' 'chmod' 'cksum' 'comm' 'cut' 'date' 'dd' 'df' 'dirname' 'du' 'echo' 'env' 'expand' 'expr' 'factor' 'false' 'fmt' 'fold' 'head' 'hostid' 'install' 'link' 'ln' 'ls' 'md5sum' 'mkdir' 'mkfifo' 'mknod' 'mktemp' 'mv' 'nice' 'nohup' 'nproc' 'nl' 'od' 'paste' 'printenv' 'printf' 'pwd' 'rm' 'rmdir' 'readlink' 'realpath' 'seq' 'sha1sum' 'sha224sum' 'sha256sum' 'sha384sum' 'sha512sum' 'shred' 'sleep' 'sort' 'sort_float' 'split' 'stat' 'stty' 'shuf' 'sync' 'tac' 'tail' 'tee' 'test' 'timeout' 'tr' 'touch' 'tsort' 'true' 'truncate' 'tty' 'uname' 'uniq' 'unlink' 'wc' 'yes') # coreutils
+_utils=('base32' 'base64' 'baseenc' 'basename' 'cat' 'cp' 'chroot' 'chmod' 'chown' 'chgrp' 'cksum' 'comm' 'cut' 'date' 'dd' 'df' 'dirname' 'du' 'echo' 'env' 'expand' 'expr' 'factor' 'false' 'fmt' 'fold' 'groups' 'head' 'hostid' 'id' 'install' 'link' 'ln' 'ls' 'md5sum' 'mkdir' 'mkfifo' 'mknod' 'mktemp' 'mv' 'nice' 'nohup' 'nproc' 'nl' 'od' 'paste' 'printenv' 'printf' 'pwd' 'rm' 'rmdir' 'readlink' 'realpath' 'seq' 'sha1sum' 'sha224sum' 'sha256sum' 'sha384sum' 'sha512sum' 'shred' 'sleep' 'sort' 'sort_float' 'split' 'stat' 'stty' 'shuf' 'sync' 'tac' 'tail' 'tee' 'test' 'timeout' 'tr' 'touch' 'tsort' 'true' 'truncate' 'tty' 'uname' 'uniq' 'unlink' 'wc' 'yes') # coreutils
 _utils+=('bc' 'patch' 'ascii' 'cpio' 'time' 'sed' 'tar' 'awk') # respective packages
 _utils+=('fgrep' 'egrep' 'grep') # grep
 _utils+=('getconf' 'iconv') # subset of glibc
