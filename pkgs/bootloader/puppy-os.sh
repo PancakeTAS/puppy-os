@@ -35,7 +35,8 @@ pkgdeps=(
     "libmnl-1.0.5"
     "libnftnl-1.3.0"
     "nftables-1.1.5"
-    "iana-20250929"
+    "iana-protocols-20250929"
+    "iana-timezones-2025b"
 )
 pkgsrcs=(
 )
@@ -84,11 +85,17 @@ pkgbuild() {
 
     sudo mkfs.ext4 -L ROOTFS "${LDEV}p4"
     sudo mount "${LDEV}p4" mnt
+
+    # - create base directories
     sudo mkdir -p \
         mnt/dev \
         mnt/proc \
         mnt/sys \
-        mnt/tmp
+        mnt/tmp \
+        mnt/var/lib \
+        mnt/root
+
+    # - copy all packages
     sudo cp -rv \
         "$buildroot/usr" \
         "$buildroot/etc" \
@@ -100,8 +107,30 @@ pkgbuild() {
         mnt
     sudo rm -rv \
         "mnt/usr/include"
-    sudo umount mnt
+    sudo ln -sfv \
+        /usr/share/zoneinfo/Europe/Berlin mnt/etc/localtime
 
+    # - create necessary files for user management
+    echo "root:x:0:0::/root:/usr/bin/dash" | sudo tee mnt/etc/passwd
+    echo "root::::::::" | sudo tee mnt/etc/shadow
+    echo "root:x:0:root" | sudo tee mnt/etc/group
+    echo "root:::root" | sudo tee mnt/etc/gshadow
+
+    # - create necessary files for shell management
+    echo "/bin/sh" | sudo tee mnt/etc/shells
+    echo "/usr/bin/sh" | sudo tee -a mnt/etc/shells
+    echo "/usr/bin/dash" | sudo tee -a mnt/etc/shells
+
+    # - create necessary files for network management
+    echo "nameserver 1.1.1.1" | sudo tee mnt/etc/resolv.conf
+    echo "127.0.0.1 localhost" | sudo tee mnt/etc/hosts
+    echo "::1 localhost" | sudo tee -a mnt/etc/hosts
+
+    # - create misc configuration files
+    echo "puppy-os" | sudo tee mnt/etc/hostname
+    echo "LANG=C.UTF-8" | sudo tee mnt/etc/locale.conf
+
+    sudo umount mnt
     sudo losetup -d "$LDEV"
 }
 

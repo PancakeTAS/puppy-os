@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # metadata
-pkgname="iana"
+pkgname="iana-protocols"
 pkgver="20250929"
 pkgdesc="iana protocols and services"
 pkgurl="https://github.com/Mic92/iana-etc"
@@ -11,12 +11,12 @@ pkglic="MIT"
 pkgdeps=(
 )
 pkgsrcs=(
-    "https://github.com/Mic92/$pkgname-etc/releases/download/$pkgver/$pkgname-etc-$pkgver.tar.gz"
+    "https://github.com/Mic92/iana-etc/releases/download/$pkgver/iana-etc-$pkgver.tar.gz"
 )
 
 # build scripts
 pkgprepare() {
-    cd $pkgname-etc-$pkgver
+    cd iana-etc-$pkgver
 }
 
 pkgbuild() {
