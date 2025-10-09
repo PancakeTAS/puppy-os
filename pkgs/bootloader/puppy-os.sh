@@ -37,6 +37,8 @@ pkgdeps=(
     "nftables-1.1.5"
     "iana-protocols-20250929"
     "iana-timezones-2025b"
+    "libnl-3.11.0"
+    "iw-6.17"
 )
 pkgsrcs=(
 )
@@ -92,6 +94,7 @@ pkgbuild() {
         mnt/proc \
         mnt/sys \
         mnt/tmp \
+        mnt/run \
         mnt/var/lib \
         mnt/root
 
@@ -109,6 +112,8 @@ pkgbuild() {
         "mnt/usr/include"
     sudo ln -sfv \
         /usr/share/zoneinfo/Europe/Berlin mnt/etc/localtime
+    sudo ln -sfv \
+        /var/run mnt/run
 
     # - create necessary files for user management
     echo "root:x:0:0::/root:/usr/bin/dash" | sudo tee mnt/etc/passwd
