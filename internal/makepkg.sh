@@ -24,13 +24,14 @@ mkdir -pv \
 
 # prepare temporary file structure
 TEMPDIR="$BUILDDIR/$RANDOM"
+_TEMPDIR=$(realpath "$TEMPDIR")
 BUILDROOT="$TEMPDIR/buildroot"
 SRCDIR="$TEMPDIR/src"
 PKGROOT="$TEMPDIR/pkgroot"
 
 mkdir "$TEMPDIR"
-trap 'rm -rf "$TEMPDIR"' ERR
-trap 'rm -rf "$TEMPDIR"' EXIT
+trap 'rm -rf "$_TEMPDIR"' ERR
+trap 'rm -rf "$_TEMPDIR"' EXIT
 
 mkdir "$BUILDROOT"
 pushd "$BUILDROOT" >/dev/null

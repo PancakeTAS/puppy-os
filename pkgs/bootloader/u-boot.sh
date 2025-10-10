@@ -596,13 +596,13 @@ CONFIG_CMD_CLK=y
 # CONFIG_CMD_DFU is not set
 CONFIG_CMD_DM=y
 # CONFIG_CMD_FUSE is not set
-CONFIG_CMD_GPIO=y
+# CONFIG_CMD_GPIO is not set
 # CONFIG_CMD_GPIO_READ is not set
 # CONFIG_CMD_GPT is not set
 # CONFIG_CMD_IDE is not set
 # CONFIG_CMD_IO is not set
 # CONFIG_CMD_IOTRACE is not set
-CONFIG_CMD_I2C=y
+# CONFIG_CMD_I2C is not set
 CONFIG_CMD_LOADB=y
 # CONFIG_CMD_LOADM is not set
 CONFIG_CMD_LOADS=y
@@ -710,9 +710,9 @@ CONFIG_CMD_FS_GENERIC=y
 #
 # CONFIG_CMD_DIAG is not set
 # CONFIG_CMD_LOG is not set
-CONFIG_CMD_UBI=y
+# CONFIG_CMD_UBI is not set
 # CONFIG_CMD_UBI_RENAME is not set
-CONFIG_CMD_UBIFS=y
+# CONFIG_CMD_UBIFS is not set
 
 #
 # Partition Types
@@ -1032,7 +1032,7 @@ CONFIG_MMC_MTK=y
 # MTD Support
 #
 # CONFIG_MTD is not set
-CONFIG_MTD_UBI=y
+# CONFIG_MTD_UBI is not set
 
 #
 # Multiplexer drivers
