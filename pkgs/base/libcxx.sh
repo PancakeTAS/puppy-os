@@ -1,23 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# metadata
 pkgname="libcxx"
 _pkgname="llvm"
 pkgver="21.1.2"
-pkgdesc="LLVM c++ standard library"
-pkgurl="https://libcxx.llvm.org/"
-pkglic="Apache-2.0 (LLVM-exception)"
-
-# build information
-pkgdeps=(
-    "linux-headers-6.17"
-    "musl-1.2.5"
-)
 pkgsrcs=(
     "https://github.com/$_pkgname/$_pkgname-project/archive/refs/tags/llvmorg-$pkgver.tar.gz"
 )
 
-# build scripts
 pkgprepare() {
     cd $_pkgname-project-llvmorg-$pkgver
 
@@ -25,10 +14,13 @@ pkgprepare() {
     LIBCC_PATH=$(dirname "$LIBCC_PATH")
 
     cmake -S runtimes -B build -G Ninja \
-        -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On \
-        -DCMAKE_INSTALL_PREFIX="$pkgroot/usr" \
-        -DCMAKE_SYSROOT="$buildroot" \
+        -DCMAKE_INSTALL_PREFIX="$pkgdir/usr" \
+        -DCMAKE_SYSROOT="$sysroot" \
+        -DCMAKE_INSTALL_SBINDIR="bin" \
+        -DCMAKE_INSTALL_LIBDIR="lib" \
+        -DCMAKE_INSTALL_LIBEXECDIR="lib" \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On \
         -DCMAKE_CXX_COMPILER=clang++ \
         -DCMAKE_C_COMPILER=clang \
         -DCMAKE_ASM_COMPILER_TARGET="aarch64-dog-linux-musl" \
@@ -54,8 +46,9 @@ pkgbuild() {
 pkginstall() {
     cmake --install build --strip
 
-    rm -rf "$pkgroot/usr/share" \
-        "$pkgroot/usr/include/c++/v1/__cxx03/experimental" \
-        "$pkgroot/usr/include/c++/v1/experimental" \
-        "$pkgroot/usr/lib/libc++experimental.a"
+    rm -r \
+        "$pkgdir/usr/share" \
+        "$pkgdir/usr/include/c++/v1/__cxx03/experimental" \
+        "$pkgdir/usr/include/c++/v1/experimental" \
+        "$pkgdir/usr/lib/libc++experimental.a"
 }

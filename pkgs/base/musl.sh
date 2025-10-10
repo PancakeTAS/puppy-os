@@ -1,21 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# metadata
 pkgname="musl"
 pkgver="1.2.5"
-pkgdesc="implementation of the C standard library"
-pkgurl="https://musl.libc.org"
-pkglic="MIT"
-
-# build information
-pkgdeps=(
-    "linux-headers-6.17"
-)
 pkgsrcs=(
     "https://musl.libc.org/releases/$pkgname-$pkgver.tar.gz"
 )
 
-# build scripts
 pkgprepare() {
     mkdir -p $pkgname-$pkgver/build
     cd $pkgname-$pkgver/build
@@ -25,12 +15,13 @@ pkgprepare() {
 
     ../configure \
         --prefix=/usr \
+        --syslibdir=/usr/lib \
         --target=aarch64-dog-linux-musl \
         --disable-wrapper \
         --disable-static \
         CROSS_COMPILE= CC=clang \
         CFLAGS="-O3" \
-        AR=llvm-ar \
+        AR=llvm-ar RANLIB=llvm-ranlib \
         LIBCC="$LIBCC_PATH/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64.a"
 }
 
@@ -39,5 +30,5 @@ pkgbuild() {
 }
 
 pkginstall() {
-    DESTDIR="$pkgroot" make install
+    DESTDIR="$pkgdir" make install
 }

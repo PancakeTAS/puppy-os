@@ -1,28 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# metadata
 pkgname="ncurses"
 pkgver="6.5"
-pkgdesc="SysV R4.0 curses emulation library"
-pkgurl="https://invisible-island.net/ncurses/ncurses.html"
-pkglic="MIT"
-
-# build information
-pkgdeps=(
-    "linux-headers-6.17"
-    "libcxx-21.1.2"
-    "musl-1.2.5"
-)
 pkgsrcs=(
     "https://invisible-island.net/archives/$pkgname/$pkgname-6.5.tar.gz"
 )
 
-# build scripts
 pkgprepare() {
     cd $pkgname-$pkgver
 
     ./configure \
         --prefix=/usr \
+        --sbindir=/usr/bin \
+        --libexecdir=/usr/lib \
         --host=aarch64-dog-linux-musl \
         --without-ada \
         --without-manpages \
@@ -44,11 +34,6 @@ pkgbuild() {
 }
 
 pkginstall() {
-    make install DESTDIR="$pkgroot"
+    make DESTDIR="$pkgdir" install
 
-    llvm-strip --strip-unneeded \
-        "$pkgroot/usr/lib/libformw.so.6.5" \
-        "$pkgroot/usr/lib/libmenuw.so.6.5" \
-        "$pkgroot/usr/lib/libncursesw.so.6.5" \
-        "$pkgroot/usr/lib/libpanelw.so.6.5"
 }

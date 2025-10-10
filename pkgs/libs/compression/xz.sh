@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-pkgname="dash"
-pkgver="0.5.13"
+pkgname="xz"
+pkgver="5.8.1"
 pkgsrcs=(
-    "http://gondor.apana.org.au/~herbert/$pkgname/files/$pkgname-$pkgver.tar.gz"
+    "https://github.com/tukaani-project/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )
 
 pkgprepare() {
@@ -14,8 +14,13 @@ pkgprepare() {
         --sbindir=/usr/bin \
         --libexecdir=/usr/lib \
         --host=aarch64-dog-linux-musl \
-        --disable-dependency-tracking \
-        CC=clang \
+        --disable-doc \
+        --disable-static \
+        --disable-nls \
+        --disable-rpath \
+        --enable-year2038 \
+        --with-sysroot="$sysroot" \
+        CC=clang LD=ld.lld \
         CFLAGS="-O3" LDFLAGS="-flto" \
         AR=llvm-ar RANLIB=llvm-ranlib STRIP=llvm-strip OBJDUMP=llvm-objdump MANIFEST_TOOL=llvm-mt NM=llvm-nm
 }
