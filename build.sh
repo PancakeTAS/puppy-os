@@ -238,7 +238,7 @@ export LD_PRELOAD="" # remove any potential fakeroot
 trap 'rm -f build/fip.bin' ERR
 
 # create 128MB GPT partitioned image
-dd if=/dev/zero of=puppy-os.img bs=1M count=128
+dd if=/dev/zero of=puppy-os.img bs=1M count=192
 sgdisk -o -a 1 \
     -n '1:1024:4095' -c '1:bl2' -t '1:ef02' -A '1:set:2' \
     -n '2:4096:8191' -c '2:fip' -t '2:b000' \

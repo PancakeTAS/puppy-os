@@ -28,6 +28,9 @@ The following libraries do not use system directories either:
 - libxcrypt
 - libmnl
 - libnftnl
+- libssh2
+- nghttp3
+- libpsl
 
 These userspace tools do not use any system directories either:
 - iputils
@@ -37,6 +40,7 @@ These userspace tools do not use any system directories either:
 - iperf3
 - less
 - traceroute
+- curl
 
 ## Projects with special files access
 
@@ -137,6 +141,32 @@ Files as expected:
 - `/etc/pci`
 - `/lib/modules/`
 
+### nmap - Network Mapping Utilities
+
+Mostly networking related files:
+- `/etc/resolv.conf`
+- `/etc/hosts`
+- `/etc/protocols`
+- `/etc/services`
+- `/usr/share/nmap`
+
+### openssh - SSH daemon
+
+As expected:
+- `/etc/hosts.equiv`
+- `/etc/nologin`
+- `/etc/passwd`
+- `/usr/lib/ssh`
+- `/etc/motd`
+- `/etc/environment`
+- `/etc/openssh`
+
+### ldns - Lightweight DNS library
+
+Nothing unordinary:
+- `/etc/resolv.conf`
+- `/etc/hosts`
+
 ### ... - Various projects
 
 The following is a list of projects that only require one simple path:
@@ -153,3 +183,4 @@ The following is a list of projects that only require one simple path:
 - wireguard-tools: `/etc/wireguard`
 - lm-sensors: `/etc/sensors[3].conf`
 - btop: `/usr/share/btop`
+- nghttp2: `/etc/nghttpx`
