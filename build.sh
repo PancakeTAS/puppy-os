@@ -200,6 +200,7 @@ build "pkgs/utils/net/wireguard-tools.sh"
 build "pkgs/utils/net/tcpdump.sh"
 build "pkgs/utils/net/iperf3.sh"
 build "pkgs/utils/net/nmap.sh"
+build "pkgs/utils/net/curl.sh"
 
 # daemons
 build "pkgs/daemons/hostapd.sh"
