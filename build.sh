@@ -59,7 +59,7 @@ fi
 mkdir -p build sysroot cache dlcache
 mkdir -m755 -p \
     sysroot/{dev,sys,proc,run} \
-    sysroot/{etc,usr,var,boot} \
+    sysroot/{etc,usr,var,boot,root} \
     sysroot/usr/{bin,lib,include,share} \
     sysroot/var/{log,cache,lib}
 mkdir -m1777 -p \
@@ -176,6 +176,7 @@ build "pkgs/libs/net/nghttp2.sh"
 build "pkgs/libs/net/libpsl.sh"
 build "pkgs/libs/net/ldns.sh"
 build "pkgs/libs/ncurses.sh"
+build "pkgs/libs/libedit.sh"
 
 # many utils
 build "pkgs/utils/attr.sh"

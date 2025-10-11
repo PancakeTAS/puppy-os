@@ -1,0 +1,21 @@
+# essential environment variables
+export UID=0
+export PATH="/usr/bin"
+export TERM="linux"
+export LOGNAME="root"
+export USER="root"
+export HOME="/root"
+export SHELL="/bin/dash"
+export HOSTNAME=$(cat /etc/hostname)
+
+# set colorful PS1
+echo '\x1b[1m\x1b[38;5;198m$USER@\x1b[38;5;170m$HOSTNAME \x1b[1;35m$PWD \$ \x1b[0;0m' > /tmp/.prompt
+export PS1=$(cat /tmp/.prompt)
+
+# colorful aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+set -E
+
+# move to home directory on login
+cd $HOME

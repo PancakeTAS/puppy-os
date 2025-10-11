@@ -40,6 +40,7 @@ pkgbuild() {
     echo "puppy-os" > hostname
     echo "LANG=C.UTF-8" > locale.conf
     ln -s /usr/share/zoneinfo/Europe/Berlin localtime
+    cp "$filesdir/profile" profile
 }
 
 pkginstall() {

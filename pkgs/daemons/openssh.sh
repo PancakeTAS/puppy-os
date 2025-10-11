@@ -13,6 +13,7 @@ pkgprepare() {
         --prefix=/usr \
         --sbindir=/usr/bin \
         --libexecdir=/usr/lib/ssh \
+        --sysconfdir=/etc/ssh \
         --host=aarch64-dog-linux-musl \
         --disable-strip \
         --disable-etc-default-login \

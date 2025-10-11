@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-pkgname="dash"
-pkgver="0.5.13"
+pkgname="libedit"
+pkgver="20250104-3.1"
 pkgsrcs=(
-    "http://gondor.apana.org.au/~herbert/$pkgname/files/$pkgname-$pkgver.tar.gz"
+    "https://thrysoee.dk/editline/$pkgname-$pkgver.tar.gz"
 )
 
 pkgprepare() {
@@ -15,9 +15,12 @@ pkgprepare() {
         --libexecdir=/usr/lib \
         --host=aarch64-dog-linux-musl \
         --disable-dependency-tracking \
-        --with-libedit \
-        CC=clang \
-        CFLAGS="-O3" LDFLAGS="-flto" \
+        --disable-static \
+        --disable-examples \
+        --enable-widec \
+        --with-sysroot="$sysroot" \
+        CC=clang CXX=clang++ LD=ld.lld \
+        CFLAGS="-O3 -D__STDC_ISO_10646__" LDFLAGS="-flto" \
         AR=llvm-ar RANLIB=llvm-ranlib STRIP=llvm-strip OBJDUMP=llvm-objdump MANIFEST_TOOL=llvm-mt NM=llvm-nm
 }
 
@@ -26,5 +29,5 @@ pkgbuild() {
 }
 
 pkginstall() {
-    make DESTDIR="$pkgdir" install-strip
+    make DESTDIR="$pkgdir" install
 }
