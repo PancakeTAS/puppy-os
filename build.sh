@@ -184,6 +184,7 @@ build "pkgs/utils/net/iproute2.sh"
 build "pkgs/utils/net/iputils.sh"
 build "pkgs/utils/net/iw.sh"
 build "pkgs/utils/net/nftables.sh"
+build "pkgs/utils/net/traceroute.sh"
 
 # other packages
 build "pkgs/dash.sh"
