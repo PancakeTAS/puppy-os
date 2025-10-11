@@ -9,6 +9,7 @@ set -euo pipefail
 #   -h                Show help/usage.
 
 CLEAN_CACHE=false
+SKIP_IMAGE=false
 IGNORE_PKGS=""
 MAKEFLAGS="-j$(nproc)"
 
@@ -18,7 +19,7 @@ show_help() {
 }
 
 # parse command line options
-while getopts ":Cc:j:h" opt; do
+while getopts ":Cc:j:hn" opt; do
     case "$opt" in
         C)
             CLEAN_CACHE=true
@@ -31,6 +32,9 @@ while getopts ":Cc:j:h" opt; do
             ;;
         h)
             show_help
+            ;;
+        n)
+            SKIP_IMAGE=true
             ;;
         \?)
             echo "Invalid option: -$OPTARG"
@@ -188,6 +192,11 @@ build "pkgs/boot/u-boot.sh"
 build "pkgs/boot/linux.sh"
 
 ### build the final image
+
+if [ "$SKIP_IMAGE" = true ]; then
+    echo "==> Skipping image creation as requested."
+    exit 0
+fi
 
 echo "==> Building final image. This requires sudo privileges."
 export LD_PRELOAD="" # remove any potential fakeroot
