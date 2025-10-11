@@ -153,8 +153,6 @@ build "pkgs/base/libcxx.sh"
 build "pkgs/base/iana-etc.sh"
 build "pkgs/base/iana-tz.sh"
 build "pkgs/base/hwdata.sh"
-build "pkgs/base/puppyos-etc.sh"
-build "pkgs/base/puppyos-init.sh"
 
 # various libraries
 build "pkgs/libs/compression/brotli.sh"
@@ -216,6 +214,7 @@ build "pkgs/daemons/openssh.sh"
 # other packages
 build "pkgs/dash.sh"
 build "pkgs/runit.sh"
+build "pkgs/puppyos.sh"
 
 # bootloader and kernel
 build "pkgs/boot/arm-trusted-firmware.sh"
