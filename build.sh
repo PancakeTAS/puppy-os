@@ -204,6 +204,7 @@ build "pkgs/daemons/wpa_supplicant.sh"
 build "pkgs/daemons/dhcpcd.sh"
 build "pkgs/daemons/dnsmasq.sh"
 build "pkgs/daemons/openntpd.sh"
+build "pkgs/daemons/openssh.sh"
 
 # other packages
 build "pkgs/dash.sh"
