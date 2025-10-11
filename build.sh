@@ -171,6 +171,7 @@ build "pkgs/libs/net/libnl.sh"
 build "pkgs/libs/net/libpcap.sh"
 build "pkgs/libs/net/libssh2.sh"
 build "pkgs/libs/net/nghttp3.sh"
+build "pkgs/libs/net/nghttp2.sh"
 build "pkgs/libs/ncurses.sh"
 
 # many utils
