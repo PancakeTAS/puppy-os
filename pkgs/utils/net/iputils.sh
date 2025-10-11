@@ -6,19 +6,8 @@ pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.xz"
 )
 
-MESON_CROSS=$(cat <<'EOF'
-[binaries]
-c = 'clang'
-cpp = 'clang++'
-ar = 'llvm-ar'
-strip = 'llvm-strip'
-EOF
-)
-
 pkgprepare() {
     cd $pkgname-$pkgver
-
-    echo "$MESON_CROSS" > meson.cross
 
     ./configure
     meson setup \
@@ -30,7 +19,7 @@ pkgprepare() {
         -Dprefix=/usr \
         --buildtype release \
         --optimization 3 \
-        --cross-file meson.cross \
+        --cross-file "$filesdir/meson.cross" \
         build
 }
 

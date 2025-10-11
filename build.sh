@@ -103,6 +103,7 @@ build() {
 
     srcdir="$(realpath "$TEMPDIR/src")"
     pkgdir="$(realpath "$TEMPDIR/pkg")"
+    filesdir="$(realpath files/$pkgname)"
     sysroot="$(realpath sysroot)"
 
     pushd "$srcdir" >/dev/null
