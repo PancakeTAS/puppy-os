@@ -1,26 +1,22 @@
 #!/usr/bin/env bash
 
-pkgname="iperf3"
-_pkgname="iperf"
-pkgver="3.19.1"
+pkgname="dhcpcd"
+pkgver="10.2.4"
 pkgsrcs=(
-    "https://github.com/esnet/$_pkgname/releases/download/$pkgver/$_pkgname-$pkgver.tar.gz"
+    "https://github.com/NetworkConfiguration/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )
 
 pkgprepare() {
-    cd $_pkgname-$pkgver
+    cd $pkgname-$pkgver
 
     ./configure \
         --prefix=/usr \
         --sbindir=/usr/bin \
         --libexecdir=/usr/lib \
+        --sysconfdir=/etc \
         --host=aarch64-dog-linux-musl \
-        --disable-doc \
-        --disable-static \
-        --disable-nls \
-        --disable-rpath \
-        --enable-year2038 \
-        --with-sysroot="$sysroot" \
+        --without-udev \
+        --with-openssl \
         CC=clang LD=ld.lld \
         CFLAGS="-O3" LDFLAGS="-flto" \
         AR=llvm-ar RANLIB=llvm-ranlib STRIP=llvm-strip OBJDUMP=llvm-objdump MANIFEST_TOOL=llvm-mt NM=llvm-nm
@@ -31,5 +27,7 @@ pkgbuild() {
 }
 
 pkginstall() {
-    make DESTDIR="$pkgdir" install-strip
+    make DESTDIR="$pkgdir" install
+
+    rm -r "$pkgdir"/usr/share/dhcpcd
 }

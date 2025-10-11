@@ -14,6 +14,7 @@ pkgprepare() {
         --prefix=/usr \
         --sbindir=/usr/bin \
         --libexecdir=/usr/lib \
+        --sysconfdir=/etc \
         --host=aarch64-dog-linux-musl \
         --disable-dependency-tracking \
         --disable-static \
