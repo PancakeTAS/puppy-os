@@ -23,5 +23,8 @@ pkginstall() {
         CC=clang OPT="-O3 -flto" STRIP= \
         PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin
 
+    ln -s libpci.so.3.14.0 "$pkgdir"/usr/lib/libpci.so.3
+    ln -s libpci.so.3.14.0 "$pkgdir"/usr/lib/libpci.so
+
     rm -r "$pkgdir"/usr/share/hwdata
 }
