@@ -193,6 +193,7 @@ build "pkgs/utils/net/wireguard-tools.sh"
 build "pkgs/dash.sh"
 build "pkgs/runit.sh"
 build "pkgs/hostapd.sh"
+build "pkgs/wpa_supplicant.sh"
 
 # bootloader and kernel
 build "pkgs/boot/arm-trusted-firmware.sh"
