@@ -190,6 +190,7 @@ build "pkgs/utils/net/nftables.sh"
 build "pkgs/utils/net/traceroute.sh"
 build "pkgs/utils/net/wireguard-tools.sh"
 build "pkgs/utils/net/tcpdump.sh"
+build "pkgs/utils/net/iperf3.sh"
 
 # other packages
 build "pkgs/dash.sh"
