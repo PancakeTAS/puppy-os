@@ -11,8 +11,9 @@ pkgprepare() {
 }
 
 pkgbuild() {
-    make all ZLIB=no DNS=no SHARED=yes \
-        OPT="-O3 -flto" \
+    make all ZLIB=no DNS=no SHARED=yes HWDB=no \
+        CROSS_COMPILE= HOST=aarch64-dog-linux-gnu \
+        CC=clang OPT="-O3 -flto" \
         PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin
 }
 
