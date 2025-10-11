@@ -36,4 +36,10 @@ pkgbuild() {
 pkginstall() {
     make DESTDIR="$pkgdir" install
 
+    for lib in ncurses form panel menu; do
+        printf "INPUT(-l${lib}w)\n" > "$pkgdir"/usr/lib/lib${lib}.so
+    done
+    for lib in tic tinfo curses; do
+        printf "INPUT(-lncursesw)\n" > "$pkgdir"/usr/lib/lib${lib}.so
+    done
 }
