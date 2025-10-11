@@ -17,7 +17,6 @@ It is assumed that the following mountpoints exist:
 After examining various packages, the following is a list of projects that do not read outside of the aforementioned directories.
 
 As of right now, not a single compression library uses any system directories.
-
 - brotli
 - bzip2
 - lz4
@@ -35,6 +34,9 @@ These userspace tools do not use any system directories either:
 - iw
 - procps-ng
 - toybox
+- iperf3
+- less
+- traceroute
 
 ## Projects with special files access
 
@@ -97,6 +99,44 @@ Finally, using `mount` uses these files:
 - `/etc/fstab`
 - `/etc/mtab`
 
+### dhcpcd - DHCP control daemon
+
+This one is a bit more intricate:
+- `/etc/dhcpcd.conf`
+- `/usr/lib/dhcpcd-run-hooks`
+- `/usr/lib/dhcpcd`
+- `/var/lib/dhcpcd`
+
+It also reads/writes optional files from hooks
+
+### dnsmasq - DNS (and more) server
+
+Nothing out of the ordinary:
+- `/var/lib/misc/dnsmasq.leases`
+- `/etc/dnsmasq.conf`
+- `/etc/resolv.conf`
+- `/etc/hosts`
+- `/etc/ethers`
+
+### hostapd - HostAP daemon (this INCLUDES wpa_supplicant)
+
+HostAPD uses seemingly random files:
+- `/etc/tnc_config`
+- `/etc/ssl`
+- `/usr/bin/x-www-browser` ???
+
+### ntpd - NTP daemon
+
+Files as expected:
+- `/etc/ntpd.conf`
+- `/var/db/ntpd.drift`
+
+### pciutils - PCI Utilities
+
+Files as expected:
+- `/etc/pci`
+- `/lib/modules/`
+
 ### ... - Various projects
 
 The following is a list of projects that only require one simple path:
@@ -106,3 +146,10 @@ The following is a list of projects that only require one simple path:
 - attr: `/etc/xattr.conf`
 - file: `/usr/share/misc/magic.msc`
 - dash: `/etc/profile`
+- lsof: `/etc/mtab`
+- psmisc: `/etc/mtab`
+- htop: `/etc/os-release`
+- vim: `/usr/share/vim`
+- wireguard-tools: `/etc/wireguard`
+- lm-sensors: `/etc/sensors[3].conf`
+- btop: `/usr/share/btop`
