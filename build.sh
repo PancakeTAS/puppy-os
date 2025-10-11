@@ -198,6 +198,7 @@ build "pkgs/daemons/hostapd.sh"
 build "pkgs/daemons/wpa_supplicant.sh"
 build "pkgs/daemons/dhcpcd.sh"
 build "pkgs/daemons/dnsmasq.sh"
+build "pkgs/daemons/openntpd.sh"
 
 # other packages
 build "pkgs/dash.sh"
