@@ -152,6 +152,7 @@ build "pkgs/base/musl.sh"
 build "pkgs/base/libcxx.sh"
 build "pkgs/base/iana-etc.sh"
 build "pkgs/base/iana-tz.sh"
+build "pkgs/base/hwdata.sh"
 build "pkgs/base/puppyos-etc.sh"
 
 # various libraries
