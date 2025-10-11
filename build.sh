@@ -196,6 +196,7 @@ build "pkgs/utils/net/traceroute.sh"
 build "pkgs/utils/net/wireguard-tools.sh"
 build "pkgs/utils/net/tcpdump.sh"
 build "pkgs/utils/net/iperf3.sh"
+build "pkgs/utils/net/nmap.sh"
 
 # daemons
 build "pkgs/daemons/hostapd.sh"
