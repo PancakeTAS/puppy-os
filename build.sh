@@ -167,6 +167,7 @@ build "pkgs/libs/crypto/openssl.sh"
 build "pkgs/libs/net/libmnl.sh"
 build "pkgs/libs/net/libnftnl.sh"
 build "pkgs/libs/net/libnl.sh"
+build "pkgs/libs/net/libpcap.sh"
 build "pkgs/libs/ncurses.sh"
 
 # many utils
