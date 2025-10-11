@@ -19,6 +19,8 @@ pkgbuild() {
 
 pkginstall() {
     make DESTDIR="$pkgdir" install install-lib \
+        CROSS_COMPILE= HOST=aarch64-dog-linux-gnu \
+        CC=clang OPT="-O3 -flto" STRIP= \
         PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man SBINDIR=/usr/bin
 
     rm -r "$pkgdir"/usr/share/hwdata
