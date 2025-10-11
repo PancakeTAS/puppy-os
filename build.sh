@@ -199,6 +199,7 @@ build "pkgs/runit.sh"
 build "pkgs/hostapd.sh"
 build "pkgs/wpa_supplicant.sh"
 build "pkgs/dhcpcd.sh"
+build "pkgs/dnsmasq.sh"
 
 # bootloader and kernel
 build "pkgs/boot/arm-trusted-firmware.sh"
