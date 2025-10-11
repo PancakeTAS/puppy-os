@@ -193,13 +193,15 @@ build "pkgs/utils/net/wireguard-tools.sh"
 build "pkgs/utils/net/tcpdump.sh"
 build "pkgs/utils/net/iperf3.sh"
 
+# daemons
+build "pkgs/daemons/hostapd.sh"
+build "pkgs/daemons/wpa_supplicant.sh"
+build "pkgs/daemons/dhcpcd.sh"
+build "pkgs/daemons/dnsmasq.sh"
+
 # other packages
 build "pkgs/dash.sh"
 build "pkgs/runit.sh"
-build "pkgs/hostapd.sh"
-build "pkgs/wpa_supplicant.sh"
-build "pkgs/dhcpcd.sh"
-build "pkgs/dnsmasq.sh"
 
 # bootloader and kernel
 build "pkgs/boot/arm-trusted-firmware.sh"
