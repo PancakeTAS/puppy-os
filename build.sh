@@ -189,6 +189,7 @@ build "pkgs/utils/net/iw.sh"
 build "pkgs/utils/net/nftables.sh"
 build "pkgs/utils/net/traceroute.sh"
 build "pkgs/utils/net/wireguard-tools.sh"
+build "pkgs/utils/net/tcpdump.sh"
 
 # other packages
 build "pkgs/dash.sh"
