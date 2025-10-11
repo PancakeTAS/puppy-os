@@ -1,0 +1,38 @@
+#!/bin/sh
+
+PATH=/usr/bin
+
+# remount root filesystem
+mount -o remount,rw,noatime /dev/mmcblk0p4 /
+
+# mount virtual filesystems
+mount -t proc -o nosuid,nodev,noexec proc /proc
+mount -t sysfs -o nosuid,noexec,nodev sysfs /sys
+mount -t tmpfs -o noatime tmpfs /run
+mount -t tmpfs tmpfs /tmp
+
+# mount shared memory and pts
+mkdir -p /dev/pts /dev/shm
+mount -t devpts devpts /dev/pts
+mount -t tmpfs shm /dev/shm
+
+# grab environment variables
+HOSTNAME=$(cat /etc/hostname)
+
+# load modules
+# <none>
+
+# mount all filesystems in fstab
+mount -a
+swapon -a
+
+# apply sysctl settings
+sysctl --system
+
+# launch udev subsystem
+# <todo>
+
+# install reboot files
+mkdir -p /run/runit
+install -m000 /dev/null /run/runit/stopit
+install -m000 /dev/null /run/runit/reboot

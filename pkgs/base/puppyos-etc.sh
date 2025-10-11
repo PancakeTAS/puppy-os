@@ -32,6 +32,10 @@ pkgbuild() {
     echo "127.0.0.1 localhost" > hosts
     echo "::1 localhost" >> hosts
 
+    # file systems
+    touch fstab
+    touch mtab
+
     # misc
     echo "puppy-os" > hostname
     echo "LANG=C.UTF-8" > locale.conf

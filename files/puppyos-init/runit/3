@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PATH=/usr/bin
+
+# force exit services
+sv -w10 force-stop /run/runit/service/*
+sv exit /run/runit/service/*
+
+# kill all processes
+pkill --inverse -s0,1 -TERM
+sleep 3
+pkill --inverse -s0,1 -KILL
+
+# remount root filesystem
+mount -o remount,ro /dev/mmcblk0p4 /
+
+# ummount all filesystems
+# <todo>
+
+# exit udev subsystem
+# <todo>
+
+# deactivate swap
+swapoff -a
