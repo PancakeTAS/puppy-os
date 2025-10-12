@@ -46,6 +46,8 @@ install_package pkgs/rootfs/libs/compression/zstd.sh
 install_package pkgs/rootfs/libs/crypto/openssl.sh
 install_package pkgs/rootfs/libs/crypto/libxcrypt.sh
 install_package pkgs/rootfs/libs/crypto/nettle.sh
+install_package pkgs/rootfs/libs/net/libmnl.sh
+install_package pkgs/rootfs/libs/net/libnftnl.sh
 install_package pkgs/rootfs/libs/ncurses.sh
 install_package pkgs/rootfs/libs/libedit.sh
 
