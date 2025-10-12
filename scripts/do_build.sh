@@ -49,6 +49,7 @@ install_package pkgs/rootfs/libs/crypto/nettle.sh
 install_package pkgs/rootfs/libs/net/libmnl.sh
 install_package pkgs/rootfs/libs/net/libnftnl.sh
 install_package pkgs/rootfs/libs/net/libnl.sh
+install_package pkgs/rootfs/libs/net/libpcap.sh
 install_package pkgs/rootfs/libs/ncurses.sh
 install_package pkgs/rootfs/libs/libedit.sh
 
