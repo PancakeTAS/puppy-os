@@ -50,6 +50,7 @@ install_package pkgs/rootfs/libs/net/libmnl.sh
 install_package pkgs/rootfs/libs/net/libnftnl.sh
 install_package pkgs/rootfs/libs/net/libnl.sh
 install_package pkgs/rootfs/libs/net/libpcap.sh
+install_package pkgs/rootfs/libs/net/libssh2.sh
 install_package pkgs/rootfs/libs/ncurses.sh
 install_package pkgs/rootfs/libs/libedit.sh
 
