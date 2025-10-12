@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+pkgname="iana-tz"
+pkgver="2025b"
+pkgsrcs=(
+    "https://data.iana.org/time-zones/releases/tzcode$pkgver.tar.gz"
+    "https://data.iana.org/time-zones/releases/tzdata$pkgver.tar.gz"
+)
+
+pkgprepare() {
+    echo "nothing to prepare"
+}
+
+pkgbuild() {
+    make ZFLAGS="-b fat"
+}
+
+pkginstall() {
+    make install DESTDIR="$pkgdir"
+
+    rm -r \
+        "$pkgdir/etc" \
+        "$pkgdir/usr/bin" \
+        "$pkgdir/usr/lib" \
+        "$pkgdir/usr/sbin" \
+        "$pkgdir/usr/share/man"
+}

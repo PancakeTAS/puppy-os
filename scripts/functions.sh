@@ -70,6 +70,5 @@ install_package() {
         build_package "$1"
     fi
 
-    echo "==> Installing $pkgname-$pkgver"
     tar -xhf "cache/$pkgname-$pkgver.tar.xz" -C "$sysroot"
 }

@@ -33,6 +33,10 @@ rm /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/rootfs/libs/base/linux-headers.sh
 install_package pkgs/rootfs/libs/base/musl.sh
 
+# build various data packages
+install_package pkgs/rootfs/data/iana-tz.sh
+install_package pkgs/rootfs/data/hwdata.sh
+
 # finish partitions
 ./target/tools/fiptool create \
     --soc-fw target/tools/bl31.bin \
