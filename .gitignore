@@ -1,0 +1,10 @@
+# ignore any cache files
+/dlcache
+/cache
+
+# ignore and user-specific files
+/.env
+
+# ignore build files
+/build
+/target
