@@ -42,6 +42,9 @@ install_package pkgs/rootfs/libs/compression/xz.sh
 install_package pkgs/rootfs/libs/compression/zlib.sh
 install_package pkgs/rootfs/libs/compression/zstd.sh
 
+# build crypto libraries
+install_package pkgs/rootfs/libs/crypto/openssl.sh
+
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
 install_package pkgs/rootfs/data/hwdata.sh
