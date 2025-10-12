@@ -57,8 +57,6 @@ build_package() {
     tar -cpJf "cache/$pkgname-$pkgver.tar.xz" -C "$pkgdir" .
 
     rm -rf "$TEMPDIR"
-
-    echo "==> Build and caching of $pkgname-$pkgver complete"
 }
 
 # Install a package into a directory, building it if necessary.

@@ -6,7 +6,7 @@ set -euo pipefail
 # prepare environment
 mkdir -p build dlcache cache
 
-rm -rf target/* || true
+rm -rf target/* build/* || true
 mkdir -p target/{,kernel,rootfs,tools}
 
 pushd target/rootfs >/dev/null
