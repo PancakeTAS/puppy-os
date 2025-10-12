@@ -1,2 +1,2 @@
 #!/bin/sh
-exec setsid -c dash -limE </dev/ttyS0 >/dev/ttyS0 2>&1
+exec setsid -c /usr/bin/dash -limE </dev/ttyS0 >/dev/ttyS0 2>&1

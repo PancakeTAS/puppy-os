@@ -61,7 +61,7 @@ mkdir -m755 -p \
     sysroot/{dev,sys,proc,run} \
     sysroot/{etc,usr,var,boot,root} \
     sysroot/usr/{bin,lib,include,share} \
-    sysroot/var/{log,cache,lib}
+    sysroot/var/{log,cache,lib,empty,db}
 mkdir -m1777 -p \
     sysroot/tmp \
     sysroot/var/tmp

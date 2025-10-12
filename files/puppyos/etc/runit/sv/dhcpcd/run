@@ -1,2 +1,3 @@
 #!/bin/sh
-exec dhcpcd -B
+mkdir -p /var/db/dhcpcd
+exec /usr/bin/dhcpcd -B
