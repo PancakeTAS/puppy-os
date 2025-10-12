@@ -46,6 +46,7 @@ install_package pkgs/rootfs/libs/compression/zstd.sh
 install_package pkgs/rootfs/libs/crypto/openssl.sh
 install_package pkgs/rootfs/libs/crypto/libxcrypt.sh
 install_package pkgs/rootfs/libs/crypto/nettle.sh
+install_package pkgs/rootfs/libs/ncurses.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
