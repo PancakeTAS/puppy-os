@@ -32,6 +32,15 @@ sysroot="$(realpath target/rootfs)"
 rm /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/rootfs/libs/base/linux-headers.sh
 install_package pkgs/rootfs/libs/base/musl.sh
+install_package pkgs/rootfs/libs/base/libc++.sh
+
+# build compression libraries
+install_package pkgs/rootfs/libs/compression/brotli.sh
+install_package pkgs/rootfs/libs/compression/bzip2.sh
+install_package pkgs/rootfs/libs/compression/lz4.sh
+install_package pkgs/rootfs/libs/compression/xz.sh
+install_package pkgs/rootfs/libs/compression/zlib.sh
+install_package pkgs/rootfs/libs/compression/zstd.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
