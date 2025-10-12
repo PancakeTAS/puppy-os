@@ -26,3 +26,9 @@ ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/kernel/arm-trusted-firmware.sh
 install_package pkgs/kernel/u-boot.sh
 install_package pkgs/kernel/linux.sh
+
+# finish partitions
+./target/tools/fiptool create \
+    --soc-fw target/tools/bl31.bin \
+    --nt-fw target/tools/u-boot.bin \
+    target/fip.img
