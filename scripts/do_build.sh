@@ -97,6 +97,9 @@ install_package pkgs/rootfs/daemons/dnsmasq.sh
 install_package pkgs/rootfs/daemons/ntp.sh
 install_package pkgs/rootfs/daemons/openssh.sh
 
+# other essential packages
+install_package pkgs/rootfs/dash.sh
+
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
 install_package pkgs/rootfs/data/hwdata.sh
