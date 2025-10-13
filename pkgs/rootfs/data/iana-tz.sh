@@ -19,7 +19,6 @@ pkginstall() {
     make install DESTDIR="$pkgdir"
 
     rm -r \
-        "$pkgdir/etc" \
         "$pkgdir/usr/bin" \
         "$pkgdir/usr/lib" \
         "$pkgdir/usr/sbin" \

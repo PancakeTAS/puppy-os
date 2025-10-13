@@ -46,7 +46,8 @@ build_package() {
         "$pkgdir"/usr/share/{man,doc,info,pkgconfig} \
         "$pkgdir"/usr/share/{bash-completion,zsh,fish} \
         "$pkgdir"/usr/lib/{pkgconfig,cmake} \
-        "$pkgdir"/usr/man
+        "$pkgdir"/usr/man \
+        "$pkgdir"/etc
 
     find "$pkgdir" -name '*.la' -delete || true
     find "$pkgdir" -type d -empty -delete || true

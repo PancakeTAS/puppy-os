@@ -19,12 +19,7 @@ pkgbuild() {
 }
 
 pkginstall() {
-    mkdir -p \
-        "$pkgdir/etc/hostapd" \
-        "$pkgdir/usr/bin"
-
+    mkdir -p "$pkgdir/usr/bin"
     cp -r hostapd{,_cli} \
         "$pkgdir/usr/bin/"
-    cp -r hostapd.{accept,conf,deny,eap_user,radius_clients,vlan,wpa_psk} \
-        "$pkgdir/etc/hostapd/"
 }

@@ -40,6 +40,5 @@ pkginstall() {
     make DESTDIR="$pkgdir" install-strip
 
     rm -r \
-        "$pkgdir/usr/share/nftables" \
-        "$pkgdir/etc"
+        "$pkgdir/usr/share/nftables"
 }
