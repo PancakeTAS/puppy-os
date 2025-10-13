@@ -90,6 +90,8 @@ install_package pkgs/rootfs/utils/net/nmap.sh
 install_package pkgs/rootfs/utils/net/curl.sh
 
 # build daemons
+install_package pkgs/rootfs/daemons/hostapd.sh
+install_package pkgs/rootfs/daemons/wpa_supplicant.sh
 install_package pkgs/rootfs/daemons/dhcpcd.sh
 install_package pkgs/rootfs/daemons/ntp.sh
 install_package pkgs/rootfs/daemons/openssh.sh
