@@ -46,6 +46,8 @@ install_package pkgs/rootfs/libs/compression/zstd.sh
 install_package pkgs/rootfs/libs/crypto/openssl.sh
 install_package pkgs/rootfs/libs/crypto/libxcrypt.sh
 install_package pkgs/rootfs/libs/crypto/nettle.sh
+
+# build network libraries
 install_package pkgs/rootfs/libs/net/libmnl.sh
 install_package pkgs/rootfs/libs/net/libnftnl.sh
 install_package pkgs/rootfs/libs/net/libnl.sh
@@ -55,8 +57,13 @@ install_package pkgs/rootfs/libs/net/nghttp2.sh
 install_package pkgs/rootfs/libs/net/nghttp3.sh
 install_package pkgs/rootfs/libs/net/libpsl.sh
 install_package pkgs/rootfs/libs/net/ldns.sh
+
+# build other libraries
 install_package pkgs/rootfs/libs/ncurses.sh
 install_package pkgs/rootfs/libs/libedit.sh
+
+# build utilities
+install_package pkgs/rootfs/utils/attr.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
