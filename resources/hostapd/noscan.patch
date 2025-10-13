@@ -1,0 +1,24 @@
+--- hw_features.c	2024-07-20 20:04:37.000000000 +0200
++++ hw_features.c.mod	2025-10-13 18:23:30.392715257 +0200
+@@ -360,21 +360,6 @@
+ 	wpa_scan_results_free(scan_res);
+ 
+ 	iface->secondary_ch = iface->conf->secondary_channel;
+-	if (!oper40) {
+-		wpa_printf(MSG_INFO, "20/40 MHz operation not permitted on "
+-			   "channel pri=%d sec=%d based on overlapping BSSes",
+-			   iface->conf->channel,
+-			   iface->conf->channel +
+-			   iface->conf->secondary_channel * 4);
+-		iface->conf->secondary_channel = 0;
+-		if (iface->drv_flags & WPA_DRIVER_FLAGS_HT_2040_COEX) {
+-			/*
+-			 * TODO: Could consider scheduling another scan to check
+-			 * if channel width can be changed if no coex reports
+-			 * are received from associating stations.
+-			 */
+-		}
+-	}
+ 
+ #ifdef CONFIG_IEEE80211AX
+ 	if (iface->conf->secondary_channel &&

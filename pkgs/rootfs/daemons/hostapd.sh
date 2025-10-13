@@ -10,6 +10,8 @@ pkgprepare() {
     cd $pkgname-$pkgver/hostapd
 
     cp "$rscdir/.config" .config
+
+    patch ../src/ap/hw_features.c < "$rscdir/noscan.patch"
 }
 
 pkgbuild() {
