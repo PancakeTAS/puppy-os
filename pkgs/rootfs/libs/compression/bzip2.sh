@@ -27,5 +27,11 @@ pkginstall() {
     ln -s libbz2.so.1.0.8 "$pkgdir/usr/lib/libbz2.so.1.0"
     ln -s libbz2.so.1.0.8 "$pkgdir/usr/lib/libbz2.so"
 
+    rm "$pkgdir"/usr/bin/{bzcmp,bzegrep,bzfgrep,bzless}
+    ln -s bzdiff "$pkgdir/usr/bin/bzcmp"
+    ln -s bzgrep "$pkgdir/usr/bin/bzegrep"
+    ln -s bzgrep "$pkgdir/usr/bin/bzfgrep"
+    ln -s bzmore "$pkgdir/usr/bin/bzless"
+
     rm "$pkgdir/usr/lib/libbz2.a"
 }
