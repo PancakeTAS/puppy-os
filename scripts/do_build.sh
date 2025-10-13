@@ -64,6 +64,7 @@ install_package pkgs/rootfs/libs/libedit.sh
 
 # build utilities
 install_package pkgs/rootfs/utils/attr.sh
+install_package pkgs/rootfs/utils/file.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
