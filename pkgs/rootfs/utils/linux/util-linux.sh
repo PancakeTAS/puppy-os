@@ -43,7 +43,6 @@ pkgprepare() {
         --disable-su \
         --disable-hwclock \
         --disable-runuser \
-        --disable-rfkill \
         --enable-pg \
         --disable-wall \
         --disable-pylibmount \
