@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
 pkgname="linux"
-_pkgname="BPI-Router-Linux"
+_pkgname="linux-bpi-r4"
 pkgver="6.17"
-_pkgver=7cd33ba5a1a51ae9ef7393613e9d079082765a0d
 pkgsrcs=(
-    "https://github.com/frank-w/$_pkgname/archive/$_pkgver/$pkgname-$pkgver.tar.gz"
+    "https://github.com/PancakeTAS/$_pkgname/archive/refs/heads/$pkgname-$pkgver.tar.gz"
     "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20250917/$pkgname-firmware-20250917.tar.gz"
     "https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-2025.10.07.tar.xz"
 )
 
 pkgprepare() {
-    cd $_pkgname-$_pkgver
+    cd $_pkgname-$pkgname-$pkgver
 
     # setup kernel embedded firmware directory
     mkdir -p firmware/mediatek/
@@ -21,10 +20,6 @@ pkgprepare() {
     # install wireless regulatory database
     cp ../wireless-regdb-2025.10.07/regulatory.db{,.p7s} \
         firmware/
-
-    # patch the eeprom driver
-    patch drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c \
-        < "$rscdir/mt7996-eeprom.patch"
 
     # apply dts override
     cat "$rscdir/mt7988a-bananapi-bpi-r4.dts.suffix" >> \
