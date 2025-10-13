@@ -99,6 +99,7 @@ install_package pkgs/rootfs/daemons/openssh.sh
 
 # other essential packages
 install_package pkgs/rootfs/dash.sh
+install_package pkgs/rootfs/runit.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
