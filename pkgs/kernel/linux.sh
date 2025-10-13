@@ -22,6 +22,10 @@ pkgprepare() {
     cp ../wireless-regdb-2025.10.07/regulatory.db{,.p7s} \
         firmware/
 
+    # patch the eeprom driver
+    patch drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c \
+        < "$rscdir/mt7996-eeprom.patch"
+
     # apply dts override
     cat "$rscdir/mt7988a-bananapi-bpi-r4.dts.suffix" >> \
         arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4.dts
