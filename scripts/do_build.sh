@@ -54,6 +54,7 @@ install_package pkgs/rootfs/libs/net/libssh2.sh
 install_package pkgs/rootfs/libs/net/nghttp2.sh
 install_package pkgs/rootfs/libs/net/nghttp3.sh
 install_package pkgs/rootfs/libs/net/libpsl.sh
+install_package pkgs/rootfs/libs/net/ldns.sh
 install_package pkgs/rootfs/libs/ncurses.sh
 install_package pkgs/rootfs/libs/libedit.sh
 
