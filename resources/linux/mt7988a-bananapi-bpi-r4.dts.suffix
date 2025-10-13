@@ -1,14 +1,14 @@
 
 &gmac0 {
-	mac-address = [00 00 00 00 00 01];
+	mac-address = [72 75 70 70 79 7A];
 };
 
 &gmac1 {
-	mac-address = [00 00 00 00 00 02];
+	mac-address = [72 75 70 70 79 7B];
 };
 
 &gmac2 {
-	mac-address = [00 00 00 00 00 03];
+	mac-address = [72 75 70 70 79 7C];
 };
 
 &pcie2 {
