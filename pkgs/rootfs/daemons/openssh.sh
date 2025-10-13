@@ -35,6 +35,10 @@ pkgprepare() {
         --without-rpath \
         --with-ssl-engine \
         --with-4in6 \
+        --with-privsep-user=nobody \
+        --with-privsep-path=/var/empty \
+        --with-pid-dir=/run \
+        --with-default-path='/usr/bin' \
         CC=clang LD=ld.lld \
         CFLAGS="-O3" LDFLAGS="-flto" \
         AR=llvm-ar RANLIB=llvm-ranlib OBJDUMP=llvm-objdump MANIFEST_TOOL=llvm-mt NM=llvm-nm
