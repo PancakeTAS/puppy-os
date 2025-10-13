@@ -27,14 +27,14 @@ popd >/dev/null
 
 # build kernel-related stuff
 sysroot="$(realpath target)"
-rm /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
+rm -f /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/kernel/arm-trusted-firmware.sh
 install_package pkgs/kernel/u-boot.sh
 install_package pkgs/kernel/linux.sh
 
 # build essential rootfs libraries
 sysroot="$(realpath target/rootfs)"
-rm /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
+rm -f /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/rootfs/libs/base/linux-headers.sh
 install_package pkgs/rootfs/libs/base/musl.sh
 install_package pkgs/rootfs/libs/base/libc++.sh
