@@ -91,6 +91,7 @@ install_package pkgs/rootfs/utils/net/curl.sh
 
 # build daemons
 install_package pkgs/rootfs/daemons/dhcpcd.sh
+install_package pkgs/rootfs/daemons/ntp.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
