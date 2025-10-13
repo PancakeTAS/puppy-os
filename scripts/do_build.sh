@@ -13,16 +13,21 @@ pushd target/rootfs >/dev/null
     mkdir -m755 \
         dev sys proc run mnt \
         etc usr var \
-        usr/{bin,lib,share,include}
+        usr/{bin,lib,share,include} \
+        var/{cache,db,lib,log} \
+        var/empty
     mkdir -m750 root
     mkdir -m1777 tmp
     ln -s usr/bin bin
     ln -s usr/lib lib
+    mkdir -m1777 var/tmp
+    ln -s ../run var/run
+    ln -s ../run/lock var/lock
 popd >/dev/null
 
 # build kernel-related stuff
 sysroot="$(realpath target)"
-ln -s "$sysroot" /tmp/puppyos-sysroot
+rm /tmp/puppyos-sysroot && ln -s "$sysroot" /tmp/puppyos-sysroot
 install_package pkgs/kernel/arm-trusted-firmware.sh
 install_package pkgs/kernel/u-boot.sh
 install_package pkgs/kernel/linux.sh
@@ -110,3 +115,8 @@ install_package pkgs/rootfs/data/hwdata.sh
     --soc-fw target/tools/bl31.bin \
     --nt-fw target/tools/u-boot.bin \
     target/fip.img
+
+# clean up
+rm -r \
+    target/tools \
+    target/rootfs/usr/include
