@@ -93,6 +93,7 @@ install_package pkgs/rootfs/utils/net/tcpdump.sh
 install_package pkgs/rootfs/utils/net/iperf3.sh
 install_package pkgs/rootfs/utils/net/nmap.sh
 install_package pkgs/rootfs/utils/net/curl.sh
+install_package pkgs/rootfs/utils/net/ethtool.sh
 
 # build daemons
 install_package pkgs/rootfs/daemons/hostapd.sh
