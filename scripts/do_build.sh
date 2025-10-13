@@ -75,6 +75,7 @@ install_package pkgs/rootfs/utils/linux/procps-ng.sh
 install_package pkgs/rootfs/utils/linux/util-linux.sh
 install_package pkgs/rootfs/utils/linux/psmisc.sh
 install_package pkgs/rootfs/utils/linux/lsof.sh
+install_package pkgs/rootfs/utils/monitoring/lm-sensors.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
