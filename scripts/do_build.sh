@@ -81,6 +81,7 @@ install_package pkgs/rootfs/utils/monitoring/htop.sh
 install_package pkgs/rootfs/utils/net/iproute2.sh
 install_package pkgs/rootfs/utils/net/iputils.sh
 install_package pkgs/rootfs/utils/net/iw.sh
+install_package pkgs/rootfs/utils/net/nftables.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
