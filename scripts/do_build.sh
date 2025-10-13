@@ -83,6 +83,7 @@ install_package pkgs/rootfs/utils/net/iputils.sh
 install_package pkgs/rootfs/utils/net/iw.sh
 install_package pkgs/rootfs/utils/net/nftables.sh
 install_package pkgs/rootfs/utils/net/traceroute.sh
+install_package pkgs/rootfs/utils/net/wireguard-tools.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
