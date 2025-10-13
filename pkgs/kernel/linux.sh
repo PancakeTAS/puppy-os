@@ -48,7 +48,7 @@ pkginstall() {
         INSTALL_MOD_STRIP=1 \
         modules_install
 
-    find "$pkgdir/rootfs/usr/lib/modules" -type f -name build -delete
+    find "$pkgdir/rootfs/usr/lib/modules" -name build -delete
 
     # install kernel image
     cp arch/arm64/boot/Image \
