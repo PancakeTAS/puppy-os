@@ -68,6 +68,7 @@ install_package pkgs/rootfs/utils/file.sh
 install_package pkgs/rootfs/utils/toybox.sh
 install_package pkgs/rootfs/utils/less.sh
 install_package pkgs/rootfs/utils/vim.sh
+install_package pkgs/rootfs/utils/pv.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
