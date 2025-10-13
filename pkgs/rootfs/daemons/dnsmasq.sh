@@ -19,6 +19,8 @@ pkgbuild() {
 
 pkginstall() {
     make install \
+        CC=clang \
+        CFLAGS="-O3" LDFLAGS="-flto" \
         PREFIX=/usr BINDIR=/usr/bin \
         DESTDIR="$pkgdir"
 }
