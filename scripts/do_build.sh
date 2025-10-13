@@ -73,6 +73,7 @@ install_package pkgs/rootfs/utils/linux/kmod.sh
 install_package pkgs/rootfs/utils/linux/pciutils.sh
 install_package pkgs/rootfs/utils/linux/procps-ng.sh
 install_package pkgs/rootfs/utils/linux/util-linux.sh
+install_package pkgs/rootfs/utils/linux/psmisc.sh
 install_package pkgs/rootfs/utils/linux/lsof.sh
 
 # build various data packages
