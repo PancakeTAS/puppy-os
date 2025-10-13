@@ -35,4 +35,6 @@ pkgbuild() {
 
 pkginstall() {
     make DESTDIR="$pkgdir" install-strip
+
+    ln -s dash "$pkgdir/usr/bin/sh"
 }

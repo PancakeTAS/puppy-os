@@ -25,4 +25,6 @@ pkginstall() {
 
     cp command/* \
         "$pkgdir/usr/bin"
+
+    ln -s runit "$pkgdir/usr/bin/init"
 }
