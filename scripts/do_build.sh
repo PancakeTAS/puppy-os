@@ -89,6 +89,9 @@ install_package pkgs/rootfs/utils/net/iperf3.sh
 install_package pkgs/rootfs/utils/net/nmap.sh
 install_package pkgs/rootfs/utils/net/curl.sh
 
+# build daemons
+install_package pkgs/rootfs/daemons/dhcpcd.sh
+
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
 install_package pkgs/rootfs/data/hwdata.sh
