@@ -78,6 +78,7 @@ install_package pkgs/rootfs/utils/linux/lsof.sh
 install_package pkgs/rootfs/utils/monitoring/lm-sensors.sh
 install_package pkgs/rootfs/utils/monitoring/btop.sh
 install_package pkgs/rootfs/utils/monitoring/htop.sh
+install_package pkgs/rootfs/utils/net/iproute2.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
