@@ -87,6 +87,7 @@ install_package pkgs/rootfs/utils/net/wireguard-tools.sh
 install_package pkgs/rootfs/utils/net/tcpdump.sh
 install_package pkgs/rootfs/utils/net/iperf3.sh
 install_package pkgs/rootfs/utils/net/nmap.sh
+install_package pkgs/rootfs/utils/net/curl.sh
 
 # build various data packages
 install_package pkgs/rootfs/data/iana-tz.sh
