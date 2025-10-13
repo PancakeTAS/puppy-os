@@ -1,2 +1,0 @@
-#!/bin/sh
-exec setsid -c /usr/bin/dash -limE </dev/ttyS0 >/dev/ttyS0 2>&1
