@@ -12,7 +12,7 @@ mkdir -p target/{,kernel,rootfs,tools}
 pushd target/rootfs >/dev/null
     mkdir -m755 \
         dev sys proc run mnt \
-        etc usr var \
+        etc usr var opt \
         usr/{bin,lib,share,include} \
         var/{cache,db,lib,log} \
         var/empty
