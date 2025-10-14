@@ -47,5 +47,5 @@ pkgbuild() {
 }
 
 pkginstall() {
-    make DESTDIR="$pkgdir" install
+    make DESTDIR="$pkgdir" install -j1
 }
