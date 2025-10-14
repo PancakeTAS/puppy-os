@@ -14,7 +14,7 @@ pushd target/rootfs >/dev/null
         dev sys proc run mnt \
         etc usr var opt \
         usr/{bin,lib,share,include} \
-        var/{cache,db,lib,log} \
+        var/{cache,db,lib} \
         var/empty
     mkdir -m750 root
     mkdir -m1777 tmp
@@ -23,6 +23,7 @@ pushd target/rootfs >/dev/null
     mkdir -m1777 var/tmp
     ln -s ../run var/run
     ln -s ../run/lock var/lock
+    ln -s ../run/log var/log
 popd >/dev/null
 
 # build kernel-related stuff

@@ -4,7 +4,7 @@ set -e
 # mount data partition
 mount -o noatime /dev/mmcblk0p5 /run
 
-for dir in etc root opt var/cache var/db var/lib var/log; do
+for dir in etc root opt var/cache var/db var/lib; do
     mkdir -p /run/$dir
     mount --bind /run/$dir /$dir
 done
@@ -20,7 +20,7 @@ mount -t tmpfs shm /dev/shm
 # mount memory mapped filesystems
 mount -t tmpfs tmpfs /tmp
 mount -t tmpfs tmpfs /run
-mkdir -p /run/lock
+mkdir -p /run/lock /run/log
 
 # hand off to runit
 exec /bin/runit
