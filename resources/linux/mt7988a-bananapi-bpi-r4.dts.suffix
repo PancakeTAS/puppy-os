@@ -1,14 +1,14 @@
 
 &gmac0 {
-	mac-address = [72 75 70 70 79 7A];
+	mac-address = [11 11 11 11 11 11];
 };
 
 &gmac1 {
-	mac-address = [72 75 70 70 79 7B];
+	status = "disabled";
 };
 
 &gmac2 {
-	mac-address = [72 75 70 70 79 7C];
+	status = "disabled";
 };
 
 &pcie2 {
