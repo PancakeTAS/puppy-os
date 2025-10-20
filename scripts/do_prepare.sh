@@ -27,7 +27,7 @@ fi
 echo "==> Creating filesystems..."
 dd if=/dev/zero bs=512 count=4 | tee "${device_}"{3,4,5} >/dev/null
 mkfs.vfat -n KERNEL "${device_}3"
-mkfs.ext4 -L ROOTFS "${device_}4"
+mkfs.f2fs -l ROOTFS "${device_}4"
 mkfs.f2fs -l DATA   "${device_}5"
 
 echo "==> Done."
