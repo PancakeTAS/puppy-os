@@ -44,6 +44,12 @@ With the partition table ready, you can install/update PuppyOS using this comman
 
 DO NOT RERUN `./puppyos.sh prepare` WHEN UPDATING THE SYSTEM!
 
+### Post Installation
+
+You will need to set up basic files to get your Linux system to run.
+
+I have provided a simple guide in `docs/CONFIGS.md`, but you might wish to set up your system completely differently.
+
 ## More Information
 
 When building a new Linux system, it is important to keep track of which files are accessed by which program or library. This is achieved (with questionable accuracy) in docs/FILES.md.

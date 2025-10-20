@@ -4,7 +4,7 @@ set -e
 # mount data partition
 mount -o noatime /dev/mmcblk0p5 /run
 
-for dir in etc root opt var/cache var/db var/lib; do
+for dir in etc root opt var/cache var/db var/lib var/tmp; do
     mkdir -p /run/$dir
     mount --bind /run/$dir /$dir
 done
