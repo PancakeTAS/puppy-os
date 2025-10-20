@@ -22,7 +22,7 @@ pkgbuild() {
         DRAM_USE_COMB=1
 
     make fiptool \
-        HOSTCC=/bin/clang
+        HOSTCC="$HOSTCLANG"
 }
 
 pkginstall() {

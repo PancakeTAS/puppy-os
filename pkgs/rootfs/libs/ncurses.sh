@@ -34,7 +34,7 @@ pkgprepare() {
         CC=clang CXX=clang++ \
         CFLAGS="-O3" LDFLAGS="-flto" \
         AR=llvm-ar RANLIB=llvm-ranlib NM=llvm-nm \
-        BUILD_CC=/bin/clang
+        BUILD_CC="$HOSTCLANG"
 }
 
 pkgbuild() {

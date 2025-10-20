@@ -18,7 +18,7 @@ pkgprepare() {
 
 pkgbuild() {
     ARCH=arm64 make u-boot.bin \
-        HOSTCC=/bin/clang \
+        HOSTCC="$HOSTCLANG" \
         CROSS_COMPILE=aarch64-linux-gnu- \
         CC=clang CXX=clang++ LD=ld.lld AS=llvm-as AR=llvm-ar NM=llvm-nm STRIP=llvm-strip OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump \
         UBOOTRELEASE="$pkgver"

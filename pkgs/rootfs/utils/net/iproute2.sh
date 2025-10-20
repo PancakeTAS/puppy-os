@@ -16,7 +16,7 @@ pkgprepare() {
 
 pkgbuild() {
     CFLAGS="-O3 -flto" make \
-        HOSTCC=/bin/clang CC=clang \
+        HOSTCC="$HOSTCLANG" CC=clang \
         AR=llvm-ar
 }
 

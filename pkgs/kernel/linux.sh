@@ -27,12 +27,12 @@ pkgprepare() {
 
     # write kconfig
     cp "$rscdir/.config" .config
-    make HOSTCC=/bin/clang \
+    make HOSTCC="$HOSTCLANG" \
         LLVM=1 ARCH=arm64 olddefconfig
 }
 
 pkgbuild() {
-    make HOSTCC=/bin/clang \
+    make HOSTCC="$HOSTCLANG" \
         LLVM=1 ARCH=arm64 \
         Image dtbs modules
 }
@@ -41,7 +41,7 @@ pkginstall() {
     mkdir -p "$pkgdir"/{kernel,rootfs}
 
     # install kernel modules
-    make HOSTCC=/bin/clang \
+    make HOSTCC="$HOSTCLANG" \
         LLVM=1 ARCH=arm64 \
         INSTALL_MOD_PATH="$pkgdir/rootfs/usr" \
         INSTALL_MOD_STRIP=1 \
