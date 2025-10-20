@@ -37,14 +37,12 @@ In order to start the build process, execute the buildscript through fakeroot:
 After successful compilation, the installed system resides in the `target` folder.
 
 Before being able to install this system, you need to create the partition table and filesystems on the SD card:
-`sudo ./puppyos.sh prepare /dev/sde`
-
-Make sure to replace `/dev/sde` with the block device you want to write to. Also please note that the script is extremely primitive and only designed to work with `/dev/sdX`. Check out `scripts/do_prepare.sh` and manually follow the steps if your SD card appears under a different name.
+`sudo ./puppyos.sh prepare /dev/<sd card>`
 
 With the partition table ready, you can install/update PuppyOS using this command:
-`sudo ./puppyos.sh update /dev/sde`
+`sudo ./puppyos.sh update /dev/<sd card>`
 
-DO NOT UNDER ANY CIRCUMSTANCES RERUN `./puppyos.sh prepare` WHEN UPDATING THE SYSTEM. It will wipe your data partition, which is otherwise preserved.
+DO NOT RERUN `./puppyos.sh prepare` WHEN UPDATING THE SYSTEM!
 
 ## More Information
 

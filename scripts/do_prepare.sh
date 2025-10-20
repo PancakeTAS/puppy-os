@@ -18,10 +18,16 @@ sgdisk -Z -a 1 \
     -n '5:598016:0' -c '5:data' -t '5:8300' \
     "$1" > /dev/null
 
+if [[ "$1" =~ [0-9]$ ]]; then
+    device_="${1}p"
+else
+    device_="$1"
+fi
+
 echo "==> Creating filesystems..."
-dd if=/dev/zero bs=512 count=4 | tee "$1"{3,4,5} >/dev/null
-mkfs.vfat -n KERNEL "${1}3"
-mkfs.ext4 -L ROOTFS "${1}4"
-mkfs.f2fs -l DATA   "${1}5"
+dd if=/dev/zero bs=512 count=4 | tee "${device_}"{3,4,5} >/dev/null
+mkfs.vfat -n KERNEL "${device_}3"
+mkfs.ext4 -L ROOTFS "${device_}4"
+mkfs.f2fs -l DATA   "${device_}5"
 
 echo "==> Done."
