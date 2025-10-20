@@ -4,13 +4,12 @@ This guide describes how to build the toolchain for PuppyOS.
 
 ## Building the toolchain
 
-Download and extract the LLVM release tarball, then build LLVM using the following command:
+Download and extract the LLVM 21 release tarball, then build LLVM using the following command:
 ```bash
 $ cmake -S llvm -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_NAME="Linux" \
   -DCMAKE_INSTALL_PREFIX="PATH-TO-TOOLCHAIN" \
-  -DLLVM_CCACHE_BUILD=On \
   -DCMAKE_C_COMPILER=clang \
   -DCMAKE_CXX_COMPILER=clang++ \
   -DLLVM_ENABLE_LTO=Thin \
@@ -26,17 +25,19 @@ $ cmake -S llvm -B build -G Ninja \
   -DCLANG_DEFAULT_RTLIB="compiler-rt" \
   -DCLANG_DEFAULT_CXX_STDLIB="libc++" \
   -DCLANG_DEFAULT_LINKER="lld" \
-  -DDEFAULT_SYSROOT="PATH-TO-SYSROOT"
+  -DDEFAULT_SYSROOT="/tmp/puppyos-sysroot"
 $ cmake --build build
 $ cmake --install build --strip
 ```
 
-If you do not use `ccache`, remove `-DLLVM_CCACHE_BUILD=On`. If you wish to compile without LTO to speed up the build significantly, remove `-DLLVM_ENABLE_LTO=Thin`. Finally, make sure PATH-TO-TOOLCHAIN is adjusted to point to `<repo-root/toolchain>` and PATH-TO-SYSROOT is adjusted to point to `<repo-root/sysroot>`. It is recommended to change it to something like `/run/sysroot`, which is a symbolic link to the repository root.
+If you wish to compile without LTO to speed up the build significantly, remove `-DLLVM_ENABLE_LTO=Thin`. Make sure PATH-TO-TOOLCHAIN is adjusted to point to `<repo-root/toolchain>` (or wherever you'd like to install the toolchain to).
 
-Next, download and extract the kernel tarball and install them to the system root you specified. This is required to build the compiler runtimes:
+Temporarily create the `/tmp/puppyos-sysroot` directory.
+
+Next, download and extract the kernel tarball and install them to `/tmp/puppyos-sysroot`. This is required to build the compiler runtimes:
 ```bash
 $ make ARCH=arm64 headers
-$ make ARCH=arm64 INSTALL_HDR_PATH="PATH-TO-SYSROOT/usr" headers_install
+$ make ARCH=arm64 INSTALL_HDR_PATH="/tmp/puppyos-sysroot/usr" headers_install
 ```
 
 Do the same for the musl tarball (NOTE: You will need to supply _any_ valid compiler capable of compiling to aarch64 for autoconf to succeed.):
@@ -46,14 +47,14 @@ $ ../configure \
     --prefix=/usr \
     --target=aarch64-dog-linux-musl \
     CROSS_COMPILE= CC=clang
-$ make DESTDIR="PATH-TO-SYSROOT" install-headers
+$ make DESTDIR="/tmp/puppyos-sysroot" install-headers
 ```
 Finally, head back into the LLVM release tarball and build compiler-rt:
 ```bash
 $ export PATH="PATH-TO-TOOLCHAIN/bin:$PATH"
 $ cmake -S compiler-rt -B build -G Ninja \
   -DCMAKE_INSTALL_PREFIX="PATH-TO-TOOLCHAIN/lib/clang/21" \
-  -DCMAKE_SYSROOT="PATH-TO-SYSROOT" \
+  -DCMAKE_SYSROOT="/tmp/puppyos-sysroot" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_CXX_COMPILER=clang++ \
   -DCMAKE_C_COMPILER=clang \
@@ -76,4 +77,4 @@ $ cmake --build build
 $ cmake --install build --strip
 ```
 
-That's it, the toolchain is now installed to `toolchain` and will automatically be added to PATH by the scripts.
+That's it, the toolchain is now installed to `toolchain`. Make sure to add the contained bin folder to your path when building!

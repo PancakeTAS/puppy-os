@@ -10,8 +10,8 @@ The bootloader "bl2", now with an initialized serial console, searches for a par
 
 U-Boot is then programmed to load the kernel and execute it. U-Boot also loads a flattened device tree. A device tree is a datastructure used on SoCs that describes at which memory adresses all hardware components are positioned. Unlike something like PCIe, there isn't a standardized way to "scan" for hardware, which is why a DTB (device tree blob) is required.
 
-The kernel arguments passed to Linux from U-Boot tell it to mount the next partition as root partition and execute the runit init system.
+The kernel arguments passed to Linux from U-Boot tell it to mount the next partition as read-only root partition and execute the "init system".
 
-The runit init system on the now fresh Linux system can barely be considered an init system, as all the initialization is written in bash by the user. It executes the `1` file, which mounts the essential virtual file systems and some other misc things (check out the script to see the full initialization).
+The "init system" is a fairly simple shell script, which mounts the usual virtual filesystems, as well as the "overlay" filesystem, containing configuration files and more. It then replaces itself with runit.
 
-After executing `1`, runit launches it's primitive service manager (read the runit wiki for more information) and hands off serial to the main shell (dash).
+The runit system is configured by you.
