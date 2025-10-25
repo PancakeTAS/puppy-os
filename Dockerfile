@@ -36,7 +36,9 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
         -DCLANG_DEFAULT_LINKER="lld" \
         -DDEFAULT_SYSROOT=/puppyos/target/rootfs && \
     cmake --build build && \
-    cmake --install build --strip
+    cmake --install build --strip && \
+    cd ../.. && \
+    rm -rf /build/llvm-project-21.1.4.src
 
 RUN mkdir -p /tmp/puppyos-sysroot
 
@@ -45,7 +47,9 @@ RUN wget -qO- "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.17.tar.xz" |
         tar xJ && \
     cd /build/linux-6.17 && \
     make ARCH=arm64 headers -j$(nproc) && \
-    make ARCH=arm64 INSTALL_HDR_PATH="/tmp/puppyos-sysroot/usr" headers_install -j$(nproc)
+    make ARCH=arm64 INSTALL_HDR_PATH="/tmp/puppyos-sysroot/usr" headers_install -j$(nproc) && \
+    cd ../.. && \
+    rm -rf /build/linux-6.17
 
 # grab musl headers
 RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
@@ -55,12 +59,16 @@ RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
         --prefix=/usr \
         --host=aarch64-dog-linux-musl \
         CROSS_COMPILE= CC=clang && \
-    make DESTDIR="/tmp/puppyos-sysroot" install-headers -j$(nproc)
+    make DESTDIR="/tmp/puppyos-sysroot" install-headers -j$(nproc) && \
+    cd ../.. && \
+    rm -rf /build/musl-1.2.5
 
 ENV PATH="/toolchain/bin:$PATH"
 
 # build compiler-rt
-RUN cd /build/llvm-project-21.1.4.src && \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.4/llvm-project-21.1.4.src.tar.xz" | \
+        tar xJ && \
+    cd /build/llvm-project-21.1.4.src && \
     cmake -S compiler-rt -B build-rt -G Ninja \
         -DCMAKE_INSTALL_PREFIX="/toolchain/lib/clang/21" \
         -DCMAKE_SYSROOT="/tmp/puppyos-sysroot" \
@@ -83,7 +91,9 @@ RUN cd /build/llvm-project-21.1.4.src && \
         -DCMAKE_CXX_FLAGS="-nostdlib" \
         -DCMAKE_C_FLAGS="-nostdlib" && \
     cmake --build build-rt && \
-    cmake --install build-rt --strip
+    cmake --install build-rt --strip && \
+    cd ../.. && \
+    rm -rf /build/llvm-project-21.1.4.src
 
 RUN rm -rf /build
 
