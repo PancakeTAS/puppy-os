@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="dash"
-pkgver="0.5.13"
+pkgver="0.5.13.1"
 pkgsrcs=(
     "http://gondor.apana.org.au/~herbert/$pkgname/files/$pkgname-$pkgver.tar.gz"
 )
