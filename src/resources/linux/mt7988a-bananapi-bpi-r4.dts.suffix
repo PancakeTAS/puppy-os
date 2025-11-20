@@ -4,11 +4,11 @@
 };
 
 &gmac1 {
-	status = "disabled";
+	mac-address = [22 22 22 22 22 22];
 };
 
 &gmac2 {
-	status = "disabled";
+	mac-address = [33 33 33 33 33 33];
 };
 
 &pcie2 {
