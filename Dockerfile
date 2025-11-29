@@ -12,9 +12,9 @@ RUN pacman -Syu --noconfirm && \
 WORKDIR /build
 
 # compile llvm
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.4/llvm-project-21.1.4.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.6/llvm-project-21.1.6.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.4.src && \
+    cd /build/llvm-project-21.1.6.src && \
     cmake -S llvm -B build -G Ninja \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SYSTEM_NAME="Linux" \
@@ -38,7 +38,7 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build && \
     cmake --install build --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.4.src
+    rm -rf /build/llvm-project-21.1.6.src
 
 RUN mkdir -p /tmp/puppyos-sysroot
 
@@ -66,9 +66,9 @@ RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
 ENV PATH="/toolchain/bin:$PATH"
 
 # build compiler-rt
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.4/llvm-project-21.1.4.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.6/llvm-project-21.1.6.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.4.src && \
+    cd /build/llvm-project-21.1.6.src && \
     cmake -S compiler-rt -B build-rt -G Ninja \
         -DCMAKE_INSTALL_PREFIX="/toolchain/lib/clang/21" \
         -DCMAKE_SYSROOT="/tmp/puppyos-sysroot" \
@@ -93,7 +93,7 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build-rt && \
     cmake --install build-rt --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.4.src
+    rm -rf /build/llvm-project-21.1.6.src
 
 RUN rm -rf /build
 
