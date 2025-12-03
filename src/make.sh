@@ -11,7 +11,7 @@ cd /puppyos
 export MAKEFLAGS="-j$(nproc)"
 
 # make basic rootfs structure
-mkdir -p /puppyos/target/{,kernel,rootfs,tools}
+mkdir -p /puppyos/target/rootfs
 pushd /puppyos/target/rootfs >/dev/null
     mkdir -m755 \
         dev sys proc run mnt \
@@ -101,105 +101,90 @@ install_package() {
     tar -xhf cache/$pkgname-$pkgver.tar.xz -C $installdir
 }
 
-# build kernel-related stuff
-installdir=/puppyos/target
-install_package src/pkgs/kernel/arm-trusted-firmware.sh
-install_package src/pkgs/kernel/u-boot.sh
-install_package src/pkgs/kernel/linux.sh
-
 # build essential rootfs libraries
 installdir=/puppyos/target/rootfs
-install_package src/pkgs/rootfs/libs/base/linux-headers.sh
-install_package src/pkgs/rootfs/libs/base/musl.sh
-install_package src/pkgs/rootfs/libs/base/libc++.sh
+install_package src/pkgs/libs/base/linux-headers.sh
+install_package src/pkgs/libs/base/musl.sh
+install_package src/pkgs/libs/base/libc++.sh
 
 # build compression libraries
-install_package src/pkgs/rootfs/libs/compression/brotli.sh
-install_package src/pkgs/rootfs/libs/compression/bzip2.sh
-install_package src/pkgs/rootfs/libs/compression/lz4.sh
-install_package src/pkgs/rootfs/libs/compression/xz.sh
-install_package src/pkgs/rootfs/libs/compression/zlib.sh
-install_package src/pkgs/rootfs/libs/compression/zstd.sh
+install_package src/pkgs/libs/compression/brotli.sh
+install_package src/pkgs/libs/compression/bzip2.sh
+install_package src/pkgs/libs/compression/lz4.sh
+install_package src/pkgs/libs/compression/xz.sh
+install_package src/pkgs/libs/compression/zlib.sh
+install_package src/pkgs/libs/compression/zstd.sh
 
 # build crypto libraries
-install_package src/pkgs/rootfs/libs/crypto/openssl.sh
-install_package src/pkgs/rootfs/libs/crypto/libxcrypt.sh
-install_package src/pkgs/rootfs/libs/crypto/nettle.sh
+install_package src/pkgs/libs/crypto/openssl.sh
+install_package src/pkgs/libs/crypto/libxcrypt.sh
+install_package src/pkgs/libs/crypto/nettle.sh
 
 # build network libraries
-install_package src/pkgs/rootfs/libs/net/libmnl.sh
-install_package src/pkgs/rootfs/libs/net/libnftnl.sh
-install_package src/pkgs/rootfs/libs/net/libnl.sh
-install_package src/pkgs/rootfs/libs/net/libpcap.sh
-install_package src/pkgs/rootfs/libs/net/libssh2.sh
-install_package src/pkgs/rootfs/libs/net/nghttp2.sh
-install_package src/pkgs/rootfs/libs/net/nghttp3.sh
-install_package src/pkgs/rootfs/libs/net/libpsl.sh
-install_package src/pkgs/rootfs/libs/net/ldns.sh
+install_package src/pkgs/libs/net/libmnl.sh
+install_package src/pkgs/libs/net/libnftnl.sh
+install_package src/pkgs/libs/net/libnl.sh
+install_package src/pkgs/libs/net/libpcap.sh
+install_package src/pkgs/libs/net/libssh2.sh
+install_package src/pkgs/libs/net/nghttp2.sh
+install_package src/pkgs/libs/net/nghttp3.sh
+install_package src/pkgs/libs/net/libpsl.sh
+install_package src/pkgs/libs/net/ldns.sh
 
 # build other libraries
-install_package src/pkgs/rootfs/libs/ncurses.sh
-install_package src/pkgs/rootfs/libs/libedit.sh
+install_package src/pkgs/libs/ncurses.sh
+install_package src/pkgs/libs/libedit.sh
 
 # build utilities
-install_package src/pkgs/rootfs/utils/attr.sh
-install_package src/pkgs/rootfs/utils/file.sh
-install_package src/pkgs/rootfs/utils/toybox.sh
-install_package src/pkgs/rootfs/utils/less.sh
-install_package src/pkgs/rootfs/utils/vim.sh
-install_package src/pkgs/rootfs/utils/pv.sh
-install_package src/pkgs/rootfs/utils/linux/kmod.sh
-install_package src/pkgs/rootfs/utils/linux/pciutils.sh
-install_package src/pkgs/rootfs/utils/linux/procps-ng.sh
-install_package src/pkgs/rootfs/utils/linux/util-linux.sh
-install_package src/pkgs/rootfs/utils/linux/psmisc.sh
-install_package src/pkgs/rootfs/utils/linux/lsof.sh
-install_package src/pkgs/rootfs/utils/monitoring/lm-sensors.sh
-install_package src/pkgs/rootfs/utils/monitoring/btop.sh
-install_package src/pkgs/rootfs/utils/monitoring/htop.sh
-install_package src/pkgs/rootfs/utils/net/iproute2.sh
-install_package src/pkgs/rootfs/utils/net/iputils.sh
-install_package src/pkgs/rootfs/utils/net/iw.sh
-install_package src/pkgs/rootfs/utils/net/nftables.sh
-install_package src/pkgs/rootfs/utils/net/traceroute.sh
-install_package src/pkgs/rootfs/utils/net/wireguard-tools.sh
-install_package src/pkgs/rootfs/utils/net/tcpdump.sh
-install_package src/pkgs/rootfs/utils/net/iperf3.sh
-install_package src/pkgs/rootfs/utils/net/nmap.sh
-install_package src/pkgs/rootfs/utils/net/curl.sh
-install_package src/pkgs/rootfs/utils/net/ethtool.sh
+install_package src/pkgs/utils/attr.sh
+install_package src/pkgs/utils/file.sh
+install_package src/pkgs/utils/toybox.sh
+install_package src/pkgs/utils/less.sh
+install_package src/pkgs/utils/vim.sh
+install_package src/pkgs/utils/pv.sh
+install_package src/pkgs/utils/linux/kmod.sh
+install_package src/pkgs/utils/linux/pciutils.sh
+install_package src/pkgs/utils/linux/procps-ng.sh
+install_package src/pkgs/utils/linux/util-linux.sh
+install_package src/pkgs/utils/linux/psmisc.sh
+install_package src/pkgs/utils/linux/lsof.sh
+install_package src/pkgs/utils/monitoring/lm-sensors.sh
+install_package src/pkgs/utils/monitoring/btop.sh
+install_package src/pkgs/utils/monitoring/htop.sh
+install_package src/pkgs/utils/net/iproute2.sh
+install_package src/pkgs/utils/net/iputils.sh
+install_package src/pkgs/utils/net/iw.sh
+install_package src/pkgs/utils/net/nftables.sh
+install_package src/pkgs/utils/net/traceroute.sh
+install_package src/pkgs/utils/net/wireguard-tools.sh
+install_package src/pkgs/utils/net/tcpdump.sh
+install_package src/pkgs/utils/net/iperf3.sh
+install_package src/pkgs/utils/net/nmap.sh
+install_package src/pkgs/utils/net/curl.sh
+install_package src/pkgs/utils/net/ethtool.sh
 
 # build daemons
-install_package src/pkgs/rootfs/daemons/hostapd.sh
-install_package src/pkgs/rootfs/daemons/wpa_supplicant.sh
-install_package src/pkgs/rootfs/daemons/dhcpcd.sh
-install_package src/pkgs/rootfs/daemons/dnsmasq.sh
-install_package src/pkgs/rootfs/daemons/ntp.sh
-install_package src/pkgs/rootfs/daemons/openssh.sh
+install_package src/pkgs/daemons/hostapd.sh
+install_package src/pkgs/daemons/wpa_supplicant.sh
+install_package src/pkgs/daemons/dhcpcd.sh
+install_package src/pkgs/daemons/dnsmasq.sh
+install_package src/pkgs/daemons/ntp.sh
+install_package src/pkgs/daemons/openssh.sh
 
 # other essential packages
-install_package src/pkgs/rootfs/dash.sh
-install_package src/pkgs/rootfs/runit.sh
+install_package src/pkgs/dash.sh
+install_package src/pkgs/runit.sh
 
 # build various data packages
-install_package src/pkgs/rootfs/data/iana-tz.sh
-install_package src/pkgs/rootfs/data/hwdata.sh
+install_package src/pkgs/data/iana-tz.sh
+install_package src/pkgs/data/hwdata.sh
 
-# finish partitions
-./target/tools/fiptool create \
-    --soc-fw target/tools/bl31.bin \
-    --nt-fw target/tools/u-boot.bin \
-    target/fip.img
-
-# clean up
+# clean up unwanted files
 rm -r \
-    target/tools \
     target/rootfs/usr/include
 
-# copy output files
-echo "==> Writing output files"
-cp target/bl2.img output
-cp target/fip.img output
-tar cJf output/kernel.tar.xz -C target/kernel .
-tar cpJf output/rootfs.tar.xz -C target/rootfs .
+# make initramfs
+echo "==> Writing initramfs"
+# (FIXME)
+
 echo "==> Done."

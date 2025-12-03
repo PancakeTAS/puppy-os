@@ -6,9 +6,9 @@ strip = 'llvm-strip'
 
 [host_machine]
 system = 'linux'
-cpu_family = 'aarch64'
-cpu = 'aarch64'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
 endian = 'little'
 
 [properties]
-sys_root = '/tmp/puppyos-sysroot'
+sys_root = '/puppyos/target/rootfs'
