@@ -101,9 +101,8 @@ RUN rm -rf /build
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm \
         fakeroot meson \
-        dtc uboot-tools \
         tinyxxd \
-        bc && \
+        bc cpio && \
     pacman -Scc --noconfirm
 
 # prepare puppy-os environment

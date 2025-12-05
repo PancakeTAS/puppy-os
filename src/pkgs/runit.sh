@@ -27,5 +27,5 @@ pkginstall() {
     cp command/* \
         $pkgdir/usr/bin
     cp $rscdir/init \
-        $pkgdir/usr/bin/init
+        $pkgdir/init
 }

@@ -185,6 +185,11 @@ rm -r \
 
 # make initramfs
 echo "==> Writing initramfs"
-# (FIXME)
+pushd target/rootfs
+    mkdir -p dev
+    mknod -m 600 dev/console c 5 1
+    mknod -m 666 dev/null c 1 3
+    find . | cpio -H newc -o --owner root:root > ../../output/initramfs.cpio
+popd
 
 echo "==> Done."
