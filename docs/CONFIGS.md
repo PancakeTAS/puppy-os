@@ -8,12 +8,13 @@ The important part is that the init system will mount the following paths from t
 - `/etc`
 - `/root`
 - `/opt`
+- `/srv`
 - `/var/lib`
 - `/var/cache`
 - `/var/db`
 - `/var/tmp`
 
-You may read the [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html) for more information on these paths, but the gist is that all four paths in `/var/` are used for storing information such as DHCP leases or DNS caches, the `/root` and `/etc` paths should be obvious and the `/opt` path is for adding semi-permanent optional software to the system (because anything in `/usr` is read-only without a rebuild).
+You may read the [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html) for more information on these paths, but the gist is that all four paths in `/var/` are used for storing information such as DHCP leases or DNS caches, the `/root` and `/etc` paths should be obvious, the `/opt` path is for adding semi-permanent optional software to the system (because anything in `/usr` is read-only without a rebuild) and `/srv` is for hosting files.
 
 ## Essential System Files
 

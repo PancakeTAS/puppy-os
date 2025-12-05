@@ -15,7 +15,7 @@ mkdir -p /puppyos/target/{,kernel,rootfs,tools}
 pushd /puppyos/target/rootfs >/dev/null
     mkdir -m755 \
         dev sys proc run mnt \
-        etc usr var opt \
+        etc usr var opt srv \
         usr/{bin,lib,share,include} \
         var/{cache,db,lib} \
         var/empty
