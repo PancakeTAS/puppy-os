@@ -153,7 +153,6 @@ install_package src/pkgs/utils/monitoring/btop.sh
 install_package src/pkgs/utils/monitoring/htop.sh
 install_package src/pkgs/utils/net/iproute2.sh
 install_package src/pkgs/utils/net/iputils.sh
-install_package src/pkgs/utils/net/iw.sh
 install_package src/pkgs/utils/net/nftables.sh
 install_package src/pkgs/utils/net/traceroute.sh
 install_package src/pkgs/utils/net/wireguard-tools.sh
@@ -164,8 +163,6 @@ install_package src/pkgs/utils/net/curl.sh
 install_package src/pkgs/utils/net/ethtool.sh
 
 # build daemons
-install_package src/pkgs/daemons/hostapd.sh
-install_package src/pkgs/daemons/wpa_supplicant.sh
 install_package src/pkgs/daemons/dhcpcd.sh
 install_package src/pkgs/daemons/dnsmasq.sh
 install_package src/pkgs/daemons/ntp.sh
