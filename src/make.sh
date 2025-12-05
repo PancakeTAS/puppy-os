@@ -165,6 +165,7 @@ install_package src/pkgs/utils/net/iperf3.sh
 install_package src/pkgs/utils/net/nmap.sh
 install_package src/pkgs/utils/net/curl.sh
 install_package src/pkgs/utils/net/ethtool.sh
+install_package src/pkgs/utils/fs/dosfstools.sh
 install_package src/pkgs/utils/fs/xfsprogs.sh
 
 # build daemons
