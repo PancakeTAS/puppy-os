@@ -23,5 +23,8 @@ mount -t tmpfs tmpfs /tmp
 mount -t tmpfs tmpfs /run
 mkdir -p /run/lock /run/log
 
+# remount root as read-only
+mount -o remount,ro /
+
 # hand off to runit
 exec /bin/runit
