@@ -11,7 +11,7 @@ cd /puppyos
 export MAKEFLAGS="-j$(nproc)"
 
 # make basic rootfs structure
-mkdir -p /puppyos/target/rootfs
+mkdir -p /puppyos/target/{rootfs,kernel}
 pushd /puppyos/target/rootfs >/dev/null
     mkdir -m755 \
         dev sys proc run mnt \
@@ -186,7 +186,14 @@ pushd target/rootfs
     mkdir -p dev
     mknod -m 600 dev/console c 5 1
     mknod -m 666 dev/null c 1 3
-    find . | cpio -H newc -o --owner root:root > ../../output/initramfs.cpio
+    find . | cpio -H newc -o --owner root:root > /tmp/initramfs.cpio
 popd
+
+# compile kernel
+installdir=/puppyos/target/kernel
+install_package src/pkgs/linux.sh
+
+# copy kernel to output directory
+cp target/kernel/linux-6.18.bzImage output/BOOTX64.EFI
 
 echo "==> Done."

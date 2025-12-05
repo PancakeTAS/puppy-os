@@ -2,14 +2,13 @@
 
 pkgname="linux-headers"
 _pkgname="linux"
-_pkgname2="linux-bpi-r4"
 pkgver="6.18"
 pkgsrcs=(
-    "https://github.com/PancakeTAS/$_pkgname2/archive/refs/heads/$_pkgname-$pkgver.tar.gz"
+    "https://cdn.kernel.org/pub/$_pkgname/kernel/v6.x/$_pkgname-$pkgver.tar.xz"
 )
 
 pkgprepare() {
-    cd ${_pkgname2}-${_pkgname}-${pkgver}
+    cd ${_pkgname}-${pkgver}
 }
 
 pkgbuild() {
