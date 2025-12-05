@@ -21,10 +21,6 @@ pkgprepare() {
     cp ../wireless-regdb-2025.10.07/regulatory.db{,.p7s} \
         firmware/
 
-    # apply dts override
-    cat $rscdir/mt7988a-bananapi-bpi-r4.dts.suffix >> \
-        arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4.dts
-
     # write kconfig
     cp $rscdir/.config .config
     make HOSTCC=/usr/bin/clang \
