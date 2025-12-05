@@ -131,6 +131,10 @@ install_package src/pkgs/libs/net/nghttp3.sh
 install_package src/pkgs/libs/net/libpsl.sh
 install_package src/pkgs/libs/net/ldns.sh
 
+# build filesystem libraries
+install_package src/pkgs/libs/fs/libinih.sh
+install_package src/pkgs/libs/fs/liburcu.sh
+
 # build other libraries
 install_package src/pkgs/libs/ncurses.sh
 install_package src/pkgs/libs/libedit.sh
@@ -161,6 +165,7 @@ install_package src/pkgs/utils/net/iperf3.sh
 install_package src/pkgs/utils/net/nmap.sh
 install_package src/pkgs/utils/net/curl.sh
 install_package src/pkgs/utils/net/ethtool.sh
+install_package src/pkgs/utils/fs/xfsprogs.sh
 
 # build daemons
 install_package src/pkgs/daemons/dhcpcd.sh
