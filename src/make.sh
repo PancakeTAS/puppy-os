@@ -150,6 +150,7 @@ install_package src/pkgs/utils/linux/kmod.sh
 install_package src/pkgs/utils/linux/pciutils.sh
 install_package src/pkgs/utils/linux/procps-ng.sh
 install_package src/pkgs/utils/linux/util-linux.sh
+install_package src/pkgs/utils/linux/mdadm.sh
 install_package src/pkgs/utils/linux/psmisc.sh
 install_package src/pkgs/utils/linux/lsof.sh
 install_package src/pkgs/utils/monitoring/lm-sensors.sh
