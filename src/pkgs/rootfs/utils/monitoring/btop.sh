@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="btop"
-pkgver="1.4.5"
+pkgver="1.4.6"
 pkgsrcs=(
     "https://github.com/aristocratos/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )
@@ -16,6 +16,7 @@ pkgprepare() {
         -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On \
         -DCMAKE_CXX_COMPILER=clang++ \
         -DCMAKE_CXX_COMPILER_TARGET="aarch64-dog-linux-musl" \
+        -DBUILD_TESTING=Off \
         -DBTOP_GPU=Off \
         -DBTOP_LTO=On
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="ldns"
-pkgver="1.8.4"
+pkgver="1.9.0"
 pkgsrcs=(
     "https://www.nlnetlabs.nl/downloads/$pkgname/$pkgname-$pkgver.tar.gz"
 )

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="vim"
-pkgver="9.1.1846"
+pkgver="9.2.0033"
 pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )

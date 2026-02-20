@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 pkgname="ncurses"
-pkgver="6.5"
+pkgver="6.6"
 pkgsrcs=(
-    "https://invisible-island.net/archives/$pkgname/$pkgname-6.5.tar.gz"
+    "https://invisible-island.net/archives/$pkgname/$pkgname-6.6.tar.gz"
 )
 
 pkgprepare() {

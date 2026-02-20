@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 pkgname="libnl"
-pkgver="3.11.0"
+pkgver="3.12.0"
 pkgsrcs=(
-    "https://github.com/thom311/$pkgname/releases/download/libnl3_11_0/$pkgname-$pkgver.tar.gz"
+    "https://github.com/thom311/$pkgname/releases/download/libnl3_12_0/$pkgname-$pkgver.tar.gz"
 )
 
 pkgprepare() {

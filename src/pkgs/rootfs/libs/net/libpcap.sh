@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="libpcap"
-pkgver="1.10.5"
+pkgver="1.10.6"
 pkgsrcs=(
     "https://www.tcpdump.org/release/$pkgname-$pkgver.tar.xz"
 )

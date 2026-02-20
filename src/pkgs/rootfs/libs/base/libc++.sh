@@ -2,7 +2,7 @@
 
 pkgname="libc++"
 _pkgname="llvm"
-pkgver="21.1.2"
+pkgver="21.1.8"
 pkgsrcs=(
     "https://github.com/$_pkgname/$_pkgname-project/archive/refs/tags/llvmorg-$pkgver.tar.gz"
 )

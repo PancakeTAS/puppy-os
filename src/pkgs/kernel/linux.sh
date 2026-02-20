@@ -2,11 +2,11 @@
 
 pkgname="linux"
 _pkgname="linux-bpi-r4"
-pkgver="6.18"
+pkgver="6.19"
 pkgsrcs=(
     "https://github.com/PancakeTAS/$_pkgname/archive/refs/heads/$pkgname-$pkgver.tar.gz"
-    "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20251125/$pkgname-firmware-20251125.tar.gz"
-    "https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-2025.10.07.tar.xz"
+    "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20260110/$pkgname-firmware-20260110.tar.gz"
+    "https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-2026.02.04.tar.xz"
 )
 
 pkgprepare() {
@@ -14,11 +14,11 @@ pkgprepare() {
 
     # setup kernel embedded firmware directory
     mkdir -p firmware/mediatek/
-    cp -r ../linux-firmware-20251125/mediatek/mt7996 \
+    cp -r ../linux-firmware-20260110/mediatek/mt7996 \
         firmware/mediatek/mt7996
 
     # install wireless regulatory database
-    cp ../wireless-regdb-2025.10.07/regulatory.db{,.p7s} \
+    cp ../wireless-regdb-2026.02.04/regulatory.db{,.p7s} \
         firmware/
 
     # write kconfig

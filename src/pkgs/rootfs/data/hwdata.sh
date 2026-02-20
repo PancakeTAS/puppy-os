@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="hwdata"
-pkgver="0.400"
+pkgver="0.404"
 pkgsrcs=(
     "https://github.com/vcrhonek/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )

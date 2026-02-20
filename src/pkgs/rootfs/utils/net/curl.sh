@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 pkgname="curl"
-pkgver="8.16.0"
+pkgver="8.18.0"
 pkgsrcs=(
-    "https://github.com/$pkgname/$pkgname/releases/download/$pkgname-8_16_0/$pkgname-$pkgver.tar.xz"
+    "https://github.com/$pkgname/$pkgname/releases/download/$pkgname-8_18_0/$pkgname-$pkgver.tar.xz"
 )
 
 pkgprepare() {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="dnsmasq"
-pkgver="2.91"
+pkgver="2.92"
 pkgsrcs=(
     "https://thekelleys.org.uk/$pkgname/$pkgname-$pkgver.tar.xz"
 )

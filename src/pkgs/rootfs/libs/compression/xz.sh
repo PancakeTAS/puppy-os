@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="xz"
-pkgver="5.8.1"
+pkgver="5.8.2"
 pkgsrcs=(
     "https://github.com/tukaani-project/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="brotli"
-pkgver="1.1.0"
+pkgver="1.2.0"
 pkgsrcs=(
     "https://github.com/google/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )

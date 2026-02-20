@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="iana-tz"
-pkgver="2025b"
+pkgver="2025c"
 pkgsrcs=(
     "https://data.iana.org/time-zones/releases/tzcode$pkgver.tar.gz"
     "https://data.iana.org/time-zones/releases/tzdata$pkgver.tar.gz"

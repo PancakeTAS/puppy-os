@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="util-linux"
-pkgver="2.41.2"
+pkgver="2.41.3"
 pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )

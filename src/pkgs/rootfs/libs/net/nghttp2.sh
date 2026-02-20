@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="nghttp2"
-pkgver="1.67.1"
+pkgver="1.68.0"
 pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )

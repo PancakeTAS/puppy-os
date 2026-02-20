@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="libedit"
-pkgver="20250104-3.1"
+pkgver="20251016-3.1"
 pkgsrcs=(
     "https://thrysoee.dk/editline/$pkgname-$pkgver.tar.gz"
 )

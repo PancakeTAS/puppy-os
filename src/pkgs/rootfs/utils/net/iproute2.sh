@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 
 pkgname="iproute2"
-pkgver="6.16.0"
+pkgver="6.19.0"
 pkgsrcs=(
     "https://mirrors.edge.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.xz"
 )
 
 pkgprepare() {
     cd ${pkgname}-${pkgver}
+
+    sed -i 's/__u8/unsigned char/g' \
+        include/color.h \
+        include/json_print.h
+    sed -i 's/__u32/unsigned int/g' \
+        include/color.h \
+        include/json_print.h
+    sed -i 's/__u64/unsigned long long/g' \
+        include/color.h \
+        include/json_print.h
 
     PKG_CONFIG=false ./configure \
         --prefix=/usr \

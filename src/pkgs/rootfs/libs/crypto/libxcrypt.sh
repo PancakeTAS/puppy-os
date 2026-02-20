@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="libxcrypt"
-pkgver="4.4.38"
+pkgver="4.5.2"
 pkgsrcs=(
     "https://github.com/besser82/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )

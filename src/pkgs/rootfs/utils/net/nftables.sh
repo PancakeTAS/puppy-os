@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="nftables"
-pkgver="1.1.5"
+pkgver="1.1.6"
 pkgsrcs=(
     "https://www.netfilter.org/pub/$pkgname/$pkgname-$pkgver.tar.xz"
 )

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="nghttp3"
-pkgver="1.12.0"
+pkgver="1.15.0"
 pkgsrcs=(
     "https://github.com/ngtcp2/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )

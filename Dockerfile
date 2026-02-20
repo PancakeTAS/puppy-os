@@ -12,9 +12,9 @@ RUN pacman -Syu --noconfirm && \
 WORKDIR /build
 
 # compile llvm
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.6/llvm-project-21.1.6.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/llvm-project-21.1.8.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.6.src && \
+    cd /build/llvm-project-21.1.8.src && \
     cmake -S llvm -B build -G Ninja \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SYSTEM_NAME="Linux" \
@@ -38,18 +38,18 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build && \
     cmake --install build --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.6.src
+    rm -rf /build/llvm-project-21.1.8.src
 
 RUN mkdir -p /tmp/puppyos-sysroot
 
 # grab kernel headers
-RUN wget -qO- "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.17.tar.xz" | \
+RUN wget -qO- "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.19.tar.xz" | \
         tar xJ && \
-    cd /build/linux-6.17 && \
+    cd /build/linux-6.19 && \
     make ARCH=arm64 headers -j$(nproc) && \
     make ARCH=arm64 INSTALL_HDR_PATH="/tmp/puppyos-sysroot/usr" headers_install -j$(nproc) && \
     cd ../.. && \
-    rm -rf /build/linux-6.17
+    rm -rf /build/linux-6.19
 
 # grab musl headers
 RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
@@ -66,9 +66,9 @@ RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
 ENV PATH="/toolchain/bin:$PATH"
 
 # build compiler-rt
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.6/llvm-project-21.1.6.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/llvm-project-21.1.8.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.6.src && \
+    cd /build/llvm-project-21.1.8.src && \
     cmake -S compiler-rt -B build-rt -G Ninja \
         -DCMAKE_INSTALL_PREFIX="/toolchain/lib/clang/21" \
         -DCMAKE_SYSROOT="/tmp/puppyos-sysroot" \
@@ -93,7 +93,7 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build-rt && \
     cmake --install build-rt --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.6.src
+    rm -rf /build/llvm-project-21.1.8.src
 
 RUN rm -rf /build
 

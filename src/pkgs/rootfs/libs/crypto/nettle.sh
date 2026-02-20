@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 pkgname="nettle"
-pkgver="3.10.2"
+pkgver="3.10.2" # 4.0 breaks ABI
 pkgsrcs=(
     "https://ftpmirror.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.gz"
-) # NOT A GNU PROJECT!! THEY JUST HAVE HTTPS RELEASES!
+)
 
 pkgprepare() {
     cd ${pkgname}-${pkgver}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="dhcpcd"
-pkgver="10.2.4"
+pkgver="10.3.0"
 pkgsrcs=(
     "https://github.com/NetworkConfiguration/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.xz"
 )

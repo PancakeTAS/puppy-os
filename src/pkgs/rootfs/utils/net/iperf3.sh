@@ -2,7 +2,7 @@
 
 pkgname="iperf3"
 _pkgname="iperf"
-pkgver="3.19.1"
+pkgver="3.20"
 pkgsrcs=(
     "https://github.com/esnet/$_pkgname/releases/download/$pkgver/$_pkgname-$pkgver.tar.gz"
 )

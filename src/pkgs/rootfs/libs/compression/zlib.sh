@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="zlib"
-pkgver="1.3.1"
+pkgver="1.3.2"
 pkgsrcs=(
     "https://zlib.net/$pkgname-$pkgver.tar.xz"
 )
@@ -28,7 +28,8 @@ pkgprepare() {
         -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=On \
         -DCMAKE_C_COMPILER=clang \
         -DCMAKE_C_COMPILER_TARGET="aarch64-dog-linux-musl" \
-        -DZLIB_BUILD_EXAMPLES=Off
+        -DZLIB_BUILD_TESTING=Off \
+        -DZLIB_BUILD_STATIC=OFF
 }
 
 pkgbuild() {
@@ -37,6 +38,4 @@ pkgbuild() {
 
 pkginstall() {
     cmake --install build --strip
-
-    rm $pkgdir/usr/lib/libz.a
 }
