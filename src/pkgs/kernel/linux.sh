@@ -2,7 +2,7 @@
 
 pkgname="linux"
 _pkgname="linux-bpi-r4"
-pkgver="6.19"
+pkgver="7.0-rc1"
 pkgsrcs=(
     "https://github.com/PancakeTAS/$_pkgname/archive/refs/heads/$pkgname-$pkgver.tar.gz"
     "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20260110/$pkgname-firmware-20260110.tar.gz"
