@@ -6,7 +6,7 @@ pkgver="7.0-rc1"
 pkgsrcs=(
     "https://github.com/PancakeTAS/$_pkgname/archive/refs/heads/$pkgname-$pkgver.tar.gz"
     "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20260110/$pkgname-firmware-20260110.tar.gz"
-    "https://mirrors.edge.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-2026.02.04.tar.xz"
+    "https://pancake.gay/wireless-regdb.tar.xz"
 )
 
 pkgprepare() {
@@ -18,7 +18,7 @@ pkgprepare() {
         firmware/mediatek/mt7996
 
     # install wireless regulatory database
-    cp ../wireless-regdb-2026.02.04/regulatory.db{,.p7s} \
+    cp ../regulatory.db \
         firmware/
 
     # write kconfig
