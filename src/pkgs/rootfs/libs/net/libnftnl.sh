@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="libnftnl"
-pkgver="1.3.1"
+pkgver="1.3.2"
 pkgsrcs=(
     "https://www.netfilter.org/pub/$pkgname/$pkgname-$pkgver.tar.xz"
 )

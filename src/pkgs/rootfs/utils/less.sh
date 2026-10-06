@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="less"
-pkgver="692"
+pkgver="710"
 pkgsrcs=(
     "https://www.greenwoodsoftware.com/$pkgname/$pkgname-$pkgver.tar.gz"
 )

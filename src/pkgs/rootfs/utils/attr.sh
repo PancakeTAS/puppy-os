@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="attr"
-pkgver="2.5.2"
+pkgver="2.5.1"
 pkgsrcs=(
     "http://download.savannah.nongnu.org/releases/$pkgname/$pkgname-$pkgver.tar.xz"
 )

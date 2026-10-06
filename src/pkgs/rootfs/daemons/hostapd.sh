@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="hostapd"
-pkgver="2.11"
+pkgver="2.12"
 pkgsrcs=(
     "https://w1.fi/releases/$pkgname-$pkgver.tar.gz"
 )

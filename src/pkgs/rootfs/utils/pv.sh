@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="pv"
-pkgver="1.10.3"
+pkgver="1.12.0"
 pkgsrcs=(
     "https://www.ivarch.com/s/$pkgname-$pkgver.tar.gz"
 )

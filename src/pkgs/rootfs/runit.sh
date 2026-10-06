@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="runit"
-pkgver="2.2.0"
+pkgver="2.3.1"
 pkgsrcs=(
     "https://smarden.org/$pkgname/$pkgname-$pkgver.tar.gz"
 )

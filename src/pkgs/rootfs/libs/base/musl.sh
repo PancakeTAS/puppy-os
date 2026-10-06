@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="musl"
-pkgver="1.2.5"
+pkgver="1.2.6"
 pkgsrcs=(
     "https://musl.libc.org/releases/$pkgname-$pkgver.tar.gz"
 )
@@ -23,7 +23,7 @@ pkgprepare() {
         CROSS_COMPILE= CC=clang \
         CFLAGS="-O3" \
         AR=llvm-ar RANLIB=llvm-ranlib \
-        LIBCC=/toolchain/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64.a
+        LIBCC=/toolchain/lib/clang/23/lib/linux/libclang_rt.builtins-aarch64.a
 }
 
 pkgbuild() {

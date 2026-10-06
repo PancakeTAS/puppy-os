@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="iproute2"
-pkgver="6.19.0"
+pkgver="7.2.0"
 pkgsrcs=(
     "https://mirrors.edge.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.xz"
 )

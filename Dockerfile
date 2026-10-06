@@ -12,9 +12,9 @@ RUN pacman -Syu --noconfirm && \
 WORKDIR /build
 
 # compile llvm
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/llvm-project-21.1.8.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.3/llvm-project-23.1.3.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.8.src && \
+    cd /build/llvm-project-23.1.3.src && \
     cmake -S llvm -B build -G Ninja \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SYSTEM_NAME="Linux" \
@@ -38,39 +38,39 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build && \
     cmake --install build --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.8.src
+    rm -rf /build/llvm-project-23.1.3.src
 
 RUN mkdir -p /tmp/puppyos-sysroot
 
 # grab kernel headers
-RUN wget -qO- "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.19.tar.xz" | \
+RUN wget -qO- "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.2.tar.xz" | \
         tar xJ && \
-    cd /build/linux-6.19 && \
+    cd /build/linux-7.2 && \
     make ARCH=arm64 headers -j$(nproc) && \
     make ARCH=arm64 INSTALL_HDR_PATH="/tmp/puppyos-sysroot/usr" headers_install -j$(nproc) && \
     cd ../.. && \
-    rm -rf /build/linux-6.19
+    rm -rf /build/linux-7.2
 
 # grab musl headers
-RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.5.tar.gz" | \
+RUN wget -qO- "https://musl.libc.org/releases/musl-1.2.6.tar.gz" | \
         tar xz && \
-    cd /build/musl-1.2.5 && \
+    cd /build/musl-1.2.6 && \
     ./configure \
         --prefix=/usr \
         --host=aarch64-dog-linux-musl \
         CROSS_COMPILE= CC=clang && \
     make DESTDIR="/tmp/puppyos-sysroot" install-headers -j$(nproc) && \
     cd ../.. && \
-    rm -rf /build/musl-1.2.5
+    rm -rf /build/musl-1.2.6
 
 ENV PATH="/toolchain/bin:$PATH"
 
 # build compiler-rt
-RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/llvm-project-21.1.8.src.tar.xz" | \
+RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.3/llvm-project-23.1.3.src.tar.xz" | \
         tar xJ && \
-    cd /build/llvm-project-21.1.8.src && \
+    cd /build/llvm-project-23.1.3.src && \
     cmake -S compiler-rt -B build-rt -G Ninja \
-        -DCMAKE_INSTALL_PREFIX="/toolchain/lib/clang/21" \
+        -DCMAKE_INSTALL_PREFIX="/toolchain/lib/clang/23" \
         -DCMAKE_SYSROOT="/tmp/puppyos-sysroot" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_COMPILER=clang++ \
@@ -93,7 +93,7 @@ RUN wget -qO- "https://github.com/llvm/llvm-project/releases/download/llvmorg-21
     cmake --build build-rt && \
     cmake --install build-rt --strip && \
     cd ../.. && \
-    rm -rf /build/llvm-project-21.1.8.src
+    rm -rf /build/llvm-project-23.1.3.src
 
 RUN rm -rf /build
 

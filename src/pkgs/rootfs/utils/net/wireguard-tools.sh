@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="wireguard-tools"
-pkgver="1.0.20250521"
+pkgver="1.0.20260223"
 pkgsrcs=(
     "https://git.zx2c4.com/$pkgname/snapshot/$pkgname-$pkgver.tar.xz"
 )

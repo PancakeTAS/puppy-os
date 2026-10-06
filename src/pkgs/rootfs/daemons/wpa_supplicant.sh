@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="wpa_supplicant"
-pkgver="2.11"
+pkgver="2.12"
 pkgsrcs=(
     "https://w1.fi/releases/$pkgname-$pkgver.tar.gz"
     "https://github.com/PancakeTAS/libdbus-stub/archive/refs/tags/v1.0.0.tar.gz"

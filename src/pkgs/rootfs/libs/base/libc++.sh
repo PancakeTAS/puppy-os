@@ -2,7 +2,7 @@
 
 pkgname="libc++"
 _pkgname="llvm"
-pkgver="21.1.8"
+pkgver="23.1.3"
 pkgsrcs=(
     "https://github.com/$_pkgname/$_pkgname-project/archive/refs/tags/llvmorg-$pkgver.tar.gz"
 )
@@ -42,7 +42,7 @@ pkgprepare() {
         -DLIBCXX_ENABLE_STATIC=Off \
         -DLIBCXXABI_ENABLE_STATIC=Off \
         -DLIBUNWIND_ENABLE_STATIC=Off \
-        -DCMAKE_CXX_FLAGS="-nostdlib /toolchain/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64.a"
+        -DCMAKE_CXX_FLAGS="-nostdlib /toolchain/lib/clang/23/lib/linux/libclang_rt.builtins-aarch64.a"
 }
 
 pkgbuild() {

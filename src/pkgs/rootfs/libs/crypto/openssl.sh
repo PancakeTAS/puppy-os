@@ -2,6 +2,7 @@
 
 pkgname="openssl"
 pkgver="3.6.1"
+# pkgver="3.6.5"
 pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/releases/download/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz"
 )

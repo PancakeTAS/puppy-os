@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="toybox"
-pkgver="0.8.12"
+pkgver="0.8.14"
 pkgsrcs=(
     "https://www.landley.net/$pkgname/downloads/$pkgname-$pkgver.tar.gz"
 )

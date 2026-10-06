@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="htop"
-pkgver="3.4.1"
+pkgver="3.5.3"
 pkgsrcs=(
     "https://github.com/$pkgname-dev/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.xz"
 )

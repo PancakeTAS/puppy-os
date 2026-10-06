@@ -2,10 +2,10 @@
 
 pkgname="linux"
 _pkgname="linux-bpi-r4"
-pkgver="7.0"
+pkgver="7.3-rc1"
 pkgsrcs=(
     "https://github.com/PancakeTAS/$_pkgname/archive/refs/heads/$pkgname-$pkgver.tar.gz"
-    "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20260110/$pkgname-firmware-20260110.tar.gz"
+    "https://gitlab.com/kernel-firmware/$pkgname-firmware/-/archive/20260916/$pkgname-firmware-20260916.tar.gz"
     "https://pancake.gay/wireless-regdb.tar.xz"
 )
 
@@ -14,7 +14,7 @@ pkgprepare() {
 
     # setup kernel embedded firmware directory
     mkdir -p firmware/mediatek/
-    cp -r ../linux-firmware-20260110/mediatek/mt7996 \
+    cp -r ../linux-firmware-20260916/mediatek/mt7996 \
         firmware/mediatek/mt7996
 
     # install wireless regulatory database

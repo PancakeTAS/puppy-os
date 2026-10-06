@@ -2,6 +2,7 @@
 
 pkgname="openssh"
 pkgver="10.2p1"
+# pkgver="10.5p1"
 pkgsrcs=(
     "https://ftp.spline.de/pub/OpenBSD/OpenSSH/portable/$pkgname-$pkgver.tar.gz"
 )

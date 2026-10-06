@@ -2,7 +2,7 @@
 
 pkgname="procps-ng"
 _pkgname="procps"
-pkgver="4.0.6"
+pkgver="4.0.7"
 pkgsrcs=(
     "https://gitlab.com/$pkgname/$_pkgname/-/archive/v$pkgver/$_pkgname-v$pkgver.tar.gz"
 )

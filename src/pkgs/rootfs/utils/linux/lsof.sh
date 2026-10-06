@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="lsof"
-pkgver="4.99.5"
+pkgver="4.99.7"
 pkgsrcs=(
     "https://github.com/lsof-org/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.gz"
 )

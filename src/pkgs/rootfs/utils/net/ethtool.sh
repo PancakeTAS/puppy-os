@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="ethtool"
-pkgver="6.15"
+pkgver="7.1"
 pkgsrcs=(
     "https://www.kernel.org/pub/software/network/$pkgname/$pkgname-$pkgver.tar.xz"
 )

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="btop"
-pkgver="1.4.6"
+pkgver="1.4.7"
 pkgsrcs=(
     "https://github.com/aristocratos/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
 )

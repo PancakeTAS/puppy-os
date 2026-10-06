@@ -3,7 +3,7 @@
 pkgname="linux-headers"
 _pkgname="linux"
 _pkgname2="linux-bpi-r4"
-pkgver="6.19"
+pkgver="7.3-rc1"
 pkgsrcs=(
     "https://github.com/PancakeTAS/$_pkgname2/archive/refs/heads/$_pkgname-$pkgver.tar.gz"
 )

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 pkgname="file"
-pkgver="5.46"
+pkgver="5.48"
 pkgsrcs=(
-    "https://github.com/file/file/archive/refs/tags/FILE5_46.tar.gz"
+    "https://github.com/file/file/archive/refs/tags/FILE5_48.tar.gz"
 )
 
 pkgprepare() {
-    cd ${pkgname}-FILE5_46
+    cd ${pkgname}-FILE5_48
 
     autoreconf -fiv
     ./configure \

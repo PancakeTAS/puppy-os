@@ -46,7 +46,7 @@ build_package() {
             wget -q --show-progress -O "dlcache/$base" "$src"
         fi
 
-        tar -xhf "dlcache/$base" -C $TEMPDIR/src
+        tar --no-same-owner -xhf "dlcache/$base" -C $TEMPDIR/src
     done
 
     # set environment variables for the build

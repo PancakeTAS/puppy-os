@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="libpsl"
-pkgver="0.21.5"
+pkgver="0.23.3"
 pkgsrcs=(
     "https://github.com/rockdaboot/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.gz"
 )

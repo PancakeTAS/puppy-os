@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="tcpdump"
-pkgver="4.99.6"
+pkgver="4.99.7"
 pkgsrcs=(
     "https://www.tcpdump.org/release/$pkgname-$pkgver.tar.xz"
 )
@@ -35,5 +35,5 @@ pkgbuild() {
 pkginstall() {
     make DESTDIR=$pkgdir install
 
-    rm $pkgdir/usr/bin/tcpdump.4.99.6
+    rm $pkgdir/usr/bin/tcpdump.4.99.7
 }

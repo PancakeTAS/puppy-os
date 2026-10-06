@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkgname="pciutils"
-pkgver="3.14.0"
+pkgver="3.15.0"
 pkgsrcs=(
     "https://github.com/$pkgname/$pkgname/releases/download/v$pkgver/$pkgname-$pkgver.tar.gz"
 )
