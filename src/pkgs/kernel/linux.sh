@@ -16,6 +16,8 @@ pkgprepare() {
     mkdir -p firmware/mediatek/
     cp -r ../linux-firmware-20260916/mediatek/mt7996 \
         firmware/mediatek/mt7996
+    cp -r ../linux-firmware-20260916/mediatek/mt7988 \
+        firmware/mediatek/mt7988
 
     # install wireless regulatory database
     cp ../regulatory.db \
@@ -52,5 +54,6 @@ pkginstall() {
     # apply dtb overlay
     fdtoverlay -i arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4.dtb \
         arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-sd.dtbo \
+        arch/arm64/boot/dts/mediatek/mt7988a-bananapi-bpi-r4-wifi-be14.dtbo \
         -o $pkgdir/kernel/${pkgname}-${pkgver}.mt7988a-bananapi-bpi-r4.dtb
 }
